@@ -28,6 +28,7 @@ using namespace std::chrono;
 // **** Find the best MCM, Greedy Search:
 map<unsigned int, __int128_t> MCM_GreedySearch(map<__int128_t, unsigned int> Kset, unsigned int N, unsigned int r);
 map<unsigned int, __int128_t> MCM_GreedySearch_AND_printInfo(map<__int128_t, unsigned int> Kset, unsigned int N, unsigned int r);
+map<unsigned int, __int128_t> MCM_GreedySearch_MCM0(map<__int128_t, unsigned int> Kset, unsigned int N, unsigned int r0, map<unsigned int, __int128_t> MCM_0);
 
 // *** Greedy Search on Reduced dataset:
 map<unsigned int, __int128_t> MCM_ReducedGreedySearch_AND_PrintInfo(map<__int128_t, unsigned int> Kset, unsigned int K, unsigned int N, unsigned int r);
