@@ -105,17 +105,26 @@ double LogE_MCM_infoSCM(map<__int128_t, unsigned int> Kset, map<unsigned int, __
 
   //else
   //{
-    double LogE = 0, LogE_SCM = 0; 
+    double LogE = 0, LogE_SCM = 0, LogE_CM = 0, eta = 0; 
     unsigned int rank = 0;
     map<unsigned int, __int128_t>::iterator Part;
+    double Nd = (double) N;
 
+    // Complete model:
+    __int128_t Part_CM = (one128 << r)-1;
+    LogE_CM = LogE_SubCM(Kset, Part_CM, N);
+    cout << int_to_bstring(Part_CM, r) << "\t " << LogE_CM << "\t " << -LogE_CM/Nd/log(2.) << " bits" << endl << endl;
+
+    // Each ICC:
     for (Part = Partition.begin(); Part != Partition.end(); Part++)
     {
       LogE_SCM = LogE_SubCM(Kset, (*Part).second, N);
       LogE += LogE_SCM;
       rank += Bitset_count((*Part).second);
-      cout << (*Part).first << "\t " << int_to_bstring((*Part).second, r) << "\t " << LogE_SCM << endl;
+      //eta = ((LogE_SCM/Nd/log(2.)) + r) / (r + (LogE_CM/Nd/log(2.)));
+      cout << (*Part).first << "\t " << int_to_bstring((*Part).second, r) << "\t " << LogE_SCM << "\t " << -LogE_SCM/Nd/log(2.) << " bits \t" << endl;
     }  
+    cout << endl;
     return LogE - ((double) (N * (r-rank))) * log(2.);
   //}
   return 0;
