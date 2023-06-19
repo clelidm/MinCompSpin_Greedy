@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>       /* lgamma */
 #include <map>
+#include <iomanip>
 
 using namespace std;
 
@@ -110,6 +111,7 @@ double LogE_MCM_infoSCM(map<__int128_t, unsigned int> Kset, map<unsigned int, __
     map<unsigned int, __int128_t>::iterator Part;
     double Nd = (double) N;
 
+    cout << setprecision(3) << fixed;
     // Complete model:
     __int128_t Part_CM = (one128 << r)-1;
     LogE_CM = LogE_SubCM(Kset, Part_CM, N);
@@ -130,15 +132,4 @@ double LogE_MCM_infoSCM(map<__int128_t, unsigned int> Kset, map<unsigned int, __
   return 0;
 }
 
-/*
-void Print_MCM_Partition(map<unsigned int, __int128_t> partition, unsigned int r)
-{
-    map<unsigned int, __int128_t>::iterator it;
-
-    for (it = partition.begin(); it != partition.end(); it++)
-    {
-        cout << (*it).first << "\t " << int_to_bstring((*it).second, r) << endl;
-    }
-    cout << endl;
-}*/
 
