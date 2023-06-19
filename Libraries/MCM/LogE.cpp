@@ -8,6 +8,7 @@ using namespace std;
 /******************   TOOL Functions from "tools.cpp"   ***********************/
 /******************************************************************************/
 unsigned int Bitset_count(__int128_t bool_nb);
+string int_to_bstring(__int128_t bool_nb, unsigned int n);
 
 /******************************************************************************/
 /*******************************    CONSTANTS     *****************************/
@@ -96,4 +97,39 @@ double LogE_MCM(map<__int128_t, unsigned int> Kset, map<unsigned int, __int128_t
   //}
   return 0;
 }
+
+
+double LogE_MCM_infoSCM(map<__int128_t, unsigned int> Kset, map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r)
+{
+  //if (!check_partition(Partition)) {cout << "Error, the argument is not a partition." << endl; return 0;  }
+
+  //else
+  //{
+    double LogE = 0, LogE_SCM = 0; 
+    unsigned int rank = 0;
+    map<unsigned int, __int128_t>::iterator Part;
+
+    for (Part = Partition.begin(); Part != Partition.end(); Part++)
+    {
+      LogE_SCM = LogE_SubCM(Kset, (*Part).second, N);
+      LogE += LogE_SCM;
+      rank += Bitset_count((*Part).second);
+      cout << (*Part).first << "\t " << int_to_bstring((*Part).second, r) << "\t " << LogE_SCM << endl;
+    }  
+    return LogE - ((double) (N * (r-rank))) * log(2.);
+  //}
+  return 0;
+}
+
+/*
+void Print_MCM_Partition(map<unsigned int, __int128_t> partition, unsigned int r)
+{
+    map<unsigned int, __int128_t>::iterator it;
+
+    for (it = partition.begin(); it != partition.end(); it++)
+    {
+        cout << (*it).first << "\t " << int_to_bstring((*it).second, r) << endl;
+    }
+    cout << endl;
+}*/
 
