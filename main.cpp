@@ -161,7 +161,7 @@ int main(int argc, char *argv[])
     cout << endl << "*******************************************************************************************" << endl;
 
     double LE_final = LogE_MCM_infoSCM(Kset, fp1, N, n);
-    cout << "Log-evidence(MCM) = " << LE_final << endl;
+    cout << "Log-evidence(MCM) = " << LE_final << "\t " << -LE_final/((double) N)/log(2.) << " bits \t" << endl;
 
 
     cout << endl << "*******************************************************************************************";
