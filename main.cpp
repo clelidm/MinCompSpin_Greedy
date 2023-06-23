@@ -160,9 +160,16 @@ int main(int argc, char *argv[])
     cout << endl << "******************************   over each ICCS   *****************************************";
     cout << endl << "*******************************************************************************************" << endl;
 
-    double LE_final = LogE_MCM_infoSCM(Kset, fp1, N, n);
-    cout << "Log-evidence(MCM) = " << LE_final << "\t " << -LE_final/((double) N)/log(2.) << " bits \t" << endl;
+    double LE_final = LogE_MCM_infoICC(Kset, fp1, N, n);
+    cout << "Log-evidence(MCM) = " << LE_final << "\t " << -LE_final/((double) N)/log(2.) << " bits per datapoint \t" << endl;
 
+    cout << endl << "*******************************************************************************************";
+    cout << endl << "***************************  Decomposition of Log-L   *************************************";
+    cout << endl << "******************************   over each ICCS   *****************************************";
+    cout << endl << "*******************************************************************************************" << endl;
+
+    double LogL_final = LogL_MCM_infoICC(Kset, fp1, N, n);
+    //cout << "Log-evidence(MCM) = " << LogL_final << "\t " << -LogL_final/((double) N)/log(2.) << " bits per datapoint \t" << endl;
 
     cout << endl << "*******************************************************************************************";
     cout << endl << "***************************  Working with a Reduced Dataset   *****************************";
