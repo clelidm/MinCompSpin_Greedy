@@ -100,7 +100,7 @@ double LogE_MCM(map<__int128_t, unsigned int> Kset, map<unsigned int, __int128_t
 }
 
 
-double LogE_MCM_infoSCM(map<__int128_t, unsigned int> Kset, map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r)
+double LogE_MCM_infoICC(map<__int128_t, unsigned int> Kset, map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r)
 {
   //if (!check_partition(Partition)) {cout << "Error, the argument is not a partition." << endl; return 0;  }
 
