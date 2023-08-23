@@ -10,6 +10,8 @@ A **simulated annealing version** of the optimization procedure can also be foun
 
 The program can run for up to `n=127` variables, which are indexed from `i=0` to `126` in the code.
 
+----
+
 We recommand using the simulated annealing algorithm if you are interested in finding a solution that is as close as possible to the global optimal, or when the local greedy procedure fails to merge the initial spin variables into communities (this could be due to non-pairwise). While we recommand the Greedy algorithm if you are looking for a fast converging algorithm, as it will allow finding solution in reasonable time when the search space becomes too large.
 
 ----
