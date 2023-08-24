@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
     cout << endl << "*******************************************************************************************" << endl;
 
     double LogL_final = LogL_MCM_infoICC(Kset, fp1, N, n);
-    //cout << "Log-evidence(MCM) = " << LogL_final << "\t " << -LogL_final/((double) N)/log(2.) << " bits per datapoint \t" << endl;
+    //cout << "Log-likelihood(MCM) = " << LogL_final << "\t " << -LogL_final/((double) N)/log(2.) << " bits per datapoint \t" << endl;
 
     cout << endl << "*******************************************************************************************";
     cout << endl << "***************************  Working with a Reduced Dataset   *****************************";
