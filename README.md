@@ -5,7 +5,9 @@ This program allows to **detect community structures in binary data**, while tak
 
 One huge advantage of Minimally Complex Models is that the model evidence (integration of the likelihood over the model parameter) has a known analytic expression that is easy to compute numerically. As a consequence, the computation of the model evidence doesn’t require fitting the parameters of the model nor computing a numerical integral, which allows to significantly accelerate the comparison between models. The selected model can also be used as a generative model for data. Details can be found in the paper [*Statistical Inference of Minimally Complex Models*](https://arxiv.org/abs/2008.00520) [1].
 
-This repository contains a code initially developed for the paper Ref. [1] and later optimised for the paper Ref.[2]. **The program performs a greedy search** for the best Minimally Complex Spin Model (MCM) on a basis provided by the user. The code can run for systems with up to `n=128` variables. The code performs an hierarchical merging procedure to find an optimal MCM in the basis chosen by the user.
+(posterior probability that the model generates the data, integrated over its parameter values)
+
+This repository contains a code initially developed for the paper Ref. [1] and later optimised for the paper Ref.[2]. **The program performs a greedy search** for the best Minimally Complex Spin Model (MCM) on a basis provided by the user. The comparison between models is based on their evidence (posterior probability that the model generates the data, integrated over its parameter values). The code performs an hierarchical merging procedure to find an optimal MCM in the basis chosen by the user. The code can run for systems with up to `n=128` variables. 
 
 This program is complementary to the program available in [github.com/clelidm/MinCompSpin](https://github.com/clelidm/MinCompSpin), which performs an **exhaustive search** for the best community. We recommand using the greedy search over the exhaustive search when the number of variables exceeds `15`. A **simulated annealing version** of the optimization procedure can also be found in [github.com/ebokai/MinCompSpin_SimulatedAnnealing](https://github.com/ebokai/MinCompSpin_SimulatedAnnealing), which can find solutions closer to the global optimal.
 
@@ -18,6 +20,8 @@ This program is complementary to the program available in [github.com/clelidm/Mi
 
 **Exhaustive search:** The program available [here](https://github.com/clelidm/MinCompSpin) performs an exhaustive search for the best community. The limiting factor of this code is the exhaustive search for the best model, as the space of models is exponentially increasing with `r` (the number of MCM on a chosen basis with `r` variable is given by the Bell number of `r`). We recommand using a different strategy when the number of variables exceeds `~13` to `15`. 
 
+The code go through all possible MCMs of a given rank `r`, where an MCM is defined by a given partition of the `r` basis operators provided (see paper). The comparison between models is based on their evidence (posterior probability that the model generates the data, integrated over its parameter values). The selected model is the one with the largest evidence.
+
 **Greedy search VS Simulated annealing:** 
 We recommand using the simulated annealing algorithm if you are interested in finding a solution that is as close as possible to the global optimal, or when the local greedy procedure fails to merge the initial spin variables into communities (this could be due to non-pairwise). While we recommand the Greedy algorithm if you are looking for a fast converging algorithm, as it will allow finding solution in reasonable time when the search space becomes too large.
 
@@ -25,17 +29,11 @@ We recommand using the simulated annealing algorithm if you are interested in fi
 
 The code performs an hierarchical merging procedure to find an optimal MCM in the basis chosen by the user.
 
-To do so, the code start by re-writing the data in the basis provided by the user. Here in the example, the basis is the encoded in the variable `Basis_Choice` and is specified as being the best basis for the example of the `Shapes_n9_Dataset_N1e5.dat` dataset available in the input folder and used one example of Ref.[1].
+To do so, the code start by re-writing the data in the basis provided by the user. The basis is encoded in the variable `Basis_li` and **by default it is the original basis of the data** (i.e., by default, there is no basis transformation). A different basis can be specified in a file by the user and read with the functions `Read_BasisOp_IntegerRepresentation()` or the function `Read_BasisOp_BinaryRepresentation()` (see examples in the `INPUT` folder, the files `SCOTUS_n9_BestBasis_Binary.dat` and `SCOTUS_n9_BestBasis_Integer.dat` which are encoding the best basis for the US Supreme Court data used as an example in Ref.[1]).
 
-To performs the hierarchical merging procedure, the code starts with `r` initial communities, and then merge the two communities that will increase the most the log-Evidence of the model. The code then iterate this procedure until no more communities can be merged without decreasing the log-Evidence. By default, the `r` initial communities are taken to be such that there is only one variable in each community. However, search can also be started from a different MCM, using the function 
+THe Greedy search can be done using the functions `MCM_GreedySearch()` or `MCM_GreedySearch_AND_printInfo()` (the only difference is the latter function also print some information about the found best MCM). To performs the hierarchical merging procedure, the code starts with `r` initial communities, and then successively merges the two communities that gives the largest increase in the log-Evidence of the model. The code iterates this procedure until no more communities can be merged without decreasing the log-Evidence. By default, the `n` initial communities are taken to be such that there is only one variable in each community.  This procedure generates an approximation of the MCM that achieves a maximal value of the evidence along the hierarchical merging process, as the number of communities varies from `n` to `1`.
 
-The code performs an hierarchical merging procedure to find an optimal MCM. It starts with `r` communities, where `r` is the number of basis operators provided.
-
-We start from the IM based on the basis operators b∗ identified above, which is an MCM with n ICC of rank r=1. We merge two ICCs Ma and Ma′ in all possible ways. Among these combinations, we identify the pair that yields a maximal increase of the evidence in Eq. (8) and merge the corresponding ICCs. This procedure generates an approximation of the MCM that achieves a maximal value of the evidence along the hierarchical merging process, as the number of ICCs varies from n to 1.
-
-The code go through all possible MCMs of a given rank `r`, where an MCM is defined by a given partition of the `r` basis operators provided (see paper). The comparison between models is based on their evidence (posterior probability that the model generates the data, integrated over its parameter values). The selected model is the one with the largest evidence.
-
-
+The search can also be started from a different initial MCM, using the function `MCM_GreedySearch_MCM0()`. This can be used for instance to run a short greedy merging at the end of a simulated annealing search.
 
 ## Requirements
 
