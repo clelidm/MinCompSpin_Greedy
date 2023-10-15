@@ -32,7 +32,7 @@ CXXFLAGS = -std=c++11 -O2  #Extra flags to give to the C++ compiler
 
 ### MCM Files:
 DIR_MCM = Libraries/MCM
-objects_MCM = tools.o LogE.o LogL.o Complexity.o MCM_info.o Basis_Choice.o P_s.o Operations_OnData.o info_quant.o BestMCM_GreedySearch.o
+objects_MCM = tools.o LogE_LogL.o Complexity.o MCM_info.o Basis_Choice.o P_s.o Operations_OnData.o info_quant.o BestMCM_GreedySearch.o
 
 ### Libraries:
 DIR_LIB = Libraries
@@ -41,20 +41,20 @@ DIR_LIB = Libraries
 OBJS := $(objects_MCM:%=$(DIR_MCM)/%)
 
 
-a.out: $(OBJS) $(DIR_LIB)/main.o $(DIR_LIB)/main_routines.o $(DIR_LIB)/library.hpp.gch
-	g++ -std=c++11 $(DIR_LIB)/main.o $(DIR_LIB)/main_routines.o $(OBJS)
+GreedySearch.out: $(OBJS) $(DIR_LIB)/main.o $(DIR_LIB)/main_routines.o $(DIR_LIB)/library.hpp.gch
+	g++ -std=c++11 $(DIR_LIB)/main.o $(DIR_LIB)/main_routines.o $(OBJS) -o GreedySearch.out
 
 $(DIR_LIB)/main.o: main.cpp data.h $(DIR_LIB)/library.hpp.gch
 	g++ -std=c++11 -c main.cpp -include $(DIR_LIB)/library.hpp -o $(DIR_LIB)/main.o   # Compile main.cpp
 
 $(DIR_LIB)/main_routines.o: $(DIR_LIB)/main_routines.cpp $(DIR_LIB)/library.hpp.gch
-	g++ -std=c++11 -c $(DIR_LIB)/main_routines.cpp -include $(DIR_LIB)/library.hpp -o $(DIR_LIB)/main_routines.o  # Compile main_routines.cpp
+	g++ -std=c++11 -c $(DIR_LIB)/main_routines.cpp -include $(DIR_LIB)/library.hpp -o $(DIR_LIB)/main_routines.o
 
 $(DIR_LIB)/library.hpp.gch: $(DIR_LIB)/library.hpp
 	g++ -std=c++11 -c $(DIR_LIB)/library.hpp
 
-run: a.out
-	./a.out $(datafilename) $n
+run: GreedySearch.out
+	./GreedySearch.out $(datafilename) $n
 
 clean:
-	rm $(OBJS) $(DIR_LIB)/library.hpp.gch $(DIR_LIB)/main_routines.o $(DIR_LIB)/main.o a.out
+	rm $(OBJS) $(DIR_LIB)/library.hpp.gch $(DIR_LIB)/main_routines.o $(DIR_LIB)/main.o GreedySearch.out
