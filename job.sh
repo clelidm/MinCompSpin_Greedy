@@ -12,6 +12,6 @@ g++ -std=c++11 -O2 Libraries/main_routines.cpp main.cpp -include Libraries/libra
 
 ## RUN:
 
-datafilename = INPUT/Big5-IPC1_VS3.dat
-n = 15
-time ./GreedySearch.out $(datafilename) $n
+datafilename=INPUT/Big5-IPC1_VS3.dat
+n=15
+time ./GreedySearch.out $datafilename $n
