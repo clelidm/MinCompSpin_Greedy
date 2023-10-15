@@ -56,7 +56,10 @@ Then you can use the following commands from your terminal:
 
 ## Examples
 
-All the useful functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file, and described in the sections below. For hands-on and simple tests of the program, check the examples in the function `int main()` of the `main.cpp` file. In the input folder, we provided the binary dataset `Dataset_Shapes_n9_N1e5.dat`, which is the dataset used in the section "Boolean description of a binary dataset" of Ref. [1]. 
+Most of the useful functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file and described in the section "General information" above. 
+For hands-on and simple tests of the program, please check the examples in the function `int main()` of the `main.cpp` file. In the input folder, we provided the binary dataset `SCOTUS_n9_N895_Data.dat` analysed in the example, which is the dataset of votes of the US Supreme court analysed in Ref.[3] and from used as an example in Ref.[1].
+
+[3] [Statistical Mechanics of the US Supreme Court](https://link.springer.com/article/10.1007/s10955-015-1253-6)
 
 ## License
 
