@@ -68,6 +68,10 @@ cd ../../
 g++ -std=c++11 -O2 -c Libraries/library.hpp
 g++ -std=c++11 -O2 Libraries/main_routines.cpp main.cpp -include Libraries/library.hpp Libraries/MCM/*.o -o GreedySearch.out
 ```
+or use the script `job_compile.sh` by running in your Terminal:
+```bash
+bash job_compile.sh
+```
 
  - **To execute:**
 ```bash
@@ -76,11 +80,12 @@ g++ -std=c++11 -O2 Libraries/main_routines.cpp main.cpp -include Libraries/libra
 
 where you must replace `datafilename` by the name of your datafile and `n` by your number of variables.
 
- - **Script:**   
-All the previous commands are also written in the file `job.sh`, and can be also excuted using:
+or use the script `job_run.sh` by running in your Terminal:
 ```bash
-bash job.sh
+bash job_run.sh
 ```
+after replacing `datafilename` by the name of your datafile and `n` by your number of variables in the file `job_run.sh`.
+
 
 ## Examples
 
@@ -88,8 +93,11 @@ All the functions that can be called from `int main()` are declared at the begin
 
 In the input folder, we provided as an example the binary dataset `SCOTUS_n9_N895_Data.dat` analysed in the example, which is the dataset of votes of the US Supreme court analysed in Ref.[3] and  used as an example in Ref.[1]. For hands-on and simple tests of the program, please check the examples in the function `int main()` of the `main.cpp` file, and the usage of the program detailed in the function `tutorial()` of the main file (you can call this function by uncommenting the last lines in the function `main()`). 
 
+In the input folder, we also provided as an example the binary dataset `Big5-IPC1_VS3_N5e4.dat`. This is a binarized version of the first `50 000` samples of the Big 5 dataset [4], which has `50` variables. This dataset is the one run as an example by the job file `job_run.sh`. See paper [1] for comments on the results obtained by the analysis using MCMs.
 
 [3] E.D. Lee, C.P. Broedersz, W. Bialek, Statistical Mechanics of the US Supreme Court. [J Stat Phys 160, 275–301 (2015)](https://link.springer.com/article/10.1007/s10955-015-1253-6).
+
+[4] Big 5 dataset, add reference (reference can be found in [1])
 
 ## License
 
