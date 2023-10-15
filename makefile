@@ -41,8 +41,8 @@ DIR_LIB = Libraries
 OBJS := $(objects_MCM:%=$(DIR_MCM)/%)
 
 
-GreedySearch.out: $(OBJS) $(DIR_LIB)/main.o $(DIR_LIB)/main_routines.o $(DIR_LIB)/library.hpp.gch
-	g++ $(CXXFLAGS) $(DIR_LIB)/main.o $(DIR_LIB)/main_routines.o $(OBJS) -o GreedySearch.out
+MCM_Greedy.out: $(OBJS) $(DIR_LIB)/main.o $(DIR_LIB)/main_routines.o $(DIR_LIB)/library.hpp.gch
+	g++ $(CXXFLAGS) $(DIR_LIB)/main.o $(DIR_LIB)/main_routines.o $(OBJS) -o MCM_Greedy.out
 
 $(DIR_LIB)/main.o: main.cpp data.h $(DIR_LIB)/library.hpp.gch
 	g++ $(CXXFLAGS) -c main.cpp -include $(DIR_LIB)/library.hpp -o $(DIR_LIB)/main.o   # Compile main.cpp
@@ -53,8 +53,8 @@ $(DIR_LIB)/main_routines.o: $(DIR_LIB)/main_routines.cpp $(DIR_LIB)/library.hpp.
 $(DIR_LIB)/library.hpp.gch: $(DIR_LIB)/library.hpp
 	g++ $(CXXFLAGS) -c $(DIR_LIB)/library.hpp
 
-run: GreedySearch.out
-	./GreedySearch.out $(datafilename) $n
+run: MCM_Greedy.out
+	./MCM_Greedy.out $(datafilename) $n
 
 clean:
-	rm $(OBJS) $(DIR_LIB)/library.hpp.gch $(DIR_LIB)/main_routines.o $(DIR_LIB)/main.o GreedySearch.out
+	rm $(OBJS) $(DIR_LIB)/library.hpp.gch $(DIR_LIB)/main_routines.o $(DIR_LIB)/main.o MCM_Greedy.out
