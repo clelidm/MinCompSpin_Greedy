@@ -1,6 +1,8 @@
 #include <list>
 #include <map>
+#include <vector>
 #include <string>
+//#include <utility>
 
 
 /******************************************************************************/
@@ -31,7 +33,8 @@ void PrintTerm_Basis(std::list<__int128_t> Basis_li, unsigned int r);
 
 /*** READ DATA and STORE data in Nset:    *************************************/
 /******************************************************************************/
-std::map<__int128_t, unsigned int> read_datafile(unsigned int *N, std::string file, unsigned int r); // filename to specify in data.h
+std::vector<std::pair<__int128_t, unsigned int>> read_datafile(unsigned int *N, std::string file, unsigned int r); // filename to specify in data.h
+
 
 /*** DATA CHANGE of BASIS:    *************************************************/
 /******************************************************************************/
@@ -41,12 +44,14 @@ std::map<__int128_t, unsigned int> read_datafile(unsigned int *N, std::string fi
 //
 // *** Rem: the new basis can have a lower dimension then the original dataset; 
 // *** in which case the function will reduce the dataset to the subspace defined by the specified basis.
-std::map<__int128_t, unsigned int> build_Kset(std::map<__int128_t, unsigned int> Nset, std::list<__int128_t> Basis);
+std::vector<std::pair<__int128_t, unsigned int>> build_Kset(std::vector<std::pair<__int128_t, unsigned int>> Nset, std::list<__int128_t> Basis);
+
 
 /*** REDUCE Kset:    **********************************************************/
 /******************************************************************************/
 // *** Remove all the states that occur less than K times in the dataset:
-void Reduce_Kset(std::map<__int128_t, unsigned int> &Kset, unsigned int K, unsigned int *N);
+std::vector<std::pair<__int128_t, unsigned int>> Reduce_Kset(std::vector<std::pair<__int128_t, unsigned int>> Kset, unsigned int K, unsigned int *N_new);
+
 
 /******************************************************************************/
 /******************************************************************************/
@@ -62,27 +67,27 @@ void Reduce_Kset(std::map<__int128_t, unsigned int> &Kset, unsigned int K, unsig
 // *** Ai must be an integer encoded on at least n bits, where each 1 indicates the basis elements included in the part:
 // *** For ex. Ai = 01001 is encoded on n=5 basis elements, and element Op1 and Op4 belong to the part;
 // *** Rem: Basis elements are ordered from the right to the left.
-
-double LogL_SubCM(std::map<__int128_t, unsigned int > Kset, __int128_t Ai, unsigned int N);
-double LogE_SubCM(std::map<__int128_t, unsigned int > Kset, __int128_t Ai, unsigned int N);
+double LogL_ICC(std::vector<std::pair<__int128_t, unsigned int>> Kset, __int128_t Ai, unsigned int N);
+double LogE_ICC(std::vector<std::pair<__int128_t, unsigned int>> Kset, __int128_t Ai, unsigned int N);
 
 // *** Complexity of a SC model based on m basis Operators: m >= 1. Rem: C_geom(m=1) = log(pi):
-double GeomComplexity_SubCM(unsigned int m);                  // Geometric complexity
-double ParamComplexity_SubCM(unsigned int m, unsigned int N); // Complexity due to the number of parameters
+double GeomComplexity_ICC(unsigned int m);                  // Geometric complexity
+double ParamComplexity_ICC(unsigned int m, unsigned int N); // Complexity due to the number of parameters
 
 /******************   for a Complete Model (CM)   *****************************/
 /******************************************************************************/
-double LogL_CM(std::map<__int128_t, unsigned int > Kset, unsigned int N);
+double LogL_CM(std::vector<std::pair<__int128_t, unsigned int>> Kset, unsigned int N);
 
 /****************************    for a MCM     ********************************/
 /******************************************************************************/
-double LogL_MCM(std::map<__int128_t, unsigned int> Kset, std::map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r);
-double LogE_MCM(std::map<__int128_t, unsigned int> Kset, std::map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r);
-double LogL_MCM_infoICC(std::map<__int128_t, unsigned int> Kset, std::map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r);
-double LogE_MCM_infoICC(std::map<__int128_t, unsigned int> Kset, std::map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r);
+
 double Complexity_MCM(std::map<uint32_t, uint32_t> Partition, unsigned int N, double *C_param, double *C_geom);
 
+double LogL_MCM(std::vector<std::pair<__int128_t, unsigned int>> Kset, std::map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r);
+double LogE_MCM(std::vector<std::pair<__int128_t, unsigned int>> Kset, std::map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r);
 
+double LogL_MCM_infoICC(std::vector<std::pair<__int128_t, unsigned int>> Kset, std::map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r);
+double LogE_MCM_infoICC(std::vector<std::pair<__int128_t, unsigned int>> Kset, std::map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r);
 
 
 /******************************************************************************/
@@ -95,29 +100,13 @@ double Complexity_MCM(std::map<uint32_t, uint32_t> Partition, unsigned int N, do
 // *** Read MCM from a file:
 //map<unsigned int, __int128_t> read_MCM_fromfile(string Input_MCM_file = communityfile);
 
-// *** Define an MCM from a file; Each part must be encoded in a binary number over n spins:
-//map<uint32_t, uint32_t> Read_MCMParts_BinaryRepresentation(string MCM_binary_filename);
-
 // *** Check that the provided model corresponds to a partition of the basis variables (i.e. properly defines an MCM):
 std::pair<bool, unsigned int> check_partition(std::map<unsigned int, __int128_t> Partition);  // the second element is the rank of the partition (dimension of the MCM)
 
 // *** Print information about the MCM specified in `MCM_Partition`:
-//void PrintTerminal_MCM_Info(map<__int128_t, unsigned int> Kset, unsigned int N, map<unsigned int, __int128_t> MCM_Partition);
 void Print_MCM_Partition(std::map<unsigned int, __int128_t> partition, unsigned int r);
 
-// *** Create successive independent models defined on the new basis, and print the corresponding information:
-//void PrintInfo_All_Indep_Models(map<uint32_t, unsigned int> Kset, unsigned int N);
-
-// *** Create successive Sub-complete models defined on the new basis, and print the corresponding information:
-//void PrintInfo_All_SubComplete_Models(map<uint32_t, unsigned int> Kset, unsigned int N);
-
-
-/******************************************************************************/
-/******************************************************************************/
-/***************************   Find Best MCM   ********************************/
-/******************************************************************************/
-/******************************************************************************/
-//map<unsigned int, __int128_t> MCM_GreedySearch(map<__int128_t, unsigned int> Kset, unsigned int N, unsigned int r = n);
+void PrintFile_MCM_Info(std::list<__int128_t> Basis, std::map<unsigned int, __int128_t> MCM_Partition, unsigned int r, std::string filename = "Result");
 
 
 /******************************************************************************/
@@ -126,15 +115,18 @@ void Print_MCM_Partition(std::map<unsigned int, __int128_t> partition, unsigned 
 /******************************************************************************/
 /******************************************************************************/
 
-// *** Statistical properties
-double Entropy(std::map <__int128_t, unsigned int> Kset, unsigned int N);
-// double KL_divergence(map<__int128_t, unsigned int> Kset, map<unsigned int, __int128_t> Partition, unsigned int N);
-double JS_divergence(std::map<__int128_t, double> Prob1, std::map<__int128_t, double> Prob2, unsigned int N);
+// *** Entropy of a dataset:
+double Entropy(std::vector<std::pair<__int128_t, unsigned int>> Kset, unsigned int N);
 
+// *** Distance between two probability distributions:
+// double KL_divergence(map<__int128_t, unsigned int> Kset, map<unsigned int, __int128_t> Partition, unsigned int N);
+// double JS_divergence(std::map<__int128_t, double> Prob1, std::map<__int128_t, double> Prob2, unsigned int N);
+
+// *** Compare two partitions:
 double Var_of_Inf(std::map<unsigned int, __int128_t> Partition1, std::map<unsigned int, __int128_t> Partition2, unsigned int r);
 double Norm_Mut_info(std::map<unsigned int, __int128_t> Partition1, std::map<unsigned int, __int128_t> Partition2, unsigned int r);
 
-// Check if the MCM in "fp1" is a sub-partition of the MCM in "fp2":
+// *** Check if the MCM in "fp1" is a sub-partition of the MCM in "fp2":
 bool is_subset(std::map<unsigned int, __int128_t> fp1, std::map<unsigned int, __int128_t> fp2);
 
 
@@ -144,10 +136,9 @@ bool is_subset(std::map<unsigned int, __int128_t> fp1, std::map<unsigned int, __
 /******************   DATA VS MODEL STATE PROBABILITIES  **********************/
 /******************************************************************************/
 /******************************************************************************/
-void PrintFile_MCM_Info(std::list<__int128_t> Basis, std::map<unsigned int, __int128_t> MCM_Partition, unsigned int r, std::string filename = "Result");
 
-void PrintFile_StateProbabilites_NewBasis(std::map<__int128_t, unsigned int > Kset, std::map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, std::string filename = "Result");
-void PrintFile_StateProbabilites_OriginalBasis(std::map<__int128_t, unsigned int > Nset, std::list<__int128_t> Basis, std::map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, std::string filename = "Result");
+void PrintFile_StateProbabilites_NewBasis(std::vector<std::pair<__int128_t, unsigned int>> Kset, std::map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, std::string filename = "Result");
+void PrintFile_StateProbabilites_OriginalBasis(std::vector<std::pair<__int128_t, unsigned int>> Nset, std::list<__int128_t> Basis, std::map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, std::string filename = "Result");
 
 // *** Create distributions of empirical data and MCMs:
 // std::map<__int128_t, double> emp_dist(std::map<__int128_t, unsigned int> Kset, unsigned int N, unsigned int r);
