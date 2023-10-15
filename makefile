@@ -42,16 +42,16 @@ OBJS := $(objects_MCM:%=$(DIR_MCM)/%)
 
 
 GreedySearch.out: $(OBJS) $(DIR_LIB)/main.o $(DIR_LIB)/main_routines.o $(DIR_LIB)/library.hpp.gch
-	g++ -std=c++11 $(DIR_LIB)/main.o $(DIR_LIB)/main_routines.o $(OBJS) -o GreedySearch.out
+	g++ $(CXXFLAGS) $(DIR_LIB)/main.o $(DIR_LIB)/main_routines.o $(OBJS) -o GreedySearch.out
 
 $(DIR_LIB)/main.o: main.cpp data.h $(DIR_LIB)/library.hpp.gch
-	g++ -std=c++11 -c main.cpp -include $(DIR_LIB)/library.hpp -o $(DIR_LIB)/main.o   # Compile main.cpp
+	g++ $(CXXFLAGS) -c main.cpp -include $(DIR_LIB)/library.hpp -o $(DIR_LIB)/main.o   # Compile main.cpp
 
 $(DIR_LIB)/main_routines.o: $(DIR_LIB)/main_routines.cpp $(DIR_LIB)/library.hpp.gch
-	g++ -std=c++11 -c $(DIR_LIB)/main_routines.cpp -include $(DIR_LIB)/library.hpp -o $(DIR_LIB)/main_routines.o
+	g++ $(CXXFLAGS) -c $(DIR_LIB)/main_routines.cpp -include $(DIR_LIB)/library.hpp -o $(DIR_LIB)/main_routines.o
 
 $(DIR_LIB)/library.hpp.gch: $(DIR_LIB)/library.hpp
-	g++ -std=c++11 -c $(DIR_LIB)/library.hpp
+	g++ $(CXXFLAGS) -c $(DIR_LIB)/library.hpp
 
 run: GreedySearch.out
 	./GreedySearch.out $(datafilename) $n

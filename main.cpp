@@ -1,5 +1,6 @@
 // To compile: make
-// To run: make run
+// To run: or: make run
+//         or: ./GreedySearch.out data_filename n
 //
 #define _USE_MATH_DEFINES 
 #include <iostream>
