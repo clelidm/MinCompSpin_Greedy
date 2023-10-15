@@ -37,9 +37,7 @@ The code performs an hierarchical merging procedure to find an optimal MCM in th
 
 The code uses the C++11 version of C++.
 
-## Usage
-
-### On Linux or macOS:
+## Usage with Makefile:
 
 Open the makefile and replace the values of these two following variables at the very top of the file (an example is provided):
  - `datafile`: path to your own datafile;
@@ -56,13 +54,31 @@ You can also run the code by using:
 
 where you must replace `datafilename` by the name of your datafile and `n` by your number of variables.
 
-### On any operating system:
+## Usage without Makefile:
+
+**To compile:** Type in 
+> cd Libraries/MCM/
+> g++ -std=c++11 -O2 -c *.cpp
+> cd ../../
+> g++ -std=c++11 -O2 -c Libraries/library.hpp
+> g++ -std=c++11 -O2 Libraries/main_routines.cpp main.cpp -include Libraries/library.hpp Libraries/MCM/*.o -o GreedySearch.out
+
+**To execute:**
+>   ./GreedySearch.out  datafilename  n
+
+where you must replace `datafilename` by the name of your datafile and `n` by your number of variables.
+
+**Script:** 
+All the following commands are also written in the file `job.sh`, and can be also excuted using:
+> bash job.sh
 
 
 ## Examples
 
-Most of the useful functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file and described in the section "General information" above. 
-For hands-on and simple tests of the program, please check the examples in the function `int main()` of the `main.cpp` file. In the input folder, we provided the binary dataset `SCOTUS_n9_N895_Data.dat` analysed in the example, which is the dataset of votes of the US Supreme court analysed in Ref.[3] and from used as an example in Ref.[1].
+All the functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file or in the file `library.hpp`. The most useful functions are described in the section "General information" above. 
+
+In the input folder, we provided as an example the binary dataset `SCOTUS_n9_N895_Data.dat` analysed in the example, which is the dataset of votes of the US Supreme court analysed in Ref.[3] and  used as an example in Ref.[1]. For hands-on and simple tests of the program, please check the examples in the function `int main()` of the `main.cpp` file, and the usage of the program detailed in the function `tutorial()` of the main file (you can call this function by uncommenting the last lines in the function `main()`). 
+
 
 [3] E.D. Lee, C.P. Broedersz, W. Bialek, Statistical Mechanics of the US Supreme Court. [J Stat Phys 160, 275–301 (2015)](https://link.springer.com/article/10.1007/s10955-015-1253-6).
 
