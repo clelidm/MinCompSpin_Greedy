@@ -17,13 +17,13 @@ const __int128_t one128 = 1;
 /********* of a Sub-Complete Model based on m basis operators     *************/
 /******************************************************************************/
 // for 1 <= m <= n . Rem C(m=1) = log(pi)
-double GeomComplexity_SubCM(unsigned int m)     // Geometric complexity
+double GeomComplexity_ICC(unsigned int m)     // Geometric complexity
 {
   double pow = (double) ( one128 << (m-1) );
   return (log(M_PI) * pow - lgamma(pow)  );   // lgamma(x) = log(gamma(x))
 }
 
-double ParamComplexity_SubCM(unsigned int m, unsigned int N)  // Parameter Complexity
+double ParamComplexity_ICC(unsigned int m, unsigned int N)  // Parameter Complexity
 {
   uint32_t K = (one128 << m) - 1;  // number of interactions
   return K * log(((double) N)/2./M_PI) / 2.;
@@ -42,8 +42,8 @@ double Complexity_MCM(std::map<unsigned int, __int128_t> Partition, unsigned int
   for (std::map<unsigned int, __int128_t>::iterator Part = Partition.begin(); Part != Partition.end(); Part++)
   {
     m_i = Bitset_count((*Part).second);
-    (*C_param) += ParamComplexity_SubCM(m_i, N);
-    (*C_geom) += GeomComplexity_SubCM(m_i);
+    (*C_param) += ParamComplexity_ICC(m_i, N);
+    (*C_geom) += GeomComplexity_ICC(m_i);
   }  
 
   return (*C_param) + (*C_geom);

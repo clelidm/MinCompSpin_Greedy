@@ -44,16 +44,18 @@ map<unsigned int, __int128_t> read_MCM_fromfile(string Input_MCM_file, unsigned 
 }
 
 /******************************************************************************/
-/*****************************    PRINT MCM   *********************************/
+/************************    PRINT MCM in TERMINAL  ***************************/
 /******************************************************************************/
 // r = number of variables in the dataset
 void Print_MCM_Partition(map<unsigned int, __int128_t> partition, unsigned int r)
 {
     map<unsigned int, __int128_t>::iterator it;
+    int i = 1;
 
     for (it = partition.begin(); it != partition.end(); it++)
     {
-        cout << (*it).first << "\t " << int_to_bstring((*it).second, r) << endl;
+        cout << "ICC " << i << ": \t " << int_to_bstring((*it).second, r) << endl;
+        i++;
     }
     cout << endl;
 }

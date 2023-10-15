@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <map>
+#include <vector>
 #include <numeric>  // for accumulate()
 
 using namespace std;
@@ -35,8 +36,108 @@ bool is_subset(map<unsigned int, __int128_t> fp1, map<unsigned int, __int128_t> 
     return flag;
 }
 
+/******************************************************************************/
+/************************    COMPARE TWO PARTITIONS  **************************/
+/******************************************************************************/
 
-double Entropy(map<__int128_t, unsigned int> Kset, unsigned int N)
+double Norm_Mut_info(map<unsigned int, __int128_t> Partition1, map<unsigned int, __int128_t> Partition2, unsigned int r)
+{
+    double I, H, p1, p2, p12;
+    I = 0;  H = 0;
+    int flag = 0;
+
+    map<unsigned int, __int128_t>::iterator com1, com2;
+    for (com1 = Partition1.begin(); com1 != Partition1.end(); com1++)
+    {
+        /*
+        bitset<n> hi1{ static_cast<unsigned long long>((*com1).second >> 64) },
+            lo1{ static_cast<unsigned long long>((*com1).second) },
+            bits1{ (hi1 << 64) | lo1 };
+        p1 = (double)bits1.count() / (double)(n);
+        */
+        p1 = (double)(Bitset_count((*com1).second)) / (double)(r);
+        for (com2 = Partition2.begin(); com2 != Partition2.end(); com2++)
+        {
+            /*
+            bitset<n> hi2{ static_cast<unsigned long long>((*com2).second >> 64) },
+                lo2{ static_cast<unsigned long long>((*com2).second) },
+                bits2{ (hi2 << 64) | lo2 };
+
+            bitset<n> hi12{ static_cast<unsigned long long>(((*com1).second & (*com2).second) >> 64) },
+                lo12{ static_cast<unsigned long long>((*com1).second & (*com2).second) },
+                bits12{ (hi12 << 64) | lo12 };
+
+            p2 = (double)bits2.count() / (double)(n);
+            p12 = (double)bits12.count() / (double)(n);
+            */
+            p2 = (double)(Bitset_count((*com2).second)) / (double)(r);
+            p12 = (double)(Bitset_count( (*com1).second & (*com2).second )) / (double)(r);            
+
+            if (p12 != 0)
+            {
+                I += p12 * log(p12 / (p1 * p2));
+            }
+            if (flag < Partition2.size()) { H += p2 * log(p2); flag++; }
+        }
+        H += p1 * log(p1);
+    }
+    if (H == 0) { return 1; }
+    else { return -2 * I / H; }
+}
+
+double Var_of_Inf(map<unsigned int, __int128_t> Partition1, map<unsigned int, __int128_t> Partition2, unsigned int r)
+{
+    // Variation of information calculates the distance between two partitions. The regular variation of information
+    // is equal to the joint entropy minus the mutual information. However, the normalized version (divide by the joint entropy)
+    // is preferred over the regular as this is a true metric, i.e., it satisfies the triangle inequality.
+    double I, H, p1, p2, p12;
+    I = 0;
+    H = 0;
+    map<unsigned int, __int128_t>::iterator com1, com2;
+    for (com1 = Partition1.begin(); com1 != Partition1.end(); com1++)
+    {
+        /*bitset<n> hi1{ static_cast<unsigned long long>((*com1).second >> 64) },
+            lo1{ static_cast<unsigned long long>((*com1).second) },
+            bits1{ (hi1 << 64) | lo1 };
+        p1 = (double)(bits1.count()) / (double)(n);
+        */
+        p1 = (double)(Bitset_count((*com1).second)) / (double)(r);
+
+        for (com2 = Partition2.begin(); com2 != Partition2.end(); com2++)
+        {
+            /*
+            bitset<n> hi2{ static_cast<unsigned long long>((*com2).second >> 64) },
+                lo2{ static_cast<unsigned long long>((*com2).second) },
+                bits2{ (hi2 << 64) | lo2 };
+
+            bitset<n> hi12{ static_cast<unsigned long long>(((*com1).second & (*com2).second) >> 64) },
+                lo12{ static_cast<unsigned long long>((*com1).second & (*com2).second) },
+                bits12{ (hi12 << 64) | lo12 };
+
+            p2 = (double)(bits2.count()) / (double)(n);
+            p12 = (double)(bits12.count()) / (double)(n);
+            */
+
+            p2 = (double)(Bitset_count((*com2).second)) / (double)(r);
+            p12 = (double)(Bitset_count( (*com1).second & (*com2).second )) / (double)(r);   
+
+            if (p12 != 0)
+            {
+                I += p12 * log(p12 / (p1 * p2));
+                H += p12 * log(p12);
+            }
+        }
+    }
+    if (H == 0) { return 0; }
+    else { return 1 + I/H; }
+}
+
+
+/******************************************************************************/
+/*******************************    ENTROPY  **********************************/
+/******************************************************************************/
+
+double Entropy(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N)
 {
     // Entropy of emperical data
     double H = 0;
@@ -51,6 +152,11 @@ double Entropy(map<__int128_t, unsigned int> Kset, unsigned int N)
     return H;
 }
 
+
+/******************************************************************************/
+/************************    STATISTICAL DISTANCES  ***************************/
+/******************************************************************************/
+/*
 map<__int128_t, double> cartesianProd(map<__int128_t, double> Map1, map<__int128_t, double> Map2, unsigned int N)
 {
     map<__int128_t, double> Prod;
@@ -220,95 +326,5 @@ double JS_divergence(map<__int128_t, double> Prob1, map<__int128_t, double> Prob
 
     return jsd / 2.0;
 }
+*/
 
-double Norm_Mut_info(map<unsigned int, __int128_t> Partition1, map<unsigned int, __int128_t> Partition2, unsigned int r)
-{
-    double I, H, p1, p2, p12;
-    I = 0;  H = 0;
-    int flag = 0;
-
-    map<unsigned int, __int128_t>::iterator com1, com2;
-    for (com1 = Partition1.begin(); com1 != Partition1.end(); com1++)
-    {
-        /*
-        bitset<n> hi1{ static_cast<unsigned long long>((*com1).second >> 64) },
-            lo1{ static_cast<unsigned long long>((*com1).second) },
-            bits1{ (hi1 << 64) | lo1 };
-        p1 = (double)bits1.count() / (double)(n);
-        */
-        p1 = (double)(Bitset_count((*com1).second)) / (double)(r);
-        for (com2 = Partition2.begin(); com2 != Partition2.end(); com2++)
-        {
-            /*
-            bitset<n> hi2{ static_cast<unsigned long long>((*com2).second >> 64) },
-                lo2{ static_cast<unsigned long long>((*com2).second) },
-                bits2{ (hi2 << 64) | lo2 };
-
-            bitset<n> hi12{ static_cast<unsigned long long>(((*com1).second & (*com2).second) >> 64) },
-                lo12{ static_cast<unsigned long long>((*com1).second & (*com2).second) },
-                bits12{ (hi12 << 64) | lo12 };
-
-            p2 = (double)bits2.count() / (double)(n);
-            p12 = (double)bits12.count() / (double)(n);
-            */
-            p2 = (double)(Bitset_count((*com2).second)) / (double)(r);
-            p12 = (double)(Bitset_count( (*com1).second & (*com2).second )) / (double)(r);            
-
-            if (p12 != 0)
-            {
-                I += p12 * log(p12 / (p1 * p2));
-            }
-            if (flag < Partition2.size()) { H += p2 * log(p2); flag++; }
-        }
-        H += p1 * log(p1);
-    }
-    if (H == 0) { return 1; }
-    else { return -2 * I / H; }
-}
-
-double Var_of_Inf(map<unsigned int, __int128_t> Partition1, map<unsigned int, __int128_t> Partition2, unsigned int r)
-{
-    // Variation of information calculates the distance between two partitions. The regular variation of information
-    // is equal to the joint entropy minus the mutual information. However, the normalized version (divide by the joint entropy)
-    // is preferred over the regular as this is a true metric, i.e., it satisfies the triangle inequality.
-    double I, H, p1, p2, p12;
-    I = 0;
-    H = 0;
-    map<unsigned int, __int128_t>::iterator com1, com2;
-    for (com1 = Partition1.begin(); com1 != Partition1.end(); com1++)
-    {
-        /*bitset<n> hi1{ static_cast<unsigned long long>((*com1).second >> 64) },
-            lo1{ static_cast<unsigned long long>((*com1).second) },
-            bits1{ (hi1 << 64) | lo1 };
-        p1 = (double)(bits1.count()) / (double)(n);
-        */
-        p1 = (double)(Bitset_count((*com1).second)) / (double)(r);
-
-        for (com2 = Partition2.begin(); com2 != Partition2.end(); com2++)
-        {
-            /*
-            bitset<n> hi2{ static_cast<unsigned long long>((*com2).second >> 64) },
-                lo2{ static_cast<unsigned long long>((*com2).second) },
-                bits2{ (hi2 << 64) | lo2 };
-
-            bitset<n> hi12{ static_cast<unsigned long long>(((*com1).second & (*com2).second) >> 64) },
-                lo12{ static_cast<unsigned long long>((*com1).second & (*com2).second) },
-                bits12{ (hi12 << 64) | lo12 };
-
-            p2 = (double)(bits2.count()) / (double)(n);
-            p12 = (double)(bits12.count()) / (double)(n);
-            */
-
-            p2 = (double)(Bitset_count((*com2).second)) / (double)(r);
-            p12 = (double)(Bitset_count( (*com1).second & (*com2).second )) / (double)(r);   
-
-            if (p12 != 0)
-            {
-                I += p12 * log(p12 / (p1 * p2));
-                H += p12 * log(p12);
-            }
-        }
-    }
-    if (H == 0) { return 0; }
-    else { return 1 + I/H; }
-}
