@@ -52,7 +52,7 @@ Then you can use the following commands from your terminal, from the main folder
  - **To clean:** `make clean` (to use only once you're done using the code)
 
 You can also run the code by using:
->   ./a.out  datafilename  n 
+>   ./GreedySearch.out  datafilename  n 
 
 where you must replace `datafilename` by the name of your datafile and `n` by your number of variables.
 
