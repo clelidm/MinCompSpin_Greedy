@@ -51,6 +51,11 @@ Then you can use the following commands from your terminal:
  - **To run:** `make run`
  - **To clean:** `make clean` (to use only once you're done using the code)
 
+You can also run the code by using:
+>   ./a.out  datafilename  n 
+
+where you must replace `datafilename` by the name of your datafile and `n` by your number of variables.
+
 ### On any operating system:
 
 
@@ -59,7 +64,7 @@ Then you can use the following commands from your terminal:
 Most of the useful functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file and described in the section "General information" above. 
 For hands-on and simple tests of the program, please check the examples in the function `int main()` of the `main.cpp` file. In the input folder, we provided the binary dataset `SCOTUS_n9_N895_Data.dat` analysed in the example, which is the dataset of votes of the US Supreme court analysed in Ref.[3] and from used as an example in Ref.[1].
 
-[3] [Statistical Mechanics of the US Supreme Court](https://link.springer.com/article/10.1007/s10955-015-1253-6)
+[3] E.D. Lee, C.P. Broedersz, W. Bialek, Statistical Mechanics of the US Supreme Court. [J Stat Phys 160, 275–301 (2015)](https://link.springer.com/article/10.1007/s10955-015-1253-6).
 
 ## License
 
