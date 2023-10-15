@@ -39,39 +39,48 @@ The code uses the C++11 version of C++.
 
 ## Usage with Makefile:
 
-Open the makefile and replace the values of these two following variables at the very top of the file (an example is provided):
- - `datafile`: path to your own datafile;
- - `n`: number of variables in your file; maximum possible value `n = 127`.
-
-Then you can use the following commands from your terminal, from the main folder:
+Run the following commands in your terminal, from the main folder (folder containing the `makefile` document):
 
  - **To compile:** `make`
- - **To run:** `make run`  (will use the datafile and variables that are specified in the makefile)
- - **To clean:** `make clean` (to use only once you're done using the code)
 
-You can also run the code by using:
->   ./GreedySearch.out  datafilename  n 
+ - **To Execute:** `make run` . This will use the datafile and variables that are specified in the makefile.
+
+To change datafile: open the makefile and replace the values of the two following variables at the very top of the file (an example is provided):
+>  - `datafile`: path to your own datafile;
+>  - `n`: number of variables in your file; maximum possible value `n = 128`.
+
+You can also execute the code by running in your terminal the command (from the main folder):
+```bash
+./GreedySearch.out  datafilename  n
+```
 
 where you must replace `datafilename` by the name of your datafile and `n` by your number of variables.
+
+ - **To clean:** `make clean` (to use only once you're done using the code)
 
 ## Usage without Makefile:
 
-**To compile:** Type in 
-> cd Libraries/MCM/
-> g++ -std=c++11 -O2 -c *.cpp
-> cd ../../
-> g++ -std=c++11 -O2 -c Libraries/library.hpp
-> g++ -std=c++11 -O2 Libraries/main_routines.cpp main.cpp -include Libraries/library.hpp Libraries/MCM/*.o -o GreedySearch.out
+ - **To compile:**  Type in your Terminal from the main folder:
+```bash
+cd Libraries/MCM/
+g++ -std=c++11 -O2 -c *.cpp
+cd ../../
+g++ -std=c++11 -O2 -c Libraries/library.hpp
+g++ -std=c++11 -O2 Libraries/main_routines.cpp main.cpp -include Libraries/library.hpp Libraries/MCM/*.o -o GreedySearch.out
+```
 
-**To execute:**
->   ./GreedySearch.out  datafilename  n
+ - **To execute:**
+```bash
+./GreedySearch.out  datafilename  n
+```
 
 where you must replace `datafilename` by the name of your datafile and `n` by your number of variables.
 
-**Script:** 
-All the following commands are also written in the file `job.sh`, and can be also excuted using:
-> bash job.sh
-
+ - **Script:**   
+All the previous commands are also written in the file `job.sh`, and can be also excuted using:
+```bash
+bash job.sh
+```
 
 ## Examples
 
@@ -93,7 +102,9 @@ This code is an open source project under the GNU GPLv3.
 To change the basis of the data to a chosen basis and apply the MCM search in this new basis:
  1. Specify the basis elements in a list of integers `list<__int128_t> basis_li = ` using one of the available function.
  2. Transform the dataset `Nset` into the new basis (transformed data is in `Kset`) using the function `build_Kset`. This defines the new transformed data, stored in `Kset`:
-    > `vector<pair<__int128_t, unsigned int>> Kset = build_Kset(Nset, Basis_li);`
+```c++
+vector<pair<__int128_t, unsigned int>> Kset = build_Kset(Nset, Basis_li);
+```
 
 **!! Important!!**
 when performing this basis transformation, basis operators are placed from right to left in the new basis, 
