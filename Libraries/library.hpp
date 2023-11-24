@@ -81,7 +81,7 @@ double LogL_CM(std::vector<std::pair<__int128_t, unsigned int>> Kset, unsigned i
 /****************************    for a MCM     ********************************/
 /******************************************************************************/
 
-double Complexity_MCM(std::map<uint32_t, uint32_t> Partition, unsigned int N, double *C_param, double *C_geom);
+double Complexity_MCM(std::map<unsigned int, __int128_t> Partition, unsigned int N, double *C_param, double *C_geom);
 
 double LogL_MCM(std::vector<std::pair<__int128_t, unsigned int>> Kset, std::map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r);
 double LogE_MCM(std::vector<std::pair<__int128_t, unsigned int>> Kset, std::map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r);
