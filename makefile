@@ -24,7 +24,7 @@ basisfilename := MNIST11.sorted_BestBasis_k4_Binary.dat  #Big5PT.sorted_BestBasi
 
 CC = g++ 	# Flag for implicit rules: used for linker
 CXX = g++ 	# Flag for implicit rules: compilation of c++ files
-CXXFLAGS = -std=c++11 -Wall   #Extra flags to give to the C++ compiler
+CXXFLAGS = -std=c++11 -O3   #Extra flags to give to the C++ compiler
 
 # !!!! Implicit compilation of the all the objects !!!!
 # Compilation -- Implicite rule:   
