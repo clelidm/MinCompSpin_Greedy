@@ -41,7 +41,6 @@ DIR_LIB = includes
 # String substitution: add the directory name: # As an example, hello.o turns into ./MCM/hello.o
 OBJS := $(objects_MCM:%=$(DIR_MCM)/%)
 
-
 MCM_Greedy.out: $(OBJS) $(DIR_LIB)/main.o $(DIR_LIB)/main_routines.o $(DIR_LIB)/library.hpp.gch
 	g++ $(CXXFLAGS) $(DIR_LIB)/main.o $(DIR_LIB)/main_routines.o $(OBJS) -o MCM_Greedy.out
 
@@ -54,11 +53,15 @@ $(DIR_LIB)/main_routines.o: $(DIR_LIB)/main_routines.cpp $(DIR_LIB)/library.hpp.
 $(DIR_LIB)/library.hpp.gch: $(DIR_LIB)/library.hpp
 	g++ $(CXXFLAGS) -c $(DIR_LIB)/library.hpp
 
-run: MCM_Greedy.out
+
+run: #MCM_Greedy.out
 	time ./MCM_Greedy.out $(datafilename) $n 
 
-run-newBasis: MCM_Greedy.out
+run-newBasis: #MCM_Greedy.out
 	time ./MCM_Greedy.out $(datafilename) $n -b $(basisfilename)
 
 clean:
-	rm -f $(OBJS) $(DIR_LIB)/library.hpp.gch $(DIR_LIB)/main_routines.o $(DIR_LIB)/main.o MCM_Greedy.out
+	rm -f $(OBJS) $(DIR_LIB)/library.hpp.gch $(DIR_LIB)/main_routines.o $(DIR_LIB)/main.o
+
+delete:
+	rm MCM_Greedy.out
