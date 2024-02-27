@@ -40,20 +40,32 @@ The code uses the C++11 version of C++.
 ## Usage without Makefile:
 
  - **To compile:**  Type in your Terminal from the main folder:
-```bash
-g++ -std=c++11 -O3 includes/main_routines.cpp main.cpp src/MCM/*.cpp -include includes/library.hpp -o MCM_Greedy.out
-```
-or use the bash script `job_compile.sh` by running in your Terminal:
-```bash
-bash job_compile.sh
-```
+   ```bash
+   g++ -std=c++11 -O3 includes/main_routines.cpp main.cpp src/MCM/*.cpp -include includes/library.hpp -o MCM_Greedy.out
+   ```
+   or use the bash script `job_compile.sh` by running in your Terminal:
+   ```bash
+   bash job_compile.sh
+   ```
 
- - **To execute:** The data and basis files be placed in the `INPUT` folder.
-```bash
-./GreedySearch.out  datafilename  n
-```
-In the following commands, replace `[datafilename]` by the name of your datafile, `[n]` by the number of variables, and `[basisfilename]` by the name of the file containing a chosen new basis (optional).
-   
+ - **To execute:** The data and basis files be placed in the `INPUT` folder. In the following commands, replace `[datafilename]` by the name of your datafile, `[n]` by the number of variables, and `[basisfilename]` by the name of the file containing a chosen new basis (optional).
+
+   **Greedy Search in the original basis:** This will run the greedy search in the basis in which the dataset is provided:
+   ```bash
+   ./GreedySearch.out  [datafilename] [n]
+   ```
+
+   **Greedy Search in a chosen basis:** You can run the greedy search in another chosen basis by using the option `-b` followed by the name of the basis file `[basisfilename]`:
+   ```bash
+   ./GreedySearch.out  [datafilename] [n] -b [basisfilename]
+   ```
+
+   **All options:** You can also use the following options: `--full` and `--NoCheckPoint`
+    - **Full merging:** the option `--full` will run the greedy merging until everything is merged into a single complete ICC, and print the evolution of the LogE along the merging path. The best MCM along the greedy path is saved and returned at the end. By default (i.e., without this option), the greedy algorithm will stop as soon as any additional merging starts decreasing the LogE.
+    - **Remove checkpoints:** By default, the program prints out the intermediate values of LogE along the Greedy path. Using the option `--NoCheckPoint` will stop printing this information. This may save time, when printing is not needed, for datasets with a large number of variables and a long greedy path.
+    - The options `-b`, `--full` and `--NoCheckPoint` can be combined in any order. Note that options `--full` and `--NoCheckPoint` are incompatible: `--full` will always print the checkpoints and therefore take over `--NoCheckPoint`.
+
+**Summary table:**
    | Run  | Command | Comment |
    | --- | --- | --- |
    | Help | `./MCM_Greedy.out -h` | |
