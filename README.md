@@ -76,6 +76,7 @@ The code uses the C++11 version of C++.
 
  - **To execute using a bash script:**
    Open the script file `job_run.sh` and replace `datafilename` by the name of your datafile, `n` by your number of variables in the file `job_run.sh`, and (if needed) `basisfilename` by the name of your basis file. Select/comment the command line that applies to your case.
+   
    Use the script `job_run.sh` by running in your Terminal:
    ```bash
    bash job_run.sh
