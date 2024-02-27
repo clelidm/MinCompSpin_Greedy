@@ -122,7 +122,7 @@ map<__int128_t, Proba> P_sig(vector<pair<__int128_t, unsigned int>> Kset, map<un
 
 /*************      Print the model probabilities     ***************/
 
-void PrintFile_StateProbabilites_NewBasis(vector<pair<__int128_t, unsigned int>> Kset, map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, string filename = "Result")
+void PrintFile_StateProbabilites_NewBasis(vector<pair<__int128_t, unsigned int>> Kset, map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, string filename) //, string filename = "Result"
 {
   // Probabilities in the sigma basis:
   map<__int128_t, Proba> P_all = P_sig(Kset, MCM_Partition, N, r);
@@ -215,7 +215,7 @@ map<__int128_t, Proba> P_s(vector<pair<__int128_t, unsigned int>> Nset, list<__i
 /*****************      PRINT FILE: INFO about an MCM     *********************/
 /******************************************************************************/
 
-void PrintFile_MCM_Info(list<__int128_t> Basis, map<unsigned int, __int128_t> MCM_Partition, unsigned int r, string filename = "Result")
+void PrintFile_MCM_Info(list<__int128_t> Basis, map<unsigned int, __int128_t> MCM_Partition, unsigned int r, string filename) //, string filename = "Result")
 {
   //***** PRINT BASIS: 
   //fstream file_MCM_info((OUTPUT_directory + filename + "_MCM_info.dat"), ios::out);
@@ -248,7 +248,7 @@ void PrintFile_MCM_Info(list<__int128_t> Basis, map<unsigned int, __int128_t> MC
 /******************************************************************************/
 /*************      Print the model probabilities in a file     ***************/
 /******************************************************************************/
-void PrintFile_StateProbabilites_OriginalBasis(vector<pair<__int128_t, unsigned int>> Nset, list<__int128_t> Basis, map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, string filename = "Result")
+void PrintFile_StateProbabilites_OriginalBasis(vector<pair<__int128_t, unsigned int>> Nset, list<__int128_t> Basis, map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, string filename) //, string filename = "Result")
 {
   // Compute all the state probabilities:
   map<__int128_t, Proba> P_all = P_s(Nset, Basis, MCM_Partition, N, r);
