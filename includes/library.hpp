@@ -106,6 +106,7 @@ std::pair<bool, unsigned int> check_partition(std::map<unsigned int, __int128_t>
 // *** Print information about the MCM specified in `MCM_Partition`:
 void Print_MCM_Partition(std::map<unsigned int, __int128_t> partition, unsigned int r);
 
+// *** in file "P_s.cpp"
 void PrintFile_MCM_Info(std::list<__int128_t> Basis, std::map<unsigned int, __int128_t> MCM_Partition, unsigned int r, std::string filename = "Result");
 
 
