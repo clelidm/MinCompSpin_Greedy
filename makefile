@@ -36,7 +36,7 @@ DIR_MCM = Libraries/MCM
 objects_MCM = tools.o LogE_LogL.o Complexity.o MCM_info.o Basis_Choice.o P_s.o Operations_OnData.o info_quant.o BestMCM_GreedySearch.o User_Interface.o
 
 ### Libraries:
-DIR_LIB = Libraries
+DIR_LIB = includes
 
 # String substitution: add the directory name: # As an example, hello.o turns into ./MCM/hello.o
 OBJS := $(objects_MCM:%=$(DIR_MCM)/%)
@@ -45,7 +45,7 @@ OBJS := $(objects_MCM:%=$(DIR_MCM)/%)
 MCM_Greedy.out: $(OBJS) $(DIR_LIB)/main.o $(DIR_LIB)/main_routines.o $(DIR_LIB)/library.hpp.gch
 	g++ $(CXXFLAGS) $(DIR_LIB)/main.o $(DIR_LIB)/main_routines.o $(OBJS) -o MCM_Greedy.out
 
-$(DIR_LIB)/main.o: main.cpp data.h $(DIR_LIB)/library.hpp.gch
+$(DIR_LIB)/main.o: main.cpp $(DIR_LIB)/default_data.h $(DIR_LIB)/library.hpp.gch
 	g++ $(CXXFLAGS) -c main.cpp -include $(DIR_LIB)/library.hpp -o $(DIR_LIB)/main.o   # Compile main.cpp
 
 $(DIR_LIB)/main_routines.o: $(DIR_LIB)/main_routines.cpp $(DIR_LIB)/library.hpp.gch
