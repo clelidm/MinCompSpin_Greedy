@@ -62,11 +62,7 @@ where you must replace `datafilename` by the name of your datafile and `n` by yo
 
  - **To compile:**  Type in your Terminal from the main folder:
 ```bash
-cd src/MCM/
-g++ -std=c++11 -O2 -c *.cpp
-cd ../../
-g++ -std=c++11 -O2 -c includes/library.hpp
-g++ -std=c++11 -O2 includes/main_routines.cpp main.cpp -include includes/library.hpp src/MCM/*.o -o GreedySearch.out
+g++ -std=c++11 -O3 includes/main_routines.cpp main.cpp src/MCM/*.cpp -include includes/library.hpp -o MCM_Greedy.out
 ```
 or use the script `job_compile.sh` by running in your Terminal:
 ```bash
