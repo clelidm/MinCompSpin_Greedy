@@ -142,7 +142,7 @@ The file `MNIST11.sorted_BestBasis_k4_Binary.dat` contains the binary representa
     
 Each of these datasets can be analyzed by running the program with the `makefile` or the `job_run.sh` after commenting/uncommenting the correct datafile choices at the beginning of these files.
 
-**Results:** See Ref.[1] for results and comments on the Best Basis obtained for these datasets. You can also find, in the `OUTPUT` folder, the log returned when running the greedy code on these datasets. 
+**Results:** See Ref.[1] for results and discussions on the best MCMs obtained for these datasets. You can also find, in the `OUTPUT` folder, the log returned when running the greedy code on these datasets. 
 
 [2] LeCun, L Bottou, Y Bengio, P Haffner, Gradient-based learning applied to document recognition. Proc. IEEE 86, 2278–2324 (1998).
 
