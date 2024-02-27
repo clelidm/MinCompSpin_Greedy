@@ -43,23 +43,33 @@ The code uses the C++11 version of C++.
 ```bash
 g++ -std=c++11 -O3 includes/main_routines.cpp main.cpp src/MCM/*.cpp -include includes/library.hpp -o MCM_Greedy.out
 ```
-or use the script `job_compile.sh` by running in your Terminal:
+or use the bash script `job_compile.sh` by running in your Terminal:
 ```bash
 bash job_compile.sh
 ```
 
- - **To execute:**
+ - **To execute:** The data and basis files be placed in the `INPUT` folder.
 ```bash
 ./GreedySearch.out  datafilename  n
 ```
+In the following commands, replace `[datafilename]` by the name of your datafile, `[n]` by the number of variables, and `[basisfilename]` by the name of the file containing a chosen new basis (optional).
+   
+   | Run  | Command | Comment |
+   | --- | --- | --- |
+   | Help | `./MCM_Greedy.out -h` | |
+   | Default example: MNIST dataset | `./MCM_Greedy.out`| Runs analysis for MNIST dataset <br> See Ex. 1 in "Examples" section below|
+   | Greedy Search in the original basis of the data | `./MCM_Greedy.out [datafilename] [n]` | Choose automatically<br>the most appropriate algorithm<br> If used, `kmax = 3`by default |
+   | Exhaustive search (*) | `./MCM_Greedy.out [datafilename] [n] --exhaustive`| |
+   | Search among all operators<br> up to order kmax | `./MCM_Greedy.out [datafilename] [n] --fix-k [kmax]` | specifying kmax is optional,<br> by default `kmax = 3` |
+   | Search among all operators<br> up to order kmax<br> in varying representations (**) | `./MCM_Greedy.out [datafilename] [n] --var-k [kmax]` | specifying kmax is optional,<br> by default `kmax = 3` |
 
-where you must replace `datafilename` by the name of your datafile and `n` by your number of variables.
-
+ - **To execute using a bash script:**
 or use the script `job_run.sh` by running in your Terminal:
 ```bash
 bash job_run.sh
 ```
 after replacing `datafilename` by the name of your datafile and `n` by your number of variables in the file `job_run.sh`.
+
 
 ## Usage with Makefile:
 
