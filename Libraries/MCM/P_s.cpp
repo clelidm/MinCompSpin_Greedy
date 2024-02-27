@@ -55,7 +55,7 @@ void update_proba_MCM(map<__int128_t, Proba> &all_P, map<__int128_t, unsigned in
   map<__int128_t, Proba>::iterator it_P;
 
   __int128_t s, sig;        // states
-  unsigned int ks=0;      // number of time state s appear in the dataset
+//  unsigned int ks=0;      // number of time state s appear in the dataset
   double Nd = (double) N;
 
 //Contribution of the basis "ba" of spins to the model probability P_MCM(s):

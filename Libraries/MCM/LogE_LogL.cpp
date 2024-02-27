@@ -97,15 +97,16 @@ double LogE_MCM(vector<pair<__int128_t, unsigned int>> Kset, map<unsigned int, _
 
 double LogE_MCM_infoICC(vector<pair<__int128_t, unsigned int>> Kset, map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r)
 {
-    double LogE = 0, LogE_SCM = 0, LogE_CM = 0, eta = 0; 
+    double LogE = 0, LogE_SCM = 0, LogE_CM = 0; //, eta = 0; 
     unsigned int rank = 0;
     double Nd = (double) N;
+    streamsize ss = cout.precision();
     cout << setprecision(3) << fixed;
 
     // Complete model:
     __int128_t Part_CM = (one128 << r)-1;
     LogE_CM = LogE_ICC(Kset, Part_CM, N);
-    cout << "Complete model: " << int_to_bstring(Part_CM, r) << "\t  LogE(CM) = " << LogE_CM << "\t = " << LogE_CM/Nd/log(2.) << " bits per datapoint" << endl << endl;
+    cout << "Complete model: " << int_to_bstring(Part_CM, r) << "\t  LogE(CM) = " << LogE_CM << "\t = " << LogE_CM/Nd/log(2.) << " bits/datapoint" << endl << endl;
 
     // Each ICC:
     map<unsigned int, __int128_t>::iterator Part;
@@ -116,7 +117,8 @@ double LogE_MCM_infoICC(vector<pair<__int128_t, unsigned int>> Kset, map<unsigne
       LogE += LogE_SCM;
       rank += Bitset_count((*Part).second);
       //eta = ((LogE_SCM/Nd/log(2.)) + r) / (r + (LogE_CM/Nd/log(2.)));
-      cout << "ICC " << i << ": \t " << int_to_bstring((*Part).second, r) << "\t LogE(ICC) = " << LogE_SCM << "\t = " << LogE_SCM/Nd/log(2.) << " bits per datapoint \t" << endl;
+      cout << "ICC" << setw(3) << setfill(' ') << right << i;
+      cout << ":   " << int_to_bstring((*Part).second, r) << "\t LogE(ICC) = " << LogE_SCM << "\t = " << LogE_SCM/Nd/log(2.) << " bits/dpt \t" << endl;
       i++;
     }  
     cout << endl;
@@ -124,6 +126,9 @@ double LogE_MCM_infoICC(vector<pair<__int128_t, unsigned int>> Kset, map<unsigne
     LogE -= ((double) (N * (r-rank))) * log(2.);
 
     cout << "Log-Evidence(MCM) = " << LogE << "\t = " << LogE/((double) N)/log(2.) << " bits per datapoint \t" << endl;
+
+    cout.unsetf(ios_base::fixed);
+    cout.precision(ss);
 
     return LogE;
 }
@@ -213,6 +218,7 @@ double LogL_MCM_infoICC(vector<pair<__int128_t, unsigned int>> Kset, map<unsigne
     double LogL = 0, LogL_SCM = 0, LogL_C = 0, eta_a = 0, eta = 0, eta_denominator = 0;
     unsigned int rank = 0, rank_a = 0;
     double Nd = (double) N;
+    streamsize ss = cout.precision();
     cout << setprecision(3) << fixed;
 
     // Complete model:
@@ -223,8 +229,8 @@ double LogL_MCM_infoICC(vector<pair<__int128_t, unsigned int>> Kset, map<unsigne
     cout << "Maximum amount of information that can be extracted = LogL(CM) - LogL(0) = ";
     cout << eta_denominator << " = " << eta_denominator/Nd/log(2.) << " bits per datapoint" << endl << endl;
 
-    cout << "Complete model: " << int_to_bstring(Part_CM, r) << "\t LogL(CM) = " << LogL_C << "\t = " << LogL_C/Nd/log(2.) << " bits per datapoint" << endl;
-    cout << "Empty model   : " << int_to_bstring(0, r) << "\t  LogL(0) = " << -((double) (r * N)) * log(2.) << "\t = " << -(int) r << " bits per datapoint" << endl << endl;
+    cout << "Complete model: " << int_to_bstring(Part_CM, r) << "\t LogL(CM) = " << LogL_C << "\t = " << LogL_C/Nd/log(2.) << " bits/datapoint" << endl;
+    cout << "Empty model   : " << int_to_bstring(0, r) << "\t  LogL(0) = " << -((double) (r * N)) * log(2.) << "\t = " << -(int) r << " bits/datapoint" << endl << endl;
 
     // Each ICC:
     map<unsigned int, __int128_t>::iterator Part;
@@ -239,7 +245,8 @@ double LogL_MCM_infoICC(vector<pair<__int128_t, unsigned int>> Kset, map<unsigne
         rank += Bitset_count((*Part).second);
         eta += eta_a;
 
-        cout << "ICC " << i << ": \t " << int_to_bstring((*Part).second, r) << "\t LogL(ICC) = " << LogL_SCM << "\t = " << LogL_SCM/Nd/log(2.) << " bits per datapoint; \t";
+        cout << "ICC" << setw(3) << setfill(' ') << right << i;
+        cout << ":   " << int_to_bstring((*Part).second, r) << "\t LogL(ICC) = " << LogL_SCM << "\t = " << LogL_SCM/Nd/log(2.) << " bits/dpt; \t";
         cout << "eta(ICC) = " << eta_a << endl;
         i++;
     }  
@@ -250,6 +257,9 @@ double LogL_MCM_infoICC(vector<pair<__int128_t, unsigned int>> Kset, map<unsigne
     cout << endl;
     cout << "Max-LogL(MCM) = " << LogL << "\t = " << LogL/((double) N)/log(2.) << " bits per datapoint \t" << endl;
     cout << "Fraction of deviance explained: eta(MCM) = " << eta << endl;
+
+    cout.unsetf(ios_base::fixed);
+    cout.precision(ss);
 
     return LogL;
   //}

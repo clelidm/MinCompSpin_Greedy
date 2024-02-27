@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <sstream>     // for stringstream
 #include <fstream>
 #include <vector>
@@ -10,6 +11,7 @@ using namespace std;
 /******************   TOOL Functions from "tools.cpp"   ***********************/
 /******************************************************************************/
 string int_to_bstring(__int128_t bool_nb, unsigned int n);
+unsigned int Bitset_count(__int128_t bool_nb);
 
 /******************************************************************************/
 /***********************    READ an MCM from a FILE  **************************/
@@ -54,7 +56,8 @@ void Print_MCM_Partition(map<unsigned int, __int128_t> partition, unsigned int r
 
     for (it = partition.begin(); it != partition.end(); it++)
     {
-        cout << "ICC " << i << ": \t " << int_to_bstring((*it).second, r) << endl;
+        cout << "ICC" << setw(3) << setfill(' ') << right << i;
+        cout << ":   " << int_to_bstring((*it).second, r) << "\t Community size: " << Bitset_count((*it).second) << endl;
         i++;
     }
     cout << endl;

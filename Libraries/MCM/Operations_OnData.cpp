@@ -150,7 +150,10 @@ vector<pair<__int128_t, unsigned int>> build_Kset(vector<pair<__int128_t, unsign
     __int128_t sig_m;    // transformed state and to the m first spins
 
 // ***** Build Kset: *************************************************************************************
-    cout << endl << "--->> Build Kset..." << endl;
+    cout << endl << "--->> Build Kset..." << endl << endl;
+    cout << "Order of the variables in the New basis:" << endl;
+    cout << "\t sig_1 = corresponds to the lowest bit, i.e. the RIGHTmost bit" << endl;
+    cout << "\t sig_n = corresponds to the highest bit, i.e. the LEFTmost bit" << endl;
 
     for (auto const& it : Nset)
     {

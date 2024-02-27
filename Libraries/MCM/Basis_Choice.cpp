@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <string>
 #include <list>
@@ -15,7 +16,7 @@ using namespace std;
 /******************************************************************************/
 /***************************   Constant variables   ***************************/
 /******************************************************************************/
-const __int128_t un = 1;
+const __int128_t one128 = 1;
 
 /******************************************************************************/
 /******************   TOOL Functions from "tools.cpp"   ***********************/
@@ -42,32 +43,41 @@ string int_to_bstring(__int128_t bool_nb, unsigned int n);
 /******************************************************************************/
 /*** VERSION a) Operators are written as the binary          ******************/
 /****           representation of the interactions           ******************/
+/****           Works for up to 128 bits           ****************************/
 /******************************************************************************/
 list<__int128_t> Read_BasisOp_BinaryRepresentation(unsigned int r, string Basis_binary_filename) //string Basis_binary_filename = basis_BinaryRepresentation_filename)
 {
   __int128_t Op_bit = 0, Op = 0;
-  list<__int128_t> Basis_li;
 
-  ifstream myfile (Basis_binary_filename.c_str());
+  cout << "Read the Basis file: " << Basis_binary_filename << endl;
+  cout << "Number of variables to read: n = " << r << endl;
+
   string line, line2;   
   char c = '1';  
 
+// ***** Store Basis in Basis_li:  **********************************************
+  list<__int128_t> Basis_li;
+
+  ifstream myfile (Basis_binary_filename.c_str());
   if (myfile.is_open())
   {
     while ( getline (myfile,line))
     {
-      line2 = line.substr (0,r);          //take the r first characters of line
-
-      //convert string line2 into a binary integer:
-      Op_bit = un << (r - 1);
-      Op = 0;
-      for (auto &elem: line2)
+      if (line.size() >= r && (line[0] == '0' || line[0] == '1'))
       {
-        if (elem == c) { Op += Op_bit; }
-        Op_bit = Op_bit >> 1;
-      }
+        line2 = line.substr (0,r);          //take the r first characters of line
 
-      Basis_li.push_back(Op);   
+        //convert string line2 into a binary integer:
+        Op_bit = one128 << (r - 1);
+        Op = 0;
+        for (auto &elem: line2)
+        {
+          if (elem == c) { Op += Op_bit; }
+          Op_bit = Op_bit >> 1;
+        }
+
+        Basis_li.push_back(Op); 
+      }  
     }
     myfile.close();
   }
@@ -78,15 +88,26 @@ list<__int128_t> Read_BasisOp_BinaryRepresentation(unsigned int r, string Basis_
 /******************************************************************************/
 /*** VERSION b) Operators are written as the integer values of the binary *****/
 /****           representation of the interactions           ******************/
+/****           Only up to 64 bits           **********************************/
 /******************************************************************************/
+// Don't make sense to use for large number of bits 
+// 2**50 ~ 10^15 --> printing and reading sucu large integers is not a very good ideas --> better to write it down in binary
+// In any case, this function is not very usable for integer of more than 64 bits:
+//         1) current function for printing basis doesn't integer with more than 64 bits (from the best basis algorithm)
+//         2) "stoi(line)" will convert to a 64 bits integer, which will then be converted to 128 bits: so it doesn't work.
+
 list<__int128_t> Read_BasisOp_IntegerRepresentation(string Basis_integer_filename) //string Basis_integer_filename = basis_IntegerRepresentation_filename)
 {
   __int128_t Op = 0;
+
+  cout << "Read the Basis file: " << Basis_integer_filename << endl;
+
+  string line;    
+
+// ***** Store Basis in Basis_li:  **********************************************
   list<__int128_t> Basis_li;
 
   ifstream myfile (Basis_integer_filename.c_str());
-  string line;    
-
   if (myfile.is_open())
   {
     while ( getline (myfile,line))
@@ -122,10 +143,12 @@ list<__int128_t> Original_Basis(unsigned int r)
 /******************************************************************************/
 void PrintTerm_Basis(list<__int128_t> Basis_li, unsigned int r)
 {
+  cout << "## Number of basis operators = " << Basis_li.size() << endl;
+  cout << "##" << endl;
   int i = 1;
   for (list<__int128_t>::iterator it = Basis_li.begin(); it != Basis_li.end(); it++)
   {
-    cout << "##\t " << i << " \t " << int_to_bstring((*it), r) << endl; i++;
+    cout << "##\t sig_" << setw(3) << setfill(' ') << left << i << " \t " << int_to_bstring((*it), r) << endl; i++;
   } 
   cout << "##" << endl;
 }
