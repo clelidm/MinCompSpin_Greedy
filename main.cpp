@@ -1,7 +1,9 @@
 // To compile: make
 // To run: or: make run
 //         or: ./GreedySearch.out data_filename n
-//
+// With options:
+//      ./GreedySearch.out data_filename n [-b basis_filename] [--full] [--NoCheckPoint]
+
 #define _USE_MATH_DEFINES 
 #include <iostream>
 #include <fstream>
@@ -28,11 +30,11 @@ using namespace std::chrono;
 /****************   GREEDY SEARCH:   Useful functions and routines    ********************/
 /*****************************************************************************************/
 // **** Find the best MCM, Greedy Search:
-map<unsigned int, __int128_t> MCM_GreedySearch(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N, unsigned int r, bool print_it = false);
-map<unsigned int, __int128_t> MCM_GreedySearch_AND_printInfo(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N, unsigned int r, bool print_it = false);
+map<unsigned int, __int128_t> MCM_GreedySearch(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N, unsigned int r, bool print_info = true, bool Greedy_Full_merging = false);
+map<unsigned int, __int128_t> MCM_GreedySearch_AND_printInfo(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N, unsigned int r, bool print_info = true, bool Greedy_Full_merging = false);
 
 // **** Find the best MCM, Greedy Search starting from the model MCM_0:
-map<unsigned int, __int128_t> MCM_GreedySearch_MCM0(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N, unsigned int r, map<unsigned int, __int128_t> MCM_0, bool print_it = false);
+map<unsigned int, __int128_t> MCM_GreedySearch_MCM0(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N, map<unsigned int, __int128_t> MCM_0, bool print_info = true, bool Greedy_Full_merging = false);
 
 // *** Greedy Search on Reduced dataset:
 map<unsigned int, __int128_t> MCM_ReducedGreedySearch_AND_PrintInfo(vector<pair<__int128_t, unsigned int>> Kset, unsigned int K, unsigned int N, unsigned int r, bool print_it = false);
@@ -47,7 +49,6 @@ void compare_two_MCMs_AND_printInfo(vector<pair<__int128_t, unsigned int>> Kset,
 // *** Read MCM from a file:
 map<unsigned int, __int128_t> read_MCM_fromfile(string Input_MCM_file, unsigned int r);
 map<unsigned int, __int128_t> read_MCM_fromfile_AND_printInfo(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N, string Input_MCM_file, unsigned int r);
-
 
 /******************************************************************************/
 /***************************   ADD OUTPUT FOLDER    ***************************/
@@ -65,7 +66,7 @@ string OutputFile_Add_Location(string filename)
 /****************************************************************************************************************************************************************************/
 /****************************************************************************************************************************************************************************/
 
-void tutorial(vector<pair<__int128_t, unsigned int>> Nset, unsigned int N,  unsigned int n)
+void tutorial(vector<pair<__int128_t, unsigned int>> Nset, unsigned int N,  unsigned int n, bool Greedy_Full_merging = false)
 {
     cout << endl << "*******************************************************************************************";  
     cout << endl << "******************************  CHOICE OF THE BASIS:  *************************************";
@@ -75,8 +76,8 @@ void tutorial(vector<pair<__int128_t, unsigned int>> Nset, unsigned int N,  unsi
 //    list<__int128_t> Basis_li = Original_Basis(n);
 
 //// *** The basis can also be read from a file: Ex. the following files contain the best basis for the SCOTUS dataset:
-   list<__int128_t> Basis_li = Read_BasisOp_IntegerRepresentation(basis_IntegerRepresentation_filename);
-//   list<__int128_t> Basis_li = Read_BasisOp_BinaryRepresentation(n, basis_IntegerRepresentation_filename);
+//   list<__int128_t> Basis_li = Read_BasisOp_IntegerRepresentation(input_directory + basis_IntegerRepresentation_filename);
+   list<__int128_t> Basis_li = Read_BasisOp_BinaryRepresentation(n, input_directory + basis_BinaryRepresentation_filename);
 
     PrintTerm_Basis(Basis_li, n);
 
@@ -98,7 +99,7 @@ void tutorial(vector<pair<__int128_t, unsigned int>> Nset, unsigned int N,  unsi
     bool print_checkpoint = true;  
 
 //// *** Finds the best MCM:
-    map<unsigned int, __int128_t> fp1 = MCM_GreedySearch(Kset, N, n, print_checkpoint);
+    map<unsigned int, __int128_t> fp1 = MCM_GreedySearch(Kset, N, n, print_checkpoint, Greedy_Full_merging);
 
 //// *** Print Log-Evidence:  
     double LogE_fp1 = LogE_MCM(Kset, fp1, N, n);
@@ -161,32 +162,42 @@ void tutorial(vector<pair<__int128_t, unsigned int>> Nset, unsigned int N,  unsi
 }
 
 
+/******************************************************************************/
+/*****************************   USER INTERFACE    ****************************/
+/******************************************************************************/
+struct RunOptions
+{
+    bool change_basis = false;  // by default: Search in the original basis 
+    bool print_checkpoint = true;   // by default: print all the checkpoints
+    
+    // by default: stop Greedy merging when LogE starts decreasing 
+    bool greedy_full_merging = false; // if TRUE: keep on merging until everything is merged; save best MCM along the greedy path
+};
+
+void HELP_message();
+int Read_argument(int argc, char *argv[], string *datafilename, unsigned int *n, string *basis_filename, RunOptions *options);
+
 /****************************************************************************************************************************************************************************/
 /****************************************************************************************************************************************************************************/
 /**************************************************************************     MAIN FUNCTION      **************************************************************************/
 /****************************************************************************************************************************************************************************/
 /****************************************************************************************************************************************************************************/
-
 int main(int argc, char *argv[])
 {
-//// *** Read the arguments:
-    string n_string_buffer = "";
 
-    if (argc == 3)
-    {
-        datafilename = argv[1];
-        n_string_buffer = argv[2];
-        n = stoul(n_string_buffer);
-    }
-    else if (argc != 1)
-    {
-        cout << "The number of arguments must be either 0 or 2" << endl;
-        return 0;
-    }
+    cout << endl << "*******************************************************************************************";
+    cout << endl << "************************************  CONFIGURATION:  *************************************";
+    cout << endl << "*******************************************************************************************" << endl;
 
-    cout << "--->> Create the \"OUTPUT\" Folder: (if needed) ";
+//// *** INITIAL SETTINGS:
+    cout << "--->> Create the \"OUTPUT\" Folder (if needed) ";
     system(("mkdir -p " + OUTPUT_directory).c_str());
-    cout << endl;
+    cout << endl << endl;
+
+    cout << "--->> Input files are in the input directory: \"" << input_directory << "\"" << endl; 
+    RunOptions options;
+
+    if ( !(Read_argument(argc, argv, &datafilename, &n, &basis_filename, &options)) )  {   return 0;   }  // error flag --> quit
 
     cout << endl << "*******************************************************************************************";
     cout << endl << "***********************************  READ THE DATA:  **************************************";
@@ -196,33 +207,81 @@ int main(int argc, char *argv[])
     //cout << "Number of variables to read: n = " << n << endl;
 
     unsigned int N = 0; // will contain the number of datapoints in the dataset
-    vector<pair<__int128_t, unsigned int>> Nset = read_datafile(&N, datafilename, n);
+    vector<pair<__int128_t, unsigned int>> Nset = read_datafile(&N, input_directory + datafilename, n);
 
     if (N == 0)     // Terminate program if the file can't be found or read, or if it is empty:
         { 
-        cout << " --->> Datafile cannot be read, or is empty; Terminate the program." << endl << endl;
+        cout << " --->> Datafile cannot be read or is empty: terminate the program." << endl << endl;
         return 0; 
-        } 
+        }
 
-    cout << endl << "###### File has been read successfully:" << endl;
+    cout << endl << "###### Datafile has been read successfully:" << endl;
     cout << "\t Number of datapoints: N = " << N << endl;
     cout << "\t Number of different observed states = " << Nset.size() << endl;
 
-    cout << endl << "*******************************************************************************************";
-    cout << endl << "*****************************  HIERARCHICAL GREEDY MERGING:  ******************************";
-    cout << endl << "********************************  in the ORIGINAL BASIS  **********************************";
-    cout << endl << "*******************************************************************************************" << endl;
+    vector<pair<__int128_t, unsigned int>> Kset;
 
-    bool print_checkpoint = false;  
+    if (options.change_basis)
+    {
+        cout << endl << "*******************************************************************************************";  
+        cout << endl << "******************************  CHOICE OF THE BASIS:  *************************************";
+        cout << endl << "*******************************************************************************************" << endl;
+
+    //// *** The basis can also be read from a file: Ex. the following files contain the best basis for the SCOTUS dataset:
+
+        list<__int128_t> Basis_li = Read_BasisOp_BinaryRepresentation(n, input_directory + basis_filename);
+
+        if (Basis_li.size() == 0)     // Terminate program if the file can't be found or read, or if it is empty:
+            { 
+            cout << " --->> Basis file cannot be read or is empty: terminate the program." << endl << endl;
+            return 0; 
+            }
+
+        cout << endl << "###### Basis file has been read successfully:" << endl;
+        PrintTerm_Basis(Basis_li, n);
+
+        cout << endl << "*******************************************************************************************";
+        cout << endl << "**********************  TRANSFORM the DATA in the CHOSEN BASIS   **************************";
+        cout << endl << "**********************************   Build Kset:   ****************************************";
+        cout << endl << "*******************************************************************************************" << endl;
+
+        Kset = build_Kset(Nset, Basis_li);
+
+        if (Kset.size() == 0)     // Terminate program if the file can't be found or read, or if it is empty:
+        { 
+            cout << " --->> Issue with conversion of the datafile in the new basis:" << endl;
+            cout << " \t - Check that provided basis is actually a basis." << endl;
+            cout << " \t Terminate the program." << endl << endl;
+            return 0; 
+        }
+
+        cout << "###### Datafile has been converted successfully:" << endl;
+        cout << "\t Number of datapoints: N = " << N << endl;
+        cout << "\t Number of different observed states in the new basis = " << Kset.size() << endl;
+
+        cout << endl << "*******************************************************************************************";
+        cout << endl << "*****************************  HIERARCHICAL GREEDY MERGING:  ******************************";
+        cout << endl << "**********************************  in the NEW BASIS  *************************************";
+        cout << endl << "*******************************************************************************************" << endl;
+    }
+    else
+    {
+        Kset.swap(Nset);
+
+        cout << endl << "*******************************************************************************************";
+        cout << endl << "*****************************  HIERARCHICAL GREEDY MERGING:  ******************************";
+        cout << endl << "********************************  in the ORIGINAL BASIS  **********************************";
+        cout << endl << "*******************************************************************************************" << endl;
+    }
 
 //// *** Finds the best MCM and print information about it in the terminal:
-    map<unsigned int, __int128_t> fp1 = MCM_GreedySearch_AND_printInfo(Nset, N, n, print_checkpoint);
+    map<unsigned int, __int128_t> fp1 = MCM_GreedySearch_AND_printInfo(Kset, N, n, options.print_checkpoint, options.greedy_full_merging);
 
     cout << endl << "*******************************************************************************************";
     cout << endl << "***************************  Decomposition of Log-E   *************************************";
     cout << endl << "*******************************   over each ICC   *****************************************";
     cout << endl << "*******************************************************************************************" << endl;
-    LogE_MCM_infoICC(Nset, fp1, N, n);
+    LogE_MCM_infoICC(Kset, fp1, N, n);
 
 /*
     cout << endl << "*******************************************************************************************************************";
@@ -231,7 +290,9 @@ int main(int argc, char *argv[])
     cout << endl << "*******************************************************************************************************************";
     cout << endl << "*******************************************************************************************************************" << endl;
 
-    tutorial(Nset, N, n);
+    bool greedy_full_merging = false;
+
+    tutorial(Nset, N, n, greedy_full_merging);
 */
 
     return 0;
