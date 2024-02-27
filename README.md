@@ -128,33 +128,28 @@ Run the following commands in your terminal, from the main folder (folder contai
 
    **Other options:** All the options specified in the previous section, "Usage without Makefile/To Execute", still apply here.
 
+## More advance use:
+
+For hands-on and simple tests of the program, please check the examples in the function `int main()` of the `main.cpp` file, and the usage of the program detailed in the function `tutorial()` of the main file (you can call this function by uncommenting the last lines in the function `main()`). 
+
 ## Examples
 
 In the `INPUT` folder, we provided the following examples:
-  - **Example 1:** The binary dataset `MNIST11.sorted`: this is the binarized version of the MNIST dataset [3] used as an example in Ref.[1] (see Fig.~7). The file `MNIST11.sorted_BestBasis_k4_Binary.dat` contains the binary representation of the best basis found with the recursive procedure described in Ref.[1] up to order `k=4` (using the program available [here](https://github.com/clelidm/MinCompSpin_BasisSearch128)).
-  - **Example 2:** The binary dataset `Big5PT.sorted`: this is the binarized version of the Big 5 dataset [3] used as an example in Ref. [1]. The dataset has `50` variables. See Ref.[1] for results and comments on the Best Basis obtained for this dataset.
-Important: this dataset is given in a zip file, which must be decompressed first before being used.
-  - **Example 3:** the binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[4] and used as an example in Ref.[1]. 
+  - **Example 1: MNIST dataset.** The binary dataset `MNIST11.sorted`: this is the binarized version of the MNIST dataset [3] used as an example in Ref.[1] (see Fig.~7). The dataset has `n=121` variables and `N=60 000` datapoints. The file `MNIST11.sorted_BestBasis_k4_Binary.dat` contains the binary representation of the best basis found with the recursive procedure described in Ref.[1] up to order `k=4` (using the program available [here](https://github.com/clelidm/MinCompSpin_BasisSearch128)).
+  - **Example 2: Big 5 dataset.** The binary dataset `Big5PT.sorted`: this is the binarized version of the Big 5 dataset [3] used as an example in Ref.[1]. The dataset has `n=50` variables and `N = 1 013 558` datapoints. Important: This dataset is given as a zip file (due to its large size) and must be decompressed before use.
+The file `MNIST11.sorted_BestBasis_k4_Binary.dat` contains the binary representation of the best basis found with the recursive procedure described in Ref.[1] up to order `k=4` (using the program available [here](https://github.com/clelidm/MinCompSpin_BasisSearch128)).
+  - **Example 3:** The binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[4] and used as an example in Ref.[1].
+    
+Each of these datasets can be analyzed by running the program with the `makefile` or the `job_run.sh` after commenting/uncommenting the correct datafile choices at the beginning of these files.
 
-Each of these two datasets can be the one run as an example by commenting/uncommenting the correct datafile choice at the beginning of the `makefile`.
+**Results:** See Ref.[1] for results and comments on the Best Basis obtained for these datasets. You can also find, in the `OUTPUT` folder, the log returned when running the greedy code on these datasets. 
 
-[2] MNIST datasets
+[2] LeCun, L Bottou, Y Bengio, P Haffner, Gradient-based learning applied to document recognition. Proc. IEEE 86, 2278–2324 (1998).
 
-[3] https://github.com/clelidm/MinCompSpin_BasisSearch128
-
-[3] Raw data from [Open-Source Psychometrics Project](https://openpsychometrics.org/_rawdata/) in the line indicated as "Answers to the IPIP Big Five Factor Markers"; [here](https://openpsychometrics.org/_rawdata/IPIP-FFM-data-8Nov2018.zip) is a direct link to the same zipfile.
+[3] Raw data from [Open-Source Psychometrics Project](https://openpsychometrics.org/_rawdata/) in the line indicated as "Answers to the IPIP Big Five Factor Markers"; [here](https://openpsychometrics.org/_rawdata/IPIP-FFM-data-8Nov2018.zip) is a direct link to the same zip file.
 
 [4] E.D. Lee, C.P. Broedersz, W. Bialek, Statistical Mechanics of the US Supreme Court. [J Stat Phys 160, 275–301 (2015)](https://link.springer.com/article/10.1007/s10955-015-1253-6).
 
-In the input folder, we provided as an example the binary dataset `SCOTUS_n9_N895_Data.dat` analyzed in the example, which is the dataset of votes of the US Supreme Court analyzed in Ref.[3] and  used as an example in Ref.[1]. For hands-on and simple tests of the program, please check the examples in the function `int main()` of the `main.cpp` file, and the usage of the program detailed in the function `tutorial()` of the main file (you can call this function by uncommenting the last lines in the function `main()`). 
-
-In the input folder, we also provided as an example the binary dataset `Big5-IPC1_VS3_N5e4.dat`. This is a binarized version of the first `50 000` samples of the Big 5 dataset [4], which has `50` variables. This dataset is the one run as an example by the job file `job_run.sh`. See paper [1] for comments on the results obtained by the analysis using MCMs.
-
-The output LOG for each of the examples above can be found in the `OUTPUT` folder.
-
-[3] E.D. Lee, C.P. Broedersz, W. Bialek, Statistical Mechanics of the US Supreme Court. [J Stat Phys 160, 275–301 (2015)](https://link.springer.com/article/10.1007/s10955-015-1253-6).
-
-[4] Raw data from [Open-Source Psychometrics Project](https://openpsychometrics.org/_rawdata/) in the line indicated as "Answers to the IPIP Big Five Factor Markers"; [here](https://openpsychometrics.org/_rawdata/IPIP-FFM-data-8Nov2018.zip) is a direct link to the same zipfile.
 
 ## License
 
