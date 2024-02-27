@@ -130,7 +130,7 @@ Run the following commands in your terminal, from the main folder (folder contai
 
 ## More advanced use:
 
-For hands-on and simple tests of the program, please check the examples in the function `int main()` of the `main.cpp` file, and the usage of the program detailed in the function `tutorial()` of the main file (you can call this function by uncommenting the last lines in the function `main()`). 
+You can also directly work with the C++ code, by calling functions directly from the `main()` function of the `main.cpp` file. For hands-on simple use of available functions, see the function `tutorial()` in the `main.cpp` file (you can call this function by uncommenting the last lines in the function `main()`).
 
 ## Examples
 
