@@ -95,6 +95,8 @@ In the input folder, we provided as an example the binary dataset `SCOTUS_n9_N89
 
 In the input folder, we also provided as an example the binary dataset `Big5-IPC1_VS3_N5e4.dat`. This is a binarized version of the first `50 000` samples of the Big 5 dataset [4], which has `50` variables. This dataset is the one run as an example by the job file `job_run.sh`. See paper [1] for comments on the results obtained by the analysis using MCMs.
 
+The output LOG for each of the examples above can be found in the `OUTPUT` folder.
+
 [3] E.D. Lee, C.P. Broedersz, W. Bialek, Statistical Mechanics of the US Supreme Court. [J Stat Phys 160, 275–301 (2015)](https://link.springer.com/article/10.1007/s10955-015-1253-6).
 
 [4] Raw data from [Open-Source Psychometrics Project](https://openpsychometrics.org/_rawdata/) in the line indicated as "Answers to the IPIP Big Five Factor Markers"; [here](https://openpsychometrics.org/_rawdata/IPIP-FFM-data-8Nov2018.zip) is a direct link to the same zipfile.
