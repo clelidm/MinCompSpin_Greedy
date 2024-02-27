@@ -32,7 +32,7 @@ CXXFLAGS = -std=c++11 -O3   #Extra flags to give to the C++ compiler
 #		$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $^ -o $@
 
 ### MCM Files:
-DIR_MCM = Libraries/MCM
+DIR_MCM = src/MCM
 objects_MCM = tools.o LogE_LogL.o Complexity.o MCM_info.o Basis_Choice.o P_s.o Operations_OnData.o info_quant.o BestMCM_GreedySearch.o User_Interface.o
 
 ### Libraries:
