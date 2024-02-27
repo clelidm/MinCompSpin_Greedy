@@ -18,19 +18,22 @@ using namespace std::chrono;
 /******************************************************************************/
 /**********************   ROUTINES for GREEDY SEARCH   ************************/
 /******************************************************************************/
-map<unsigned int, __int128_t> MCM_GreedySearch(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N, unsigned int r, bool print_it = false);
+map<unsigned int, __int128_t> MCM_GreedySearch(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N, unsigned int r, bool print_info = true, bool Greedy_Full_merging = false);
 
-map<unsigned int, __int128_t> MCM_GreedySearch_AND_printInfo(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N, unsigned int r, bool print_it = false)
+map<unsigned int, __int128_t> MCM_GreedySearch_AND_printInfo(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N, unsigned int r, bool print_info = true, bool Greedy_Full_merging = false)
 {
     cout << "######### START GREEDY SEARCH #########" << endl;
+    cout << "###### Start timer..." << endl << endl;
     // *** Calculate the optimal partition
     auto start = chrono::system_clock::now();
-    map<unsigned int, __int128_t> fp1 = MCM_GreedySearch(Kset, N, r, print_it);
+    map<unsigned int, __int128_t> fp1 = MCM_GreedySearch(Kset, N, r, print_info, Greedy_Full_merging);
+
     auto end = chrono::system_clock::now();
 
     // *** Time it takes to find partition
     chrono::duration<double> elapsed = end - start;
-    cout << "Run time : " << elapsed.count() << "s" << endl << endl;
+    cout << "###### Run time : " << elapsed.count() << "s = " << elapsed.count()/60. << " min" << endl;
+    cout << "#######################################" << endl << endl;
 
     cout << "######### ENTROPY OF THE DATA #########" << endl;
     // Entropy of dataset
@@ -70,7 +73,7 @@ map<unsigned int, __int128_t> MCM_GreedySearch_ChosenBasis(vector<pair<__int128_
 /********************   GREEDY SEARCH for REDUCED DATASET  ********************/
 /******************************************************************************/
 
-map<unsigned int, __int128_t> MCM_ReducedGreedySearch_AND_PrintInfo(vector<pair<__int128_t, unsigned int>> Kset_Vect, unsigned int K, unsigned int N, unsigned int r, bool print_it = false)
+map<unsigned int, __int128_t> MCM_ReducedGreedySearch_AND_PrintInfo(vector<pair<__int128_t, unsigned int>> Kset_Vect, unsigned int K, unsigned int N, unsigned int r, bool print_info = true)
 {
     auto start = chrono::system_clock::now();
     cout << "######### REDUCE Kset TO STATES OCCURING AT LEAST K TIMES: K = " << K << "  #########" << endl;
@@ -88,7 +91,7 @@ map<unsigned int, __int128_t> MCM_ReducedGreedySearch_AND_PrintInfo(vector<pair<
 
     cout << endl << "######### START GREEDY SEARCH #########" << endl;
     // *** Calculate the optimal partition
-    map<unsigned int, __int128_t> fp_reduced = MCM_GreedySearch(Kset_reduced, N_reduced, r, print_it);
+    map<unsigned int, __int128_t> fp_reduced = MCM_GreedySearch(Kset_reduced, N_reduced, r, print_info);
     auto end = chrono::system_clock::now();
 
     // *** Time it takes to find partition
