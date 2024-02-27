@@ -37,6 +37,8 @@ The code performs a hierarchical merging procedure to find an optimal MCM in the
 
 **Starting from a chosen MCM:** The search can also be started from a different initial MCM, using the function `MCM_GreedySearch_MCM0()`. This can be used for instance to run a short greedy merging at the end of a simulated annealing search.
 
+All the functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file or in the file `library.hpp`. The most useful functions are described in the section "General information" above. 
+
 ## Format of the datafiles:
 The data file and the basis file must be placed in the `INPUT` folder and have the following format:
 - **Data file:** The dataset must be provided in a text file in which the state of each variable is either a `'0'` or a `'1'`. The file must have:
@@ -127,8 +129,6 @@ Run the following commands in your terminal, from the main folder (folder contai
    **Other options:** All the options specified in the previous section, "Usage without Makefile/To Execute", still apply here.
 
 ## Examples
-
-All the functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file or in the file `library.hpp`. The most useful functions are described in the section "General information" above. 
 
 In the input folder, we provided as an example the binary dataset `SCOTUS_n9_N895_Data.dat` analyzed in the example, which is the dataset of votes of the US Supreme Court analyzed in Ref.[3] and  used as an example in Ref.[1]. For hands-on and simple tests of the program, please check the examples in the function `int main()` of the `main.cpp` file, and the usage of the program detailed in the function `tutorial()` of the main file (you can call this function by uncommenting the last lines in the function `main()`). 
 
