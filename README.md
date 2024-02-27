@@ -63,8 +63,8 @@ The code uses the C++11 version of C++.
     - **Full merging:** the option `--full` will run the greedy merging until everything is merged into a single complete ICC, and print the evolution of the LogE along the merging path. The best MCM along the greedy path is saved and returned at the end. By default (i.e., without this option), the greedy algorithm will stop as soon as any additional merging starts decreasing the LogE.
     - **Remove checkpoints:** By default, the program prints out the intermediate values of LogE along the Greedy path. Using the option `--NoCheckPoint` will stop printing this information. This may save time, when printing is not needed, for datasets with a large number of variables and a long greedy path.
     - The options `-b`, `--full` and `--NoCheckPoint` can be combined in any order. Note that options `--full` and `--NoCheckPoint` are incompatible: `--full` will always print the checkpoints and therefore take over `--NoCheckPoint`.
-
-**Summary table:**
+   
+   **Summary table:**
    | Run  | Command | Comment |
    | --- | --- | --- |
    | Help | `./MCM_Greedy.out -h` | |
