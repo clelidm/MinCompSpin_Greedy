@@ -69,10 +69,10 @@ The code uses the C++11 version of C++.
    | --- | --- | --- |
    | Help | `./MCM_Greedy.out -h` | |
    | Default example: MNIST dataset | `./MCM_Greedy.out`| Runs analysis for MNIST dataset <br> See Ex. 1 in "Examples" section below|
-   | Greedy Search in the original basis of the data | `./MCM_Greedy.out [datafilename] [n]` | Choose automatically<br>the most appropriate algorithm<br> If used, `kmax = 3`by default |
-   | Exhaustive search (*) | `./MCM_Greedy.out [datafilename] [n] --exhaustive`| |
-   | Search among all operators<br> up to order kmax | `./MCM_Greedy.out [datafilename] [n] --fix-k [kmax]` | specifying kmax is optional,<br> by default `kmax = 3` |
-   | Search among all operators<br> up to order kmax<br> in varying representations (**) | `./MCM_Greedy.out [datafilename] [n] --var-k [kmax]` | specifying kmax is optional,<br> by default `kmax = 3` |
+   | Greedy Search<br>in the original basis of the data | `./MCM_Greedy.out [datafilename] [n]` |  |
+   | Greedy Search<br>in the chosen new basis | `./MCM_Greedy.out [datafilename] [n] -b [basisfilename]`| |
+   | Full Greedy merging | `./MCM_Greedy.out [datafilename] [n] --full` | Continue merging until getting a single ICC |
+   | Remove checkpoints | `./MCM_Greedy.out [datafilename] [n] --NoCheckPoint` | won't print any checkpoint<br> (slightly faster for datasets with large `n`) |
 
  - **To execute using a bash script:**
    Open the script file `job_run.sh` and replace `datafilename` by the name of your datafile, `n` by your number of variables in the file `job_run.sh`, and (if needed) `basisfilename` by the name of your basis file. Select/comment the command line that applies to your case.
