@@ -128,7 +128,7 @@ Run the following commands in your terminal, from the main folder (folder contai
 
    **Other options:** All the options specified in the previous section, "Usage without Makefile/To Execute", still apply here.
 
-## More advance use:
+## More advanced use:
 
 For hands-on and simple tests of the program, please check the examples in the function `int main()` of the `main.cpp` file, and the usage of the program detailed in the function `tutorial()` of the main file (you can call this function by uncommenting the last lines in the function `main()`). 
 
