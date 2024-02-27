@@ -91,19 +91,18 @@ Run the following commands in your terminal, from the main folder (folder contai
   
  - **To clean:** `make clean`, removes all the intermediate files created during compilation and not used later. `make delete` will delete the final executable (to use only once you're done using the code).
 
- - **To Execute:** `make run` . This will use the datafile and variables that are specified in the makefile.
+ - **To Execute:** `make run` or `make run-newBasis`. This will use the variables that are specified at the beginning of the makefile.
 
-To change datafile: open the makefile and replace the values of the two following variables at the very top of the file (an example is provided):
->  - `datafilename`: name of your datafile; this file must be placed in the `INPUT` folder.
->  - `n`: number of variables in your file; maximum possible value `n = 128`.
->  - `basisfilename`: (option) name of the file containing the new basis; this file must be placed in the `INPUT` folder.
-
-You can also execute the code by running in your terminal the command (from the main folder):
-```bash
-./GreedySearch.out  [datafilename]  [n]
-```
-
-where you must replace `datafilename` by the name of your datafile and `n` by your number of variables.
+   To change the datafiles: open the `makefile` and replace the values of the following variables at the very top of the file:
+   >  - `datafilename`: name of your datafile; this file must be placed in the `INPUT` folder.
+   >  - `n`: number of variables in your file; maximum possible value `n = 128`.
+   >  - `basisfilename`: (option) name of the file containing the new basis; this file must be placed in the `INPUT` folder.
+   
+   You can also execute the code by running in your terminal the command:
+   ```bash
+   ./GreedySearch.out  [datafilename]  [n]
+   ```
+   where you must replace `[datafilename]` by the name of your datafile and `[n]` by your number of variables.
 
 ## Examples
 
