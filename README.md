@@ -142,14 +142,22 @@ The file `MNIST11.sorted_BestBasis_k4_Binary.dat` contains the binary representa
     
 Each of these datasets can be analyzed by running the program with the `makefile` or the `job_run.sh` after commenting/uncommenting the correct datafile choices at the beginning of these files.
 
-**Results:** See Ref.[1] for results and discussions on the best MCMs obtained for these datasets. You can also find, in the `OUTPUT` folder, the log returned when running the greedy code on these datasets. 
-
 [2] LeCun, L Bottou, Y Bengio, P Haffner, Gradient-based learning applied to document recognition. Proc. IEEE 86, 2278–2324 (1998).
 
 [3] Raw data from [Open-Source Psychometrics Project](https://openpsychometrics.org/_rawdata/) in the line indicated as "Answers to the IPIP Big Five Factor Markers"; [here](https://openpsychometrics.org/_rawdata/IPIP-FFM-data-8Nov2018.zip) is a direct link to the same zip file.
 
 [4] E.D. Lee, C.P. Broedersz, W. Bialek, Statistical Mechanics of the US Supreme Court. [J Stat Phys 160, 275–301 (2015)](https://link.springer.com/article/10.1007/s10955-015-1253-6).
 
+
+## OUTPUT and format of the printed MCM:
+
+ - **Working in the original basis:** The 
+
+ - **Working in the new basis:**
+
+
+**Results:** See Ref.[1] for results and discussions on the best MCMs obtained for these datasets. You can also find, in the `OUTPUT` folder, the log returned when running the greedy code on these datasets. 
+The log returned when running the greedy code on the example datasets can be found in the `OUTPUT` folder.
 
 ## License
 
