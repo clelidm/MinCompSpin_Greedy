@@ -88,6 +88,8 @@ The code uses the C++11 version of C++.
 Run the following commands in your terminal, from the main folder (folder containing the `makefile` document):
 
  - **To compile:** `make`
+  
+ - **To clean:** `make clean`, removes all the intermediate files created during compilation and not used later. `make delete` will delete the final executable (to use only once you're done using the code).
 
  - **To Execute:** `make run` . This will use the datafile and variables that are specified in the makefile.
 
@@ -102,9 +104,6 @@ You can also execute the code by running in your terminal the command (from the 
 ```
 
 where you must replace `datafilename` by the name of your datafile and `n` by your number of variables.
-
- - **To clean:** `make clean` (to use only once you're done using the code)
-
 
 ## Examples
 
