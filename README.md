@@ -53,7 +53,7 @@ The data file and the basis file must be placed in the `INPUT` folder and have t
     
   Here, spins are ordered in the same order as in the original datafile, i.e. the i-th index from the left in the basis file corresponds to the i-th spin from the left in the datafile.
   
-  See the example file `MNIST11.sorted_BestBasis_k4_Binary` which contains a basis with `n=121` basis operators, each encoded over the `n=121` basis variables. Each operator corresponds to a new line. Note that the text appearing after the `n`-th columns is simply ignored by the function reading the basis. Similarly, empty lines or lines starting with characters other than `'0'` or `'1'` (such as the lines starting with `'#'`) are ignored.
+  See the example file `MNIST11.sorted_BestBasis_k4_Binary` which contains a basis with `n=121` basis operators, each encoded over the `n=121` basis variables. Each operator corresponds to a new line. Note that the text appearing after the `n`-th columns is simply ignored by the function reading the basis. Similarly, empty lines or lines starting with characters other than `'0'` or `'1'` are ignored (see for example the line starting with `'#'`).
 
 ## Usage without Makefile:
 
