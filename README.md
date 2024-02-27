@@ -89,7 +89,9 @@ Run the following commands in your terminal, from the main folder (folder contai
 
  - **To compile:** `make`
   
- - **To clean:** `make clean`, removes all the intermediate files created during compilation and not used later. `make delete` will delete the final executable (to use only once you're done using the code).
+ - **To clean:**
+   - `make clean` removes all the intermediate files created during compilation and not used later;
+   - `make delete` will delete the final executable (to use only once you're done using the code).
 
  - **To Execute:**
     - `make run` to run the greedy search in the original basis;
