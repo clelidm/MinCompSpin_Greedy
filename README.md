@@ -72,7 +72,7 @@ The code uses the C++11 version of C++.
    | Greedy Search<br>in the original basis of the data | `./MCM_Greedy.out [datafilename] [n]` |  |
    | Greedy Search<br>in the chosen new basis | `./MCM_Greedy.out [datafilename] [n] -b [basisfilename]`| |
    | Full Greedy merging | `./MCM_Greedy.out [datafilename] [n] --full` | Continue merging until getting a single ICC |
-   | Remove checkpoints | `./MCM_Greedy.out [datafilename] [n] --NoCheckPoint` | won't print any checkpoint<br> (slightly faster for datasets with large `n`) |
+   | Don't print checkpoints | `./MCM_Greedy.out [datafilename] [n] --NoCheckPoint` | slightly faster for datasets<br>with large `n` |
 
  - **To execute using a bash script:**
    Open the script file `job_run.sh` and replace `datafilename` by the name of your datafile, `n` by your number of variables in the file `job_run.sh`, and (if needed) `basisfilename` by the name of your basis file. Select/comment the command line that applies to your case.
