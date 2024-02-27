@@ -39,19 +39,19 @@ The code performs a hierarchical merging procedure to find an optimal MCM in the
 
 ## Format of the datafiles:
 The data file and the basis file must be placed in the `INPUT` folder and have the following format:
-- **Data file:** The dataset must be provided in a text file in which the state of each variable is either a `0` or a `1`. The file must have:
+- **Data file:** The dataset must be provided in a text file in which the state of each variable is either a `'0'` or a `'1'`. The file must have:
    - `n` columns, where `n` is the number of variables;
    - `N` lines, each corresponding to a new datapoint (where `N` is the total number of datapoints).
      
   See the example file `MNIST11.sorted` which is a dataset with `n=121` variables and `N=60 000` binary datapoints.
 
 - **Basis file:** The basis must be provided in a text file, in which the values of the basis operators are defined per line by a binary string of size `n`:
-  - a `0` at the i-th index indicates that the i-th spin is not involved in the operator;
-  - a `1` at the i-th index indicates that the i-th spin contributes to the operator.
+  - a `'0'` at the i-th index indicates that the i-th spin is not involved in the operator;
+  - a `'1'` at the i-th index indicates that the i-th spin contributes to the operator.
     
   Here, spins are ordered in the same order as in the original datafile, i.e. the i-th index from the left in the basis file corresponds to the i-th spin from the left in the datafile.
   
-  See the example file `MNIST11.sorted_BestBasis_k4_Binary` which contains a basis with `n=121` basis operators, each encoded over the `n=121` basis variables. Each operator corresponds to a new line. Note that the text appearing after the `n`-th columns is simply ignored by the function reading the basis. Similarly, empty lines or lines starting with characters other than `0` or `1` (such as the lines starting with `#`) are ignored.
+  See the example file `MNIST11.sorted_BestBasis_k4_Binary` which contains a basis with `n=121` basis operators, each encoded over the `n=121` basis variables. Each operator corresponds to a new line. Note that the text appearing after the `n`-th columns is simply ignored by the function reading the basis. Similarly, empty lines or lines starting with characters other than `'0'` or `'1'` (such as the lines starting with `'#'`) are ignored.
 
 ## Usage without Makefile:
 
