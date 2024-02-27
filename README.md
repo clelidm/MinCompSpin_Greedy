@@ -68,10 +68,10 @@ The code uses the C++11 version of C++.
    | Run  | Command | Comment |
    | --- | --- | --- |
    | Help | `./MCM_Greedy.out -h` | |
-   | Default example: MNIST dataset | `./MCM_Greedy.out`| Runs analysis for MNIST dataset <br> See Ex. 1 in "Examples" section below|
+   | Run default example:<br>MNIST dataset | `./MCM_Greedy.out`| See Example 1<br>in "Examples" section below|
    | Greedy Search<br>in the original basis of the data | `./MCM_Greedy.out [datafilename] [n]` |  |
    | Greedy Search<br>in the chosen new basis | `./MCM_Greedy.out [datafilename] [n] -b [basisfilename]`| |
-   | Full Greedy merging | `./MCM_Greedy.out [datafilename] [n] --full` | Continue merging until getting a single ICC |
+   | Full Greedy merging | `./MCM_Greedy.out [datafilename] [n] --full` | Continue merging<br>until getting a single ICC |
    | Don't print checkpoints | `./MCM_Greedy.out [datafilename] [n] --NoCheckPoint` | slightly faster for datasets<br>with large `n` |
 
  - **To execute using a bash script:**
