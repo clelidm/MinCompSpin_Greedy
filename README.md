@@ -120,13 +120,13 @@ Run the following commands in your terminal, from the main folder (folder contai
    >  - `n`: number of variables in your file; maximum possible value `n = 128`.
    >  - `basisfilename`: (option) name of the file containing the new basis; this file must be placed in the `INPUT` folder.
    
-   You can also execute the code by running it directly from your terminal, as in the previous section ("Usage without Makefile/To Execute"). For example, you can run the command:
+   You can also execute the code by running it directly from your terminal, as in the previous section ("Usage without Makefile"). For example, you can run the command:
    ```bash
    ./GreedySearch.out [datafilename] [n]
    ```
    where you must replace `[datafilename]` by the name of your datafile and `[n]` by your number of variables.
 
-   **Other options:** All the options specified in the previous section, "Usage without Makefile/To Execute", still apply here.
+   **Other options:** All the options specified in the previous section, "Usage without Makefile", still apply here.
 
 ## More advanced use:
 
