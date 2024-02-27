@@ -75,12 +75,12 @@ The code uses the C++11 version of C++.
    | Search among all operators<br> up to order kmax<br> in varying representations (**) | `./MCM_Greedy.out [datafilename] [n] --var-k [kmax]` | specifying kmax is optional,<br> by default `kmax = 3` |
 
  - **To execute using a bash script:**
-or use the script `job_run.sh` by running in your Terminal:
-```bash
-bash job_run.sh
-```
-after replacing `datafilename` by the name of your datafile and `n` by your number of variables in the file `job_run.sh`.
-
+   Open the script file `job_run.sh` and replace `datafilename` by the name of your datafile, `n` by your number of variables in the file `job_run.sh`, and (if needed) `basisfilename` by the name of your basis file. Select/comment the command line that applies to your case.
+   Use the script `job_run.sh` by running in your Terminal:
+   ```bash
+   bash job_run.sh
+   ```
+   All the options in the previous section also apply here. 
 
 ## Usage with Makefile:
 
