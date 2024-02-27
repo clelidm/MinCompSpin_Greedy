@@ -47,7 +47,7 @@ The data file and the basis file must be placed in the `INPUT` folder and have t
      
   See the example file `MNIST11.sorted` which is a dataset with `n=121` variables and `N=60 000` binary datapoints.
 
-- **Basis file:** The basis must be provided in a text file, in which the values of the basis operators are defined per line by a binary string of size `n`:
+- **Basis file:** The basis must be provided in a text file, in which basis operators are defined in each line by a binary string of size `n`:
   - a `'0'` at the i-th index indicates that the i-th spin is not involved in the operator;
   - a `'1'` at the i-th index indicates that the i-th spin contributes to the operator.
     
