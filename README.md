@@ -91,18 +91,21 @@ Run the following commands in your terminal, from the main folder (folder contai
   
  - **To clean:** `make clean`, removes all the intermediate files created during compilation and not used later. `make delete` will delete the final executable (to use only once you're done using the code).
 
- - **To Execute:** `make run` or `make run-newBasis`. This will use the variables that are specified at the beginning of the makefile.
-
-   To change the datafiles: open the `makefile` and replace the values of the following variables at the very top of the file:
+ - **To Execute:**
+    - `make run` to run the greedy search in the original basis;
+    - `make run-newBasis` to run the greedy search in the specified new basis.
+   This will use the datafiles specified at the beginning of the `makefile`. To change them, open the `makefile` and replace the values of the following variables at the very top of the file:
    >  - `datafilename`: name of your datafile; this file must be placed in the `INPUT` folder.
    >  - `n`: number of variables in your file; maximum possible value `n = 128`.
    >  - `basisfilename`: (option) name of the file containing the new basis; this file must be placed in the `INPUT` folder.
    
-   You can also execute the code by running in your terminal the command:
+   You can also execute the code by running it directly from your terminal, as in the previous section ("Usage without Makefile/To Execute"). For example your can run the command:
    ```bash
    ./GreedySearch.out  [datafilename]  [n]
    ```
    where you must replace `[datafilename]` by the name of your datafile and `[n]` by your number of variables.
+
+   All the options specified in the previous section, "Usage without Makefile/To Execute", still applies here.
 
 ## Examples
 
