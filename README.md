@@ -24,7 +24,7 @@ The comparison between models is based on their evidence (posterior probability 
 We recommend using the *simulated annealing algorithm* if you are interested in finding a solution that is as close as possible to the global optimal, or when the local greedy procedure fails to merge the initial spin variables into communities (this could be due to the absence of strong pairwise patterns, for example). We recommend the *Greedy algorithm* if you are looking for a fast converging algorithm, as it will allow finding near-optimal solutions in reasonable times when the search space becomes too large.
 
 ----
-# General information
+## General information
 
 The code performs a hierarchical merging procedure to try to find the optimal MCM in the basis chosen by the user.
 
