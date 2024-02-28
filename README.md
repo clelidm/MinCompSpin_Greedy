@@ -18,9 +18,9 @@ This program is complementary to the program available in [github.com/clelidm/Mi
 
 The comparison between models is based on their evidence (posterior probability that the model generates the data, integrated over its parameter values). All these programs aim at finding the models with the largest log-evidence. 
 
-**Exhaustive search:** The program available [here](https://github.com/clelidm/MinCompSpin) performs an exhaustive search for the best community. The code goes through all possible MCMs of a given rank `r`, and finds the one with the largest evidence (exact optimal model). The limiting factor of this code is that the space of possible MCMs increases almost exponentially with the number `r` of variables (the number of MCMs on a chosen basis is given by the Bell number of `r`). We recommend using a different strategy when the number of variables exceeds `~13` to `15`.
+ - **Exhaustive search:** The program available [here](https://github.com/clelidm/MinCompSpin) performs an exhaustive search for the best community. The code goes through all possible MCMs of a given rank `r`, and finds the one with the largest evidence (exact optimal model). The limiting factor of this code is that the space of possible MCMs increases almost exponentially with the number `r` of variables (the number of MCMs on a chosen basis is given by the Bell number of `r`). We recommend using a different strategy when the number of variables exceeds `~13` to `15`.
 
-**Greedy search VS Simulated annealing:** 
+ - **Greedy search VS Simulated annealing:** 
 We recommend using the *simulated annealing algorithm* if you are interested in finding a solution that is as close as possible to the global optimal, or when the local greedy procedure fails to merge the initial spin variables into communities (this could be due to the absence of strong pairwise patterns, for example). We recommend the *Greedy algorithm* if you are looking for a fast converging algorithm, as it will allow finding near-optimal solutions in reasonable times when the search space becomes too large.
 
 
