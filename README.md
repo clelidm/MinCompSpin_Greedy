@@ -146,7 +146,7 @@ Each of these datasets can be analyzed by running the program with the `makefile
 [4] E.D. Lee, C.P. Broedersz, W. Bialek, *Statistical Mechanics of the US Supreme Court*. [J Stat Phys 160, 275–301 (2015)](https://link.springer.com/article/10.1007/s10955-015-1253-6).
 
 
-## Output format of the returned MCM:
+## Output and format of the returned MCMs:
 
  - **Working in the original basis:** The (How to read MCM in the original and in the new basis.)
 
