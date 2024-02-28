@@ -166,14 +166,14 @@ Each of these datasets can be analyzed by running the program with the `makefile
      >                            - 000000001, this part contains the spin s1 alone.
 
    - **Working in the new basis:** The code compares MCMs that correspond to a partition of the basis operators provided.
-        - **Conversion to the new basis:** Consider a basis with $r$ independent operators (necessarily $r\leq n$). In the new basis, the datapoints will then be written over $r$ binary variables, each corresponding to one of the basis variables. The code will order the basis operators from the right to the left, i.e. the rightmost bit corresponds to the first operator $\sig_1$ in the basis file (encoded by the binary string on the first line of the file):
-          >   sig_1 = corresponds to the lowest bit, i.e. the RIGHTmost bit
-          >   sig_n = corresponds to the highest bit, i.e. the LEFTmost bit
-        - **Reading the MCM in the new basis:** Once the dataset is converted in the new basis, the MCMs found are printed as a list of binary strings, exactly as described in the previous section, except that the spin variables now correspond to the variables $\sig_{i}$ of the new basis.
+        - **Conversion to the new basis:** Consider a basis with $r$ independent operators (necessarily $r\leq n$). In the new basis, the datapoints will then be written over $r$ binary variables, each corresponding to one of the basis variables. The code will order the basis operators from the right to the left, i.e. the rightmost bit corresponds to the first operator (sig_1) in the basis file (encoded by the binary string in the first line of the file):
+          
+          >      sig_1 = 1rst operator in the basis file = corresponds to the RIGHTmost bit 
+          >      sig_n = last operator in the basis file = corresponds to the LEFTmost bit
+          
+        - **Reading the MCM in the new basis:** Once the dataset is converted in the new basis, the MCMs found are printed as a list of binary strings, exactly as described in the previous section, except that the spin variables now correspond to the variables (sig_i) of the new basis.
 
  - **Results for the examples:** See Ref.[1] for results and discussions on the best MCMs obtained for these datasets.
-
-$\sigma_{50}$
 
 ## Important information:
 
