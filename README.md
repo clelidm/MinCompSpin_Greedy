@@ -1,5 +1,4 @@
-# Greedy search
-# for the best Minimally Complex Models (MCM)
+# Greedy Search<br>for the best Minimally Complex Models (MCM)
 
 This program allows the **detection of community structures in binary data**, while taking into account possible **high-order patterns of the data** in detecting the communities (i.e., possible high-order correlations between the variables). The idea of the algorithm is based on performing statistical inference with a family of spin models (maximum entropy models for binary data) that have minimal information-theoretic complexity. These models are called **Minimally Complex Models (MCM)**. We use the fact that each partition of the variables (i.e., a community structure) can be mapped to an MCM.
 
