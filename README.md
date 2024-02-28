@@ -170,26 +170,12 @@ Each of these datasets can be analyzed by running the program with the `makefile
           
           >      sig_1 = 1rst operator in the basis file = corresponds to the RIGHTmost bit 
           >      sig_n = last operator in the basis file = corresponds to the LEFTmost bit
+        
+        This ordering is very important to interpret correctly the output of the MCM algorithm after basis transformation!
           
         - **Reading the MCM in the new basis:** Once the dataset is converted in the new basis, the MCMs found are printed as a list of binary strings, exactly as described in the previous section, except that the spin variables now correspond to the variables (sig_i) of the new basis.
 
  - **Results for the examples:** See Ref.[1] for results and discussions on the best MCMs obtained for these datasets.
-
-## Important information:
-
-### Basis change:
-To change the basis of the data to a chosen basis and apply the MCM search in this new basis:
- 1. Specify the basis elements in a list of integers `list<__int128_t> basis_li = ` using one of the available functions.
- 2. Transform the dataset `Nset` into the new basis (transformed data is in `Kset`) using the function `build_Kset`. This defines the new transformed data, stored in `Kset`:
-```c++
-vector<pair<__int128_t, unsigned int>> Kset = build_Kset(Nset, Basis_li);
-```
-
-**!! Important!!**
-when performing this basis transformation, basis operators are placed from right to left in the new basis, 
-i.e. the rightmost bit (lowest bit) corresponds to the first operator in `list<__int128_t> Basis`.
-
-This is very important for properly interpreting the output of the MCM algorithm after basis transformation.
 
 ----
 ## Advanced use:
@@ -198,13 +184,20 @@ You can also directly work with the C++ code, by calling functions directly from
 
 All the functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file or in the file `library.hpp`. The most useful functions are described below. 
 
- - **Basis Choice:** The basis is encoded in the variable `Basis_li`; by default, it is the original basis of the data. A different basis can be specified in a file by the user and read with the functions `Read_BasisOp_IntegerRepresentation()` or the function `Read_BasisOp_BinaryRepresentation()` depending on the format of the basis file (see examples in the `INPUT` folder, the files `SCOTUS_n9_BestBasis_Binary.dat` and `SCOTUS_n9_BestBasis_Integer.dat` which are encoding the best basis for the US Supreme Court data used as an example in Ref.[1]).
+ - **Basis Choice:** Specify the basis elements in a list of integers `list<__int128_t> basis_li = ` using one of the available functions.
 
- - **Basis Transformation:** blabla
+   The basis is encoded in the variable `Basis_li`; by default, it is the original basis of the data. A different basis can be specified in a file by the user and read with the functions `Read_BasisOp_IntegerRepresentation()` or the function `Read_BasisOp_BinaryRepresentation()` depending on the format of the basis file (see examples in the `INPUT` folder, the files `SCOTUS_n9_BestBasis_Binary.dat` and `SCOTUS_n9_BestBasis_Integer.dat` which are encoding the best basis for the US Supreme Court data used as an example in Ref.[1]).
+
+ - **Basis Transformation:** You can transform the dataset `Nset` into the new basis (transformed data is in `Kset`) using the function `build_Kset`. The transformed data is then stored in `Kset`:
+   ```c++
+   vector<pair<__int128_t, unsigned int>> Kset = build_Kset(Nset, Basis_li);
+   ```
+   When performing this basis transformation, basis operators are then placed from right to left in the new basis, i.e. the rightmost bit (lowest bit) corresponds to the first operator in `list<__int128_t> Basis`. This is very important to interpret correctly the output of the MCM algorithm after basis transformation.
 
  - **Greedy Search:** The Greedy search can be done using the functions `MCM_GreedySearch()` or `MCM_GreedySearch_AND_printInfo()` (the only difference is the latter function also prints some information about the found best MCM). 
 
  - **Starting the Greedy search from a chosen MCM:** By default, the greedy search starts from an MCM in which each ICC only contains a single variable. The search can also be started from a different initial MCM, using the function `MCM_GreedySearch_MCM0()`. This can be used for instance to run a short greedy merging at the end of a simulated annealing search.
+
 
 ----
 ## License
