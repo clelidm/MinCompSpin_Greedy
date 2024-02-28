@@ -31,13 +31,10 @@ The code uses the C++11 version of C++.
 
 The code performs a hierarchical merging procedure to try to find the optimal MCM in the basis chosen by the user.
 
- - **Chosen Basis:** To do so, the code starts by re-writing the data in the basis provided by the user. The basis is encoded in the variable `Basis_li` and **by default it is the original basis of the data** (i.e., by default, there is no basis transformation). A different basis can be specified in a file by the user and read with the functions `Read_BasisOp_IntegerRepresentation()` or the function `Read_BasisOp_BinaryRepresentation()` (see examples in the `INPUT` folder, the files `SCOTUS_n9_BestBasis_Binary.dat` and `SCOTUS_n9_BestBasis_Integer.dat` which are encoding the best basis for the US Supreme Court data used as an example in Ref.[1]).
+ - **Chosen Basis:** The code starts by re-writing the data in the basis provided by the user. By default, this basis is the original basis of the data.
 
- - **Greedy Search:** The Greedy search can be done using the functions `MCM_GreedySearch()` or `MCM_GreedySearch_AND_printInfo()` (the only difference is the latter function also prints some information about the found best MCM). To perform the hierarchical merging procedure, the code starts with `r` initial communities, and then successively merges the two communities that lead to the largest increase in the log-Evidence of the model. The code iterates this procedure until no more communities can be merged without decreasing the log-Evidence. **By default, the `n` initial communities are taken to be such that there is only one variable in each community.**  This procedure returns the MCM that achieves the maximal value of the evidence along the hierarchical merging process, as the number of communities varies from `n` to `1`.
+ - **Greedy Search:** To perform the hierarchical merging procedure, the code starts with `r` initial communities, and then successively merges the two communities that lead to the largest increase in the log-Evidence of the model. The code iterates this procedure until no more communities can be merged without decreasing the log-Evidence. **By default, the `n` initial communities are taken to be such that there is only one variable in each community.**  This procedure returns the MCM that achieves the maximal value of the evidence along the hierarchical merging process, as the number of communities varies from `n` to `1`.
 
- - **Starting from a chosen MCM:** The search can also be started from a different initial MCM, using the function `MCM_GreedySearch_MCM0()`. This can be used for instance to run a short greedy merging at the end of a simulated annealing search.
-
-All the functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file or in the file `library.hpp`. The most useful functions are described in the section "General information" above. 
 
 ## Format of the datafiles:
 The data file and the basis file must be placed in the `INPUT` folder and have the following format:
@@ -128,9 +125,17 @@ Run the following commands in your terminal, from the main folder (folder contai
 
    **Other options:** All the options specified in the previous section, "Usage without Makefile", still apply here.
 
-## More advanced use:
+## Advanced use:
 
 You can also directly work with the C++ code, by calling functions directly from the `main()` function of the `main.cpp` file. For hands-on simple use of available functions, see the function `tutorial()` in the `main.cpp` file (you can call this function by uncommenting the last lines in the function `main()`).
+
+All the functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file or in the file `library.hpp`. The most useful functions are described below. 
+
+ - **Basis Choice:** The basis is encoded in the variable `Basis_li`; by default, it is the original basis of the data. A different basis can be specified in a file by the user and read with the functions `Read_BasisOp_IntegerRepresentation()` or the function `Read_BasisOp_BinaryRepresentation()` depending on the format of the basis file (see examples in the `INPUT` folder, the files `SCOTUS_n9_BestBasis_Binary.dat` and `SCOTUS_n9_BestBasis_Integer.dat` which are encoding the best basis for the US Supreme Court data used as an example in Ref.[1]).
+
+ - **Greedy Search:** The Greedy search can be done using the functions `MCM_GreedySearch()` or `MCM_GreedySearch_AND_printInfo()` (the only difference is the latter function also prints some information about the found best MCM). 
+
+ - **Starting the Greedy search from a chosen MCM:** By default, the greedy search starts from an MCM in which each ICC only contains a single variable. The search can also be started from a different initial MCM, using the function `MCM_GreedySearch_MCM0()`. This can be used for instance to run a short greedy merging at the end of a simulated annealing search.
 
 ## Examples
 
@@ -159,13 +164,8 @@ Each of these datasets can be analyzed by running the program with the `makefile
 **Results:** See Ref.[1] for results and discussions on the best MCMs obtained for these datasets. You can also find, in the `OUTPUT` folder, the log returned when running the greedy code on these datasets. 
 The log returned when running the greedy code on the example datasets can be found in the `OUTPUT` folder.
 
-## License
-
-This code is an open-source project under the GNU GPLv3.
-
-----
-
 ## Important information:
+
 ### Basis change:
 To change the basis of the data to a chosen basis and apply the MCM search in this new basis:
  1. Specify the basis elements in a list of integers `list<__int128_t> basis_li = ` using one of the available functions.
@@ -179,4 +179,10 @@ when performing this basis transformation, basis operators are placed from right
 i.e. the rightmost bit (lowest bit) corresponds to the first operator in `list<__int128_t> Basis`.
 
 This is very important for properly interpreting the output of the MCM algorithm after basis transformation.
+
+----
+## License
+
+This code is an open-source project under the GNU GPLv3.
+
 
