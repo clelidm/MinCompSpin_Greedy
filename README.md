@@ -50,7 +50,7 @@ The data file and the basis file must be placed in the `INPUT` folder and have t
   - a `'0'` at the i-th index indicates that the i-th spin is not involved in the operator;
   - a `'1'` at the i-th index indicates that the i-th spin contributes to the operator.
     
-  Spins must be ordered in the same order as in the original datafile, i.e. the i-th index from the left in the basis file corresponds to the i-th spin from the left in the datafile.
+  Spins must be ordered in the same order as in the original datafile, i.e. the i-th index from the left in the basis file corresponds to the i-th spin from the left in the datafile. The number $r$ of basis operators can be smaller than the original number $n$ of spin variables, in which case there will be a dimension reduction of the dataset after basis transformation. **The important thing is that the basis operators provided are independent (i.e. they form an independent set). You must make sure that this is the case, as the program won't check it** (see Ref. [1] for more information about this). 
   
   See the example file `MNIST11.sorted_BestBasis_k4_Binary` which contains a basis with `n=121` basis operators, each encoded over the `n=121` original basis variables. Each operator corresponds to a new line. Note that the text appearing after the `n`-th columns is simply ignored by the function reading the basis. Similarly, empty lines or lines starting with characters other than `'0'` or `'1'` are ignored (see for example the line starting with `'#'`).
 
@@ -165,7 +165,9 @@ Each of these datasets can be analyzed by running the program with the `makefile
    >                            - 001000110, this part contains the spins s2, s3, s7;
    >                            - 000000001, this part contains the spin s1 alone.
 
- - **Working in the new basis:** The code only compares MCMs that correspond to partitions of the basis operators provided.  Once the dataset is converted in the new basis, these MCMs are simply encoded on r digits, where r is the number of basis operators on which one want to perform the search for the best MCM (see next section).
+ - **Working in the new basis:** The code compares MCMs that correspond to a partition of the basis operators provided.
+      - **Conversion to the new basis:**
+      - **Reading the MCM in the new basis:** Once the dataset is converted in the new basis, the MCMs found are printed as a list of binary strings, exactly as described in the previous section, except that the spin variables now correspond to the variables $\sig_i$ of the new basis.
 
 **Results:** See Ref.[1] for results and discussions on the best MCMs obtained for these datasets.
 
