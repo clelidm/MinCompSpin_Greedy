@@ -147,29 +147,29 @@ Each of these datasets can be analyzed by running the program with the `makefile
 
 ## Output and format of the returned MCMs:
 
-**Output:** The log returned when running the greedy code on the example datasets can be found in the `OUTPUT` folder.
+ - **Output:** The log returned when running the greedy code on the example datasets can be found in the `OUTPUT` folder.
 
-**Interpreting the output MCM:** The (How to read MCM in the original and in the new basis.)
+ - **Interpreting the printed MCM:**  How to read the printed MCM in the original and in the new basis?
 
- - **Working in the original basis:** The code only compares MCMs that correspond to partitions of `n` original basis variables of the data. The best-found MCM is then printed as a list of binary strings, each one encoding an ICC (i.e., a part): spins with a bit equal to `'1'` belong to the ICC, spins with a `'0'` don't. Variables are organized in the same order as in the original datafile, i.e. the i-th spin from the right in the best MCM corresponds to the i-th spin from the right in the original datafile.
+   - **Working in the original basis:** The code only compares MCMs that correspond to partitions of `n` original basis variables of the data. The best-found MCM is then printed as a list of binary strings, each one encoding an ICC (i.e., a part): spins with a bit equal to `'1'` belong to the ICC, spins with a `'0'` don't. Variables are organized in the same order as in the original datafile, i.e. the i-th spin from the right in the best MCM corresponds to the i-th spin from the right in the original datafile.
    
-   >      Example, for a system with 9 binary variables.
-   >
-   >      The following MCM has 3 parts:   110111000
-   >                                       001000110
-   >                                       000000001
-   >
-   >      Labeling the spin variables from the right (s1) to the left (s9),
-   >      one can read the contribution of each spin to each part:
-   >                            - 110111000, this part contains the spins s4, s5, s6, s8, s9;
-   >                            - 001000110, this part contains the spins s2, s3, s7;
-   >                            - 000000001, this part contains the spin s1 alone.
+     >      Example, for a system with 9 binary variables.
+     >
+     >      The following MCM has 3 parts:   110111000
+     >                                       001000110
+     >                                       000000001
+     >
+     >      Labeling the spin variables from the right (s1) to the left (s9),
+     >      one can read the contribution of each spin to each part:
+     >                            - 110111000, this part contains the spins s4, s5, s6, s8, s9;
+     >                            - 001000110, this part contains the spins s2, s3, s7;
+     >                            - 000000001, this part contains the spin s1 alone.
 
- - **Working in the new basis:** The code compares MCMs that correspond to a partition of the basis operators provided.
-      - **Conversion to the new basis:**
-      - **Reading the MCM in the new basis:** Once the dataset is converted in the new basis, the MCMs found are printed as a list of binary strings, exactly as described in the previous section, except that the spin variables now correspond to the variables $\sig_i$ of the new basis.
+   - **Working in the new basis:** The code compares MCMs that correspond to a partition of the basis operators provided.
+        - **Conversion to the new basis:**
+        - **Reading the MCM in the new basis:** Once the dataset is converted in the new basis, the MCMs found are printed as a list of binary strings, exactly as described in the previous section, except that the spin variables now correspond to the variables $\sig_i$ of the new basis.
 
-**Results:** See Ref.[1] for results and discussions on the best MCMs obtained for these datasets.
+ - **Results for the examples:** See Ref.[1] for results and discussions on the best MCMs obtained for these datasets.
 
 ## Important information:
 
