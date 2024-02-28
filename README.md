@@ -39,7 +39,7 @@ The code performs a hierarchical merging procedure to try to find the optimal MC
 
 The code uses the C++11 version of C++.
 
-## Format of the datafiles:
+## Format of the input datafiles:
 The data file and the basis file must be placed in the `INPUT` folder and have the following format:
 - **Data file:** The dataset must be provided in a text file in which the state of each variable is either a `'0'` or a `'1'`. The file must have:
    - `n` columns, where `n` is the number of variables;
