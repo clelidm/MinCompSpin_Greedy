@@ -23,9 +23,9 @@ The comparison between models is based on their evidence (posterior probability 
 **Greedy search VS Simulated annealing:** 
 We recommend using the *simulated annealing algorithm* if you are interested in finding a solution that is as close as possible to the global optimal, or when the local greedy procedure fails to merge the initial spin variables into communities (this could be due to the absence of strong pairwise patterns, for example). We recommend the *Greedy algorithm* if you are looking for a fast converging algorithm, as it will allow finding near-optimal solutions in reasonable times when the search space becomes too large.
 
-## Requirements
 
-The code uses the C++11 version of C++.
+----
+# Usage
 
 ## General information
 
@@ -35,6 +35,9 @@ The code performs a hierarchical merging procedure to try to find the optimal MC
 
  - **Greedy Search:** To perform the hierarchical merging procedure, the code starts with `r` initial communities, and then successively merges the two communities that lead to the largest increase in the log-Evidence of the model. The code iterates this procedure until no more communities can be merged without decreasing the log-Evidence. **By default, the `n` initial communities are taken to be such that there is only one variable in each community.**  This procedure returns the MCM that achieves the maximal value of the evidence along the hierarchical merging process, as the number of communities varies from `n` to `1`.
 
+## Requirements
+
+The code uses the C++11 version of C++.
 
 ## Format of the datafiles:
 The data file and the basis file must be placed in the `INPUT` folder and have the following format:
