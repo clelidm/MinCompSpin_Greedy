@@ -147,13 +147,38 @@ Each of these datasets can be analyzed by running the program with the `makefile
 
 ## Output and format of the returned MCMs:
 
- - **Working in the original basis:** The (How to read MCM in the original and in the new basis.)
+**Output:** The log returned when running the greedy code on the example datasets can be found in the `OUTPUT` folder.
 
- - **Working in the new basis:**
+**Interpreting the output MCM:** The (How to read MCM in the original and in the new basis.)
+
+ - **Working in the original basis:** The code only compares MCMs that correspond to partitions of `n` original variables of the data. The best-found MCM is then printed as a list of binary strings, each one encoding an ICC (i.e., a part): the spins with a bit equal to `'1'` belong to the ICC. Variables are organized in the same order as in the original datafile, i.e. the i-th spin from the right in the best MCM corresponds to the i-th spin from the right in the original datafile.
+ 
+   >      Example, for a system with 9 binary variables:
+   >
+   >      The following MCM has 3 parts:
+   >                            - 110111000, this part contains the spins s4, s5, s6, s8, s9;
+   >                            - 001000110, this part contains the spins s2, s3, s7;
+   >                            - 000000001, this part contains the spin s1 alone.
+   
+   >      Example, for a system with 9 binary variables.
+   >
+   >      The following MCM:
+   >          `110111000`
+   >          `001000110`
+   >          `000000001`
+   >       has 3 parts. Labeling the spin variables from the right, one can read the contribution of each spin to each part:
+   >          `110111000`, this part contains the spins s4, s5, s6, s8, s9;
+   >          `001000110`, this part contains the spins s2, s3, s7;
+   >          `000000001`, this part contains the spin s1 alone.
 
 
-**Results:** See Ref.[1] for results and discussions on the best MCMs obtained for these datasets. You can also find, in the `OUTPUT` folder, the log returned when running the greedy code on these datasets. 
-The log returned when running the greedy code on the example datasets can be found in the `OUTPUT` folder.
+ 
+ - The printed MCM of the r digits are encoded in two different ways:
+ In this representation, each integer encodes a part of the partition: in the binary representation of each integer, the variables with a bit equal to 1 belong to the part. See example below.
+
+ - **Working in the new basis:** The code only compares MCMs that correspond to partitions of the basis operators provided.  Once the dataset is converted in the new basis, these MCMs are simply encoded on r digits, where r is the number of basis operators on which one want to perform the search for the best MCM (see next section).
+
+**Results:** See Ref.[1] for results and discussions on the best MCMs obtained for these datasets.
 
 ## Important information:
 
