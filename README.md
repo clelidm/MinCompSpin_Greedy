@@ -184,9 +184,7 @@ You can also directly work with the C++ code, by calling functions directly from
 
 All the functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file or in the file `library.hpp`. The most useful functions are described below. 
 
- - **Basis Choice:** Specify the basis elements in a list of integers `list<__int128_t> basis_li = ` using one of the available functions.
-
-   The basis is encoded in the variable `Basis_li`; by default, it is the original basis of the data. A different basis can be specified in a file by the user and read with the functions `Read_BasisOp_IntegerRepresentation()` or the function `Read_BasisOp_BinaryRepresentation()` depending on the format of the basis file (see examples in the `INPUT` folder, the files `SCOTUS_n9_BestBasis_Binary.dat` and `SCOTUS_n9_BestBasis_Integer.dat` which are encoding the best basis for the US Supreme Court data used as an example in Ref.[1]).
+ - **Basis Choice:** The basis is encoded in the variable `Basis_li`; by default, it is the original basis of the data. You can specify the basis elements as a list of integers `list<__int128_t> basis_li` either manually or by using one of the available functions. A different basis can be specified in a file by the user and read with the functions `Read_BasisOp_IntegerRepresentation()` or the function `Read_BasisOp_BinaryRepresentation()` depending on the format of the basis file (see examples in the `INPUT` folder, the files `SCOTUS_n9_BestBasis_Binary.dat` and `SCOTUS_n9_BestBasis_Integer.dat` which are encoding the best basis for the US Supreme Court data used as an example in Ref.[1]).
 
  - **Basis Transformation:** You can transform the dataset `Nset` into the new basis (transformed data is in `Kset`) using the function `build_Kset`. The transformed data is then stored in `Kset`:
    ```c++
