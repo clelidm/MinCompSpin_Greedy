@@ -125,17 +125,6 @@ Run the following commands in your terminal, from the main folder (folder contai
 
    **Other options:** All the options specified in the previous section, "Usage without Makefile", still apply here.
 
-## Advanced use:
-
-You can also directly work with the C++ code, by calling functions directly from the `main()` function of the `main.cpp` file. For hands-on simple use of available functions, see the function `tutorial()` in the `main.cpp` file (you can call this function by uncommenting the last lines in the function `main()`).
-
-All the functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file or in the file `library.hpp`. The most useful functions are described below. 
-
- - **Basis Choice:** The basis is encoded in the variable `Basis_li`; by default, it is the original basis of the data. A different basis can be specified in a file by the user and read with the functions `Read_BasisOp_IntegerRepresentation()` or the function `Read_BasisOp_BinaryRepresentation()` depending on the format of the basis file (see examples in the `INPUT` folder, the files `SCOTUS_n9_BestBasis_Binary.dat` and `SCOTUS_n9_BestBasis_Integer.dat` which are encoding the best basis for the US Supreme Court data used as an example in Ref.[1]).
-
- - **Greedy Search:** The Greedy search can be done using the functions `MCM_GreedySearch()` or `MCM_GreedySearch_AND_printInfo()` (the only difference is the latter function also prints some information about the found best MCM). 
-
- - **Starting the Greedy search from a chosen MCM:** By default, the greedy search starts from an MCM in which each ICC only contains a single variable. The search can also be started from a different initial MCM, using the function `MCM_GreedySearch_MCM0()`. This can be used for instance to run a short greedy merging at the end of a simulated annealing search.
 
 ## Examples
 
@@ -179,6 +168,19 @@ when performing this basis transformation, basis operators are placed from right
 i.e. the rightmost bit (lowest bit) corresponds to the first operator in `list<__int128_t> Basis`.
 
 This is very important for properly interpreting the output of the MCM algorithm after basis transformation.
+
+----
+## Advanced use:
+
+You can also directly work with the C++ code, by calling functions directly from the `main()` function of the `main.cpp` file. For hands-on simple use of available functions, see the function `tutorial()` in the `main.cpp` file (you can call this function by uncommenting the last lines in the function `main()`).
+
+All the functions that can be called from `int main()` are declared at the beginning of the `main.cpp` file or in the file `library.hpp`. The most useful functions are described below. 
+
+ - **Basis Choice:** The basis is encoded in the variable `Basis_li`; by default, it is the original basis of the data. A different basis can be specified in a file by the user and read with the functions `Read_BasisOp_IntegerRepresentation()` or the function `Read_BasisOp_BinaryRepresentation()` depending on the format of the basis file (see examples in the `INPUT` folder, the files `SCOTUS_n9_BestBasis_Binary.dat` and `SCOTUS_n9_BestBasis_Integer.dat` which are encoding the best basis for the US Supreme Court data used as an example in Ref.[1]).
+
+ - **Greedy Search:** The Greedy search can be done using the functions `MCM_GreedySearch()` or `MCM_GreedySearch_AND_printInfo()` (the only difference is the latter function also prints some information about the found best MCM). 
+
+ - **Starting the Greedy search from a chosen MCM:** By default, the greedy search starts from an MCM in which each ICC only contains a single variable. The search can also be started from a different initial MCM, using the function `MCM_GreedySearch_MCM0()`. This can be used for instance to run a short greedy merging at the end of a simulated annealing search.
 
 ----
 ## License
