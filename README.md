@@ -159,7 +159,7 @@ Each of these datasets can be analyzed by running the program with the `makefile
    >                                       001000110
    >                                       000000001
    >
-   >      Labeling the spin variables from the right, one can read the contribution of each spin to each part:
+   >      Labeling the spin variables from the right (s1) to the left (s9), one can read the contribution of each spin to each part:
    >                            - 110111000, this part contains the spins s4, s5, s6, s8, s9;
    >                            - 001000110, this part contains the spins s2, s3, s7;
    >                            - 000000001, this part contains the spin s1 alone.
