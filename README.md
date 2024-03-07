@@ -147,7 +147,7 @@ Each of these datasets can be analyzed by running the program with the `makefile
 
 ## Output and format of the returned MCMs:
 
- - **Output:** The log returned when running the greedy code on the example datasets can be found in the `OUTPUT` folder.
+ - **Terminal Output:** We provided, in the `OUTPUT` folder, the LOGS returned when running the greedy code on the example datasets.
 
  - **Interpreting the printed MCM:**  How to read the printed MCM in the original and in the new basis?
 
