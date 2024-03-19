@@ -33,7 +33,7 @@ datafilename := SCOTUS_n9_N895_Data.dat    # datafile name, must be in INPUT fol
 n := 9      # number of binary variables in the datafile 
 basisfilename := SCOTUS_n9_BestBasis_Binary.dat  # must be in INPUT folder 
 
-mcmfilename := SCOTUS_n9_N895_Data_MCM_inBnew.dat  # must be in OUTPUT folder 
+mcmfilename := SCOTUS_n9_N895_Data_MCM_inBnew_exh.dat  # must be in OUTPUT folder 
                                                    # --> this is the best MCM overall, i.e. the one found by the exhaustive search in the best basis
 N=1000          ## number of samples
 
