@@ -137,7 +137,7 @@ Run the following commands in your terminal, from the main folder (folder contai
    - `make clean` removes all the intermediate files created during compilation and not used later;
    - `make delete` will delete the final executable (to use only once you're done using the code).
 
- - **To Execute:**
+ - **To Execute Greedy Search:**
     - `make run` to run the greedy search in the original basis;
     - `make run-newBasis` to run the greedy search in the specified new basis.
    
@@ -152,6 +152,17 @@ Run the following commands in your terminal, from the main folder (folder contai
    ```
    where you must replace `[datafilename]` by the name of your datafile and `[n]` by your number of variables.
 
+ - **To Execute Sampling:**
+    - `make sample` to get samples from an MCM specified in the original basis;
+    - `make sample-newBasis` to get samples from an MCM specified in a specified new basis.
+
+   This will use the datafiles specified at the beginning of the `makefile`. To change them, open the `makefile` and replace the values of the following variables at the very top of the file:
+   >  - `datafilename`: name of your datafile; this file must be placed in the `INPUT` folder.
+   >  - `n`: number of variables in your file; maximum possible value `n = 128`.
+   >  - `basisfilename`: (option) name of the file containing the new basis; this file must be placed in the `INPUT` folder.
+   >  - `mcmfilename`: name of the file containing the MCM; this file must be placed in the `OUTPUT` folder.
+   >  - `N`: number of requested samples.
+   
    **Other options:** All the options specified in the previous section, "Usage without Makefile", still apply here.
 
 
