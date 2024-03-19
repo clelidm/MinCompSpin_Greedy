@@ -163,7 +163,7 @@ Run the following commands in your terminal, from the main folder (folder contai
    >  - `mcmfilename`: name of the file containing the MCM; this file must be placed in the `OUTPUT` folder.
    >  - `N`: number of requested samples.
    
-   **Other options:** All the options specified in the previous section, "Usage without Makefile", still apply here.
+ - **Other options:** All the options specified in the previous section, "Usage without Makefile", still apply here.
 
 
 ## Examples
