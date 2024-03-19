@@ -11,7 +11,7 @@ This program is complementary to the program available in [github.com/clelidm/Mi
 
 [1]  C. de Mulatier, P. P. Mazza, M. Marsili, *Statistical Inference of Minimally Complex Models*, [arXiv:2008.00520](https://arxiv.org/abs/2008.00520)
 
-[2] E. Peerbooms, S. Kamphof, J.-H. Lestang, C. de Mulatier, *Statistical Modeling of High-Order Community Structures in Binary Data*
+[2] E. Peerbooms, S. Kamphof, J.-H. Lestang, C. de Mulatier, *Statistical Modeling of High-Order Community Structures in Binary Data* (arxiv coming soon)
 
 ## Different programs for searching for the best MCM:
 
