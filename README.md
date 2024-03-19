@@ -8,6 +8,7 @@ This repository contains a code initially developed for the paper Ref. [1] and l
 
 This program is complementary to the program available in [github.com/clelidm/MinCompSpin](https://github.com/clelidm/MinCompSpin), which performs an **exhaustive search** for the best community. We recommend using the greedy search over the exhaustive search when the number of variables exceeds `15`. A **simulated annealing version** of the optimization procedure can also be found in [github.com/ebokai/MinCompSpin_SimulatedAnnealing](https://github.com/ebokai/MinCompSpin_SimulatedAnnealing), which can find solutions closer to the global optimal.
 
+It is also possible to use the program to generate samples from a chosen MCM, as well as print out the model probability distribution.
 
 [1]  C. de Mulatier, P. P. Mazza, M. Marsili, *Statistical Inference of Minimally Complex Models*, [arXiv:2008.00520](https://arxiv.org/abs/2008.00520)
 
@@ -52,7 +53,7 @@ The data file and the basis file must be placed in the `INPUT` folder and have t
     
   Spins must be ordered in the same order as in the original datafile, i.e. the i-th index from the left in the basis file corresponds to the i-th spin from the left in the datafile. The number $r$ of basis operators can be smaller than the original number $n$ of spin variables, in which case there will be a dimension reduction of the dataset after basis transformation. **The important thing is that the basis operators provided are independent (i.e. they form an independent set). You must make sure that this is the case, as the program won't check it** (see Ref. [1] for more information about this). 
   
-  See the example file `MNIST11.sorted_BestBasis_k4_Binary` which contains a basis with `n=121` basis operators, each encoded over the `n=121` original basis variables. Each operator corresponds to a new line. Note that the text appearing after the `n`-th columns is simply ignored by the function reading the basis. Similarly, empty lines or lines starting with characters other than `'0'` or `'1'` are ignored (see for example the line starting with `'#'`).
+  See the example file `MNIST11.sorted_BestBasis_k4_Binary.dat` which contains a basis with `n=121` basis operators, each encoded over the `n=121` original basis variables. Each operator corresponds to a new line. Note that the text appearing after the `n`-th columns is simply ignored by the function reading the basis. Similarly, empty lines or lines starting with characters other than `'0'` or `'1'` are ignored (see for example the line starting with `'#'`).
 
 ## Usage without Makefile:
 
