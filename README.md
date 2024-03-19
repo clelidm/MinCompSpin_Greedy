@@ -103,7 +103,7 @@ The data file and the basis file must be placed in the `INPUT` folder and have t
     - **Print model probabilities:** adding the option `--proba` will also print out (in a file) the model probability distribution in comparison with the empirical probability distribution (only for the states observed in the dataset) at the end of the program.
    
    **Summary table:**
-   | Run  | Command | Comment |
+   | Run MCM Search  | Command | Comment |
    | --- | --- | --- |
    | Help | `./MCM_Greedy.out -h` | |
    | Run default example:<br>MNIST dataset | `./MCM_Greedy.out`| See Example 1<br>in "Examples" section below|
@@ -111,6 +111,12 @@ The data file and the basis file must be placed in the `INPUT` folder and have t
    | Greedy Search<br>in the chosen New Basis | `./MCM_Greedy.out [datafilename] [n] -b [basisfilename]`| |
    | Full Greedy merging<br>until getting a single ICC | `./MCM_Greedy.out [datafilename] [n] --full` | prints LogE<br>along the entire Greedy path |
    | Don't print checkpoints | `./MCM_Greedy.out [datafilename] [n] --NoCheckPoint` | slightly faster for datasets<br>with large `n` |
+
+   | Run Sampling  | Command | Comment |
+   | --- | --- | --- |
+   | Sample from MCM <br>in the Original Basis<br>of the data | `./MCM_Greedy.out [datafilename] [n] --sample [MCMfilename]` |  |
+   | Sample from MCM <br>in a chosen New Basis | `./MCM_Greedy.out [datafilename] [n] -b [basisfilename] --sample [MCMfilename]`| |
+   | Sample from MCM <br>and print model probabilities | `./MCM_Greedy.out [datafilename] [n] --proba` |  |
 
  - **To execute using a bash script:**
    Open the script file `job_run.sh` and replace `datafilename` by the name of your datafile, `n` by your number of variables in the file `job_run.sh`, and (if needed) `basisfilename` by the name of your basis file. Select/comment the command line that applies to your case.
