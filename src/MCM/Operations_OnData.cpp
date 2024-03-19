@@ -76,36 +76,32 @@ vector<pair<__int128_t, unsigned int>> read_datafile(unsigned int *N, std::strin
 
 
 /******************************************************************************/
-/**************************     PRINT Nset   **********************************/
+/**************************     PRINT Kset   **********************************/
 /******************************************************************************/
-/*
-void Print_File_Nset(map<__int128_t, unsigned int> Nset, unsigned int N, unsigned int r, string OUTPUTfilename)
-// map.second = nb of time that the state map.first appears in the data set
+
+void Print_File_Kset(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N, unsigned int r, string OUTPUTfilename)
+// Kset[i].second = nb of time that the state Kset[i].first appears in the data set
 {
-  map<__int128_t, unsigned int>::iterator it;
-  int Ncontrol = 0;
-  __int128_t one128 = 1;
+    int Ncontrol = 0;
 
-  fstream file(OUTPUTfilename.c_str(), ios::out);
-  file << "#N = " << N << endl;
-  file << "#Total number of accessible states = 2^r-1 = 2^(" << r << ") - 1" << endl;
-  file << "#Number of visited states, Nset.size() = " << Nset.size() << endl;
-  file << "#" << endl;
-  file << "#1: state \t #2: nb of pts in state \t #3: Pba state" << endl;
+    fstream file(OUTPUTfilename.c_str(), ios::out);
+    file << "#N = " << N << endl;
+    file << "#Total number of accessible states = 2^r-1 = 2^(" << r << ") - 1" << endl;
+    file << "#Number of visited states, Nset.size() = " << Kset.size() << endl;
+    file << "#" << endl;
+    file << "#1: state \t #2: nb of pts in state \t #3: Pba state" << endl;
 
-  for (it = Nset.begin(); it!=Nset.end(); ++it)
-  {
-    file << int_to_bstring((*it).first, r) << " => " << (*it).second; // << endl;
-    file << "  \t  P = " << ((*it).second) / (float) N << endl;
-    Ncontrol += (*it).second;
-  }
+    for (auto const& it : Kset)
+    {
+        file << int_to_bstring((it).first, r) << " => " << (it).second; // << endl;
+        file << "  \t  P = " << ((it).second) / (float) N << endl;
+        Ncontrol += (it).second;
+    }
 
-  if (Ncontrol != N) { cout << "Error function \'read_Nset\': Ncontrol != N" << endl;  }
+    if (Ncontrol != N) { cout << "Error function \'read_Nset\': Ncontrol != N" << endl;  }
 
-  file.close();
+    file.close();
 }
-*/
-
 
 /******************************************************************************/
 /*********************     CHANGE of BASIS: one datapoint  ********************/
@@ -174,7 +170,6 @@ vector<pair<__int128_t, unsigned int>> build_Kset(vector<pair<__int128_t, unsign
 
     return Kset;
 }
-
 
 /******************************************************************************/
 /****************************   REDUCE K_SET   ********************************/

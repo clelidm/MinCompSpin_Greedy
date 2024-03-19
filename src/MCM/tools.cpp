@@ -9,6 +9,21 @@ const uint32_t un32 = 1;  // we only need the first bit here -->> will be used t
 //const unsigned int n_max = 128;  // for bitset
 
 /******************************************************************************/
+/*****************   Remove the extension of a filename   *********************/
+/******************************************************************************/
+std::string filename_remove_extension(std::string filename)
+{
+    std::string new_filename;
+
+    for(char& c:filename)  
+    { 
+        if (c == '.') { break; }
+        new_filename.push_back(c);
+    } 
+    return new_filename;
+}
+
+/******************************************************************************/
 /*******************   Convert Integer to Binary string   *********************/
 /******************************************************************************/
 std::string int_to_bstring(__int128_t bool_nb, unsigned int n)
@@ -33,6 +48,23 @@ std::string int_to_bstring(__int128_t bool_nb, unsigned int n)
             bits{ (hi << 64) | lo };
     return bits.to_string();
 }*/
+
+__int128_t bstring_to_int(std::string Nb_bin_str, unsigned int n)
+{
+  __int128_t bit_index = 1, Nb_bin_int = 0;  
+
+  bit_index = bit_index << (n - 1);
+    
+  char c = '1';  
+  for (auto &elem: Nb_bin_str)     //convert string line2 into a binary integer
+  {
+      if (elem == c) 
+        { Nb_bin_int += bit_index; }
+      bit_index = bit_index >> 1;
+  }
+
+  return Nb_bin_int;
+}
 
 /******************************************************************************/
 /****************   Count number of set bits of an integer  *******************/

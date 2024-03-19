@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <cmath>
+#include <fstream>
 
 using namespace std;
 
@@ -25,26 +26,34 @@ unsigned int mat_loc(unsigned int i, unsigned int j)  // for i < j
     return j * (j - 1) / 2 + i;
 }
 
+void PrintFile_MCM_FullMerge(map<unsigned int, __int128_t> MCM_Partition, unsigned int r, fstream &file);
+
 /******************************************************************************/
 /***************    FIND THE BEST MCM: GREEDY PROCEDURE    ********************/
 /***************          Starting from chosen MCM_0       ********************/
 /******************************************************************************/
 // r = number of communities in MCM_0
 
-map<unsigned int, __int128_t> MCM_GreedySearch_MCM0(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N, map<unsigned int, __int128_t> MCM_0, bool print_info = true, bool Greedy_Full_merging = false)
+map<unsigned int, __int128_t> MCM_GreedySearch_MCM0(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N, unsigned int r, map<unsigned int, __int128_t> MCM_0, bool print_info = true, bool Greedy_Full_merging = false)
 {
+    fstream file_MCMs;  // used only if full merging: print all MCMs along merging
+
     double Nd = (double) N;
     if(Greedy_Full_merging)
     {
         cout << "**** Performing a full merging procedure until fully merged model: print merging path ****" << endl;
         print_info = true;
+
+        file_MCMs.open("MCMs_FullMerge.dat", ios::out);
+        file_MCMs << "## Successive MCM Partitions found along the Greedy hierarchical merging search." << endl;
+        file_MCMs << "## \tMCM are given in the specified chosen basis:" << endl;
     }
 
     // ** Create MCM_Best and initialise it to MCM_0:   
     map<unsigned int, __int128_t> Best_MCM(MCM_0);
 
     // ** Number of ICCs in MCM_Best:
-    unsigned int r = Best_MCM.size();
+    unsigned int rank = Best_MCM.size();
     double LogE_tot_best = 0;
 
     // ** Store values of LogE for each ICC:
@@ -70,12 +79,12 @@ map<unsigned int, __int128_t> MCM_GreedySearch_MCM0(vector<pair<__int128_t, unsi
 
     // ** Create table of LogE values for all pairs of merged ICCs:
     cout << "\t **** Filling in the rxr-triangular Matrix ****" << endl;
-    double* logE_merged = (double*)malloc(r * (r - 1) / 2 * sizeof(double));
+    double* logE_merged = (double*)malloc(rank * (rank - 1) / 2 * sizeof(double));
 
     // logE_merged[mat_loc(i,j)] will contain the values of LogE of merged(ICCs i and j)
-    for (unsigned int i = 0; i < r - 1; i++)
+    for (unsigned int i = 0; i < rank - 1; i++)
     {
-        for (unsigned int j = i + 1; j < r; j++)
+        for (unsigned int j = i + 1; j < rank; j++)
         {
             logE_merged[mat_loc(i, j)] = 0;  // initalized to 0
         }
@@ -100,6 +109,9 @@ map<unsigned int, __int128_t> MCM_GreedySearch_MCM0(vector<pair<__int128_t, unsi
     cout << "   Start: \t\t Nb of communities = " << Best_MCM.size();
     cout << "\t LogE = " << LogE_tot;
     cout << " = " << LogE_tot/log(2.)/Nd << " bits/datapoint"<< endl; // << "\t Check: " << LogE_MCM(Kset, Best_MCM, N, r) << endl;
+
+    if(Greedy_Full_merging) 
+        {  PrintFile_MCM_FullMerge(Best_MCM, r, file_MCMs); }
 
     int iteration = 0; 
     while (Best_MCM.size() > 1 && (!stop))
@@ -198,6 +210,8 @@ map<unsigned int, __int128_t> MCM_GreedySearch_MCM0(vector<pair<__int128_t, unsi
             cout << " \t Merged ICCs " << i_keep << " & " << i_erase << " into " << i_keep;
             cout << " (delete " << i_erase << ")" << endl;   
         }
+        if(Greedy_Full_merging) 
+            {  PrintFile_MCM_FullMerge(Best_MCM, r, file_MCMs); }
     } // End While
 
     cout << "\t **** Greedy Merging Finished ****" << endl;
@@ -229,7 +243,7 @@ map<unsigned int, __int128_t> MCM_GreedySearch(vector<pair<__int128_t, unsigned 
     }
 
     // ** Call Greedy Algo for MCM_0:
-    return MCM_GreedySearch_MCM0(Kset, N, MCM_0, print_info, Greedy_Full_merging);
+    return MCM_GreedySearch_MCM0(Kset, N, r, MCM_0, print_info, Greedy_Full_merging);
 }
 
 /******************************************************************************/

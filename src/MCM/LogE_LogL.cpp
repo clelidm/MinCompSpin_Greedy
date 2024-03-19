@@ -37,6 +37,33 @@ map<__int128_t, unsigned int> build_Kset_ICC(vector<pair<__int128_t, unsigned in
     return Kset_ICC;
 }
 
+
+// ONLY BECAUSE OF ISSUES IN "-O3" compilation mode:
+vector<pair<__int128_t, unsigned int>> build_Kset_ICC_vect(vector<pair<__int128_t, unsigned int>> Kset, __int128_t Ai)
+{
+    map<__int128_t, unsigned int> Kset_ICC;
+    __int128_t s;        // state
+
+  //Build Kset_ICC:
+    for (auto const& it : Kset)
+    {
+      s = ((it).first) & Ai;          // troncated state: take only the bits of s (=it.first) indicated by Ai
+      Kset_ICC[s] += ((it).second);   // # of times s appears in the data set
+    }
+
+// ***** Convert map to a vector:  ONLY BECAUSE OF ISSUES IN "-O3" compilation mode:  ********************************************
+    vector<pair<__int128_t, unsigned int>> Kset_ICC_vect(Kset_ICC.size());
+
+    int i=0;
+    for (auto& my_pair : Kset_ICC)
+    {
+        Kset_ICC_vect[i]=my_pair;
+        i++;
+    }    
+
+    return Kset_ICC_vect;
+}
+
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 /**************************************************   LOG-E   **********************************************************/
@@ -55,7 +82,7 @@ double LogE_ICC(vector<pair<__int128_t, unsigned int>> Kset, __int128_t Ai, unsi
   map<__int128_t, unsigned int> Kset_ICC = build_Kset_ICC(Kset, Ai);  // Data reduced to the ICC
   unsigned int m = Bitset_count(Ai); // rank of the ICC
 
-  double LogE = 0;
+  double LogE = 0, lgamma_diff = 0;
   unsigned int Ncontrol = 0; // for control
   unsigned int Ks = 0;
 
@@ -69,8 +96,15 @@ double LogE_ICC(vector<pair<__int128_t, unsigned int>> Kset, __int128_t Ai, unsi
   }  
   if (Ncontrol != N) { cout << "Error \'LogE_ICC\' function: Ncontrol != N" << endl;  }
 
-  //  return LogE - GeomComplexity_ICC(m) - lgamma( (double)( N + (one128 << (m-1)) ) );
-  return LogE + lgamma((double)( one128 << (m-1) )) - (Kset_ICC.size()/2.) * log(M_PI) - lgamma( (double)( N + (one128 << (m-1)) ) ); 
+  if (m > 31) // use approximation up to order O(N^2/2^n) -- first neglected order is O(N^3 / (2^n)^2) 
+              //       --> For N~10^7: this term is already neglectable for n~31  --> unlikely that someone would use this code with a dataset much larger than N~10^7
+    {   lgamma_diff = ( - 1. * N * ((double)(m-1))*log(2.) ) - N*(N-1.)/((double) (one128 << m) );  }
+  else // use exact value
+    {   lgamma_diff = lgamma((double)( one128 << (m-1) )) - lgamma( (double)( N + (one128 << (m-1)) ) );  }
+  
+
+  //  return LogE - GeomComplexity_ICC(m) - lgamma( (double)( N + (one128 << (m-1)) ) ); 
+  return LogE - (Kset_ICC.size()/2.) * log(M_PI) + lgamma_diff ; 
 }
 
 /******************************************************************************/

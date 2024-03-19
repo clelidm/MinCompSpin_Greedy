@@ -3,6 +3,18 @@
 
 using namespace std;
 
+
+/******************************************************************************/
+/**************************  ERROR MESSAGE  ***********************************/
+/******************************************************************************/
+
+void ERROR_message()
+{
+    cout << "       General call:   >> ./MCM_Greedy.out [datafilename] [n] (-b [basisfilename]) (--full) (--NoCheckPoint)" << endl;
+    cout << "                       Commands in \'(...)\' are optional." << endl << endl; 
+    cout << "       To get help:    >> ./MCM_Greedy.out -h" << endl << endl;
+}
+
 /******************************************************************************/
 /**************************  HELP MESSAGE  ************************************/
 /******************************************************************************/
@@ -100,16 +112,12 @@ void HELP_message()
     cout << endl;
 }
 
-void ERROR_message()
-{
-    cout << "       General call:   >> ./MCM_Greedy.out [datafilename] [n] (-b [basisfilename]) (--full) (--NoCheckPoint)" << endl;
-    cout << "                       Commands in \'(...)\' are optional." << endl << endl; 
-    cout << "       To get help:    >> ./MCM_Greedy.out -h" << endl << endl;
-}
 
 /******************************************************************************/
-/************************** Read Arguments ************************************/
+/****************** STRUCTURE INFO Read Arguments *****************************/
 /******************************************************************************/
+// IMPORTANT: same structure must be defined in the file "library.hpp"
+
 struct RunOptions
 {
     bool change_basis = false;  // by default: Search in the original basis 
@@ -117,7 +125,23 @@ struct RunOptions
     
     // by default: stop Greedy merging when LogE starts decreasing 
     bool greedy_full_merging = false; // if TRUE: keep on merging until everything is merged; save best MCM along the greedy path
+
+    // MODE GREEDY:
+    // by default in greedy merging mode:
+
+    // MODE SAMPLING:
+    // if sampling = true, then in sampling mode
+    bool sampling = false;
+    unsigned int Nsample = 1000; // default value
+    std::string MCM_file = "";
+
+    // MODE COMPUTE PROBABILITIES:
+    bool proba = false;
 };
+
+/******************************************************************************/
+/************************** Read Arguments ************************************/
+/******************************************************************************/
 
 int Read_argument(int argc, char *argv[], string *datafilename, unsigned int *n, string *basis_filename, RunOptions *options)
 {
@@ -166,6 +190,40 @@ int Read_argument(int argc, char *argv[], string *datafilename, unsigned int *n,
                 (*options).print_checkpoint = false;
                 i++;
             }
+            else if(((string) argv[i]) == "--sample")
+            {
+                if((i+1) < argc)
+                {
+                    (*options).MCM_file = argv[i+1];
+                    (*options).sampling = true;
+                    i+=2;
+                }
+                else
+                { 
+                    cout << endl << "ERROR: missing MCM filename after option \'--sample\'." << endl << endl; 
+                    ERROR_message(); 
+                    return 0;
+                }
+            }
+            else if(((string) argv[i]) == "-N")
+            {
+                if((i+1) < argc)
+                {
+                    (*options).Nsample = stoul(argv[i+1]);
+                    i+=2;
+                }
+                else
+                { 
+                    cout << endl << "ERROR: missing number of sample after option \'-N\'." << endl << endl; 
+                    ERROR_message(); 
+                    return 0;
+                }
+            }
+            else if(((string) argv[i]) == "--proba")
+            {
+                (*options).proba = true;
+                i++;
+            }
             else
             {
                 cout << endl << "ERROR: issue with the arguments of the program." << endl << endl; 
@@ -180,20 +238,37 @@ int Read_argument(int argc, char *argv[], string *datafilename, unsigned int *n,
     // **** Print information for the user:
     cout << endl;
     cout << "Dataset to read: " << (*datafilename) << " with n = " << (*n) << " variables" << endl << endl;
-    cout << "OPTIONS: " << endl;
+    cout << "OPTIONS: ";
+    if((*options).sampling)
+    {
+        cout << " ********* MODE: SAMPLING ***************** " << endl << endl;
+
+        cout << "\t - MCM to use:                    \"" << (*options).MCM_file << "\"" << endl;  
+        cout << "\t - Number of samples:             " << ((*options).Nsample) << endl;      
+    }
+    else if((*options).proba)
+    {
+        cout << " ********* MODE: PROBABILITIES ************* " << endl;
+        cout << "\t - Compute and compare the empirical probabilities and the model probabilities" << endl << endl;      
+
+        cout << "\t - for the MCM in:                \"" << (*options).MCM_file << "\"" << endl;      
+    }
+    else 
+    {
+        cout << " ********* MODE: MCM GREEDY SEARCH ********* " << endl << endl;
+
+        cout << "\t - Print checkpoints:             " << (((*options).print_checkpoint)?"Yes":"No") << endl;
+        cout << "\t - Run Greedy until FULLY merged: " << (((*options).greedy_full_merging)?"Yes":"No") << endl;
+    }
 
     if((*options).change_basis)
     { 
-        cout << "\t Change Basis:                  Yes" << endl;
-        cout << "\t New Basis in:                  " << (*basis_filename) << endl; 
+        cout << "\t - Change Basis:                  Yes" << endl;
+        cout << "\t - New Basis in:                  \"" << (*basis_filename) << "\"" << endl; 
     }
     else
-        { cout << "\t Change Basis:                  No" << endl; }
-    cout << "\t Print checkpoints:             " << (((*options).print_checkpoint)?"Yes":"No") << endl;
-    cout << "\t Run Greedy until FULLY merged: " << (((*options).greedy_full_merging)?"Yes":"No") << endl;
+    {   cout << "\t - Change Basis:                  No" << endl; }
 
     return 1; 
 }
-
-
 

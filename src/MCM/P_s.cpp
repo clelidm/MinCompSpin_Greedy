@@ -1,8 +1,11 @@
 #include <iostream>
+#include <random>
 #include <map>
 #include <list>
 #include <vector>
 #include <fstream>
+
+#include <array>
 
 using namespace std;
 
@@ -10,7 +13,7 @@ using namespace std;
 /******************************************************************************/
 /***************************   ADD OUTPUT FOLDER    ***************************/
 /******************************************************************************/
-string OutputFile_Add_Location(string filename);  // defined in main.cpp
+//string Add_Output_Location(string filename);  // defined in main.cpp
 
 /******************************************************************************/
 /***************************   Constant variables   ***************************/
@@ -40,10 +43,17 @@ string int_to_bstring(__int128_t bool_nb, unsigned int n);
 // i.e., that each basis element only appears in a single part of the partition.
 pair<bool, unsigned int> check_partition(map<unsigned int, __int128_t> Partition); 
 
+
 /******************************************************************************/
 /********************   Return Kset over a chosen ICC    **********************/
 /******************************************************************************/
+__int128_t transform_mu_basis(__int128_t mu, list<__int128_t> basis);
+
 map<__int128_t, unsigned int> build_Kset_ICC(vector<pair<__int128_t, unsigned int>> Kset, __int128_t Ai); // Ai = integer indicated the spins included in the ICC
+
+vector<pair<__int128_t, unsigned int>> build_Kset_ICC_vect(vector<pair<__int128_t, unsigned int>> Kset, __int128_t Ai);
+
+vector<pair<__int128_t, unsigned int>> build_Kset(vector<pair<__int128_t, unsigned int>> Nset, list<__int128_t> Basis);
 
 /******************************************************************************/
 /*****************   Compute the contribution to P_MCM(s)   *******************/
@@ -75,7 +85,8 @@ void update_proba_MCM(map<__int128_t, Proba> &all_P, map<__int128_t, unsigned in
 /******************************************************************************/
 /******************************************************************************/
 
-/*************      Compute the model probabilities     ***************/
+/*****************      Compute the model probabilities     *******************/
+/*******    Computed only for the states that are observed in the data   ******/
 
 // This function can be used directly on the original basis, by replacing Kset by Nset:
 map<__int128_t, Proba> P_sig(vector<pair<__int128_t, unsigned int>> Kset, map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r) // Probabilities in the sigma basis
@@ -90,6 +101,7 @@ map<__int128_t, Proba> P_sig(vector<pair<__int128_t, unsigned int>> Kset, map<un
   // Check partition:
   pair<bool, unsigned int> Is_partition = check_partition(Partition);
   unsigned int rank = Is_partition.second;
+//  cout << "Rank = " << rank << endl;
 
   if (!Is_partition.first) {cout << "Error, the argument is not a partition: the function returned an empty map for P[s]." << endl; }
   else
@@ -98,22 +110,25 @@ map<__int128_t, Proba> P_sig(vector<pair<__int128_t, unsigned int>> Kset, map<un
 
     for (auto const& it : Kset)
     {   
-      s = (it).first;      // initial state s 
+      s = (it).first;      // initial state s (in new basis)
       //ks = it->second;    // # of times s appears in the data set
 
       all_P[s].P_D_s = ((double) ((it).second))/Nd;  // (it).second = ks = # of times s appears in the data set
       all_P[s].P_MCM = pre_factor;
     }
-
+  
     // Compute the Kset over each ICC: Kset_ICC:
-    map<__int128_t, unsigned int> Kset_ICC;
-    map<unsigned int, __int128_t>::iterator Part;
+    //map<__int128_t, unsigned int> Kset_ICC;
+    //vector<pair<__int128_t, unsigned int>> Kset_ICC;
 
+    map<unsigned int, __int128_t>::iterator Part;
     for (Part = Partition.begin(); Part != Partition.end(); Part++)
     {
-      Kset_ICC = build_Kset_ICC(Kset, (*Part).second);         // (*Part).second) = Ai = integer indicated the spin elements included in b_a
-      update_proba_MCM(all_P, Kset_ICC, (*Part).second, N);
-      Kset_ICC.clear();
+      //Kset_ICC = build_Kset_ICC_vect(Kset, (*Part).second);         // (*Part).second) = Ai = integer indicated the spin elements included in b_a
+      //Kset_ICC = build_Kset_ICC(Kset, (*Part).second);         // (*Part).second) = Ai = integer indicated the spin elements included in b_a
+      //update_proba_MCM(all_P, Kset_ICC, (*Part).second, N);
+      //Kset_ICC.clear();
+      update_proba_MCM(all_P, build_Kset_ICC(Kset, (*Part).second), (*Part).second, N);
     }  
   }
 
@@ -122,27 +137,60 @@ map<__int128_t, Proba> P_sig(vector<pair<__int128_t, unsigned int>> Kset, map<un
 
 /*************      Print the model probabilities     ***************/
 
-void PrintFile_StateProbabilites_NewBasis(vector<pair<__int128_t, unsigned int>> Kset, map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, string filename) //, string filename = "Result"
+void PrintFile_StateProbabilites_CurrentBasis(vector<pair<__int128_t, unsigned int>> Kset, map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, string filename) //, string filename = "Result"
 {
   // Probabilities in the sigma basis:
   map<__int128_t, Proba> P_all = P_sig(Kset, MCM_Partition, N, r);
   map<__int128_t, Proba>::iterator it_P;
 
-  string Psig_filename = filename + "_DataVSMCM_Psig.dat";
+  //P_k:
+  double *Pk_D = (double *)malloc((r+1)*sizeof(double)); 
+  double *Pk_MCM = (double *)malloc((r+1)*sizeof(double)); 
 
-  cout << "--->> Print the state probabilities P(sig) in the file: \'" << Psig_filename << "\'" << endl << endl;
+  unsigned int k = 0;
+  for(k=0; k<=r; k++)
+  {
+    Pk_D[k] = 0;
+    Pk_MCM[k] = 0;
+  }
 
-  //fstream file_P_sig((OUTPUT_directory + Psig_filename), ios::out);
-  fstream file_P_sig(OutputFile_Add_Location(Psig_filename), ios::out);
+  string Psig_filename = filename + "_DataVSMCM_Ps.dat";
+  string Pk_filename = filename + "_DataVSMCM_Pk.dat";
 
-  file_P_sig << "## 1:sig \t 2:P_D(sig) \t 3:P_MCM(sig)" << endl;
+  cout << "--->> Print the state probabilities P(s) in the file: \'" << Psig_filename << "\'" << endl << endl;
+  cout << "--->> Print the probability of a state with k \'+1\' bits: \'" << Pk_filename << "\'" << endl << endl;
 
+  // ***** Print P(s):  *****************************************************/
+  fstream file_P_sig(Psig_filename, ios::out);
+
+  file_P_sig << "## State probability: computed only for states that are observed in the datasets." << endl;
+  file_P_sig << "## Other non-observed states may have a non-zero model probability, but are not reported here." << endl;
+  file_P_sig << "## " << endl;
+  file_P_sig << "## 1:s \t 2:P_D(s) \t 3:P_MCM(s)" << endl;
+
+  __int128_t s;
   for (it_P = P_all.begin(); it_P!=P_all.end(); ++it_P)
   {   
-    file_P_sig << int_to_bstring((it_P->first), r) << "\t " << (it_P->second).P_D_s << "\t " << (it_P->second).P_MCM << endl;
+    s = it_P->first;
+    file_P_sig << int_to_bstring(s, r) << "\t " << (it_P->second).P_D_s << "\t " << (it_P->second).P_MCM << endl;
+
+    k = Bitset_count(s);
+    Pk_D[k] += (it_P->second).P_D_s;      // P[k] in the data
+    Pk_MCM[k] += (it_P->second).P_MCM;    // P[k] from the MCM
   }
 
   file_P_sig.close();
+
+  // ***** Print P(k):   ***************************************************/
+  fstream file_Pk(Pk_filename, ios::out);
+
+  file_Pk << "## 1:k \t 2:P_D(k) \t 3:P_MCM(k)" << endl;
+
+  for(k=0; k<=r; k++)
+  {
+    file_Pk << k << "\t" << Pk_D[k] << "\t" << Pk_MCM[k] << endl;
+  }
+  file_Pk.close();
 }
 
 /******************************************************************************/
@@ -152,9 +200,6 @@ void PrintFile_StateProbabilites_NewBasis(vector<pair<__int128_t, unsigned int>>
 /***************   in a given basis, with a given partition   *****************/
 /******************************************************************************/
 /******************************************************************************/
-__int128_t transform_mu_basis(__int128_t mu, list<__int128_t> basis);
-vector<pair<__int128_t, unsigned int>> build_Kset(vector<pair<__int128_t, unsigned int>> Nset, list<__int128_t> Basis);
-
 
 //// The partition must be guven in the new basis:
 map<__int128_t, Proba> P_s(vector<pair<__int128_t, unsigned int>> Nset, list<__int128_t> Basis, map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r) // Probabilities in the sigma basis
@@ -215,40 +260,13 @@ map<__int128_t, Proba> P_s(vector<pair<__int128_t, unsigned int>> Nset, list<__i
 /*****************      PRINT FILE: INFO about an MCM     *********************/
 /******************************************************************************/
 
-void PrintFile_MCM_Info(list<__int128_t> Basis, map<unsigned int, __int128_t> MCM_Partition, unsigned int r, string filename) //, string filename = "Result")
-{
-  //***** PRINT BASIS: 
-  //fstream file_MCM_info((OUTPUT_directory + filename + "_MCM_info.dat"), ios::out);
-  fstream file_MCM_info(OutputFile_Add_Location(filename + "_MCM_info.dat"), ios::out);
-
-  file_MCM_info << "## sig_vec = states in the chosen new basis (ideally the best basis), defined by the basis operators:" << endl;
-  int i = 1;
-  for (list<__int128_t>::iterator it = Basis.begin(); it != Basis.end(); it++)
-  {
-    file_MCM_info << "##\t sig_" << i << " = " << int_to_bstring((*it), r) << endl; i++;
-  } file_MCM_info << "##" << endl;
-
-  // Print info about the model -- Print MCM:
-  file_MCM_info << "## The MCM Partition is defined on the sig_vec basis by the following Parts:" << endl;
-
-  //***** PRINT MCM: 
-  i = 1;
-  for (map<unsigned int, __int128_t>::iterator it = MCM_Partition.begin(); it != MCM_Partition.end(); it++)
-  {    
-    __int128_t Part = (*it).second;
-
-    file_MCM_info << "##\t MCM_Part_" << i << " = " << int_to_bstring(Part, r) << endl; i++;
-  }
-  file_MCM_info << "##" << endl;
-
-  file_MCM_info.close();
-}
+void PrintFile_MCM_Info(list<__int128_t> Basis, map<unsigned int, __int128_t> MCM_Partition, unsigned int r, string filename); //, string filename = "Result")
 
 
 /******************************************************************************/
 /*************      Print the model probabilities in a file     ***************/
 /******************************************************************************/
-void PrintFile_StateProbabilites_OriginalBasis(vector<pair<__int128_t, unsigned int>> Nset, list<__int128_t> Basis, map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, string filename) //, string filename = "Result")
+void PrintFile_StateProbabilites_OriginalBasis_NewBasis(vector<pair<__int128_t, unsigned int>> Nset, list<__int128_t> Basis, map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, string filename) //, string filename = "Result")
 {
   // Compute all the state probabilities:
   map<__int128_t, Proba> P_all = P_s(Nset, Basis, MCM_Partition, N, r);
@@ -263,20 +281,20 @@ void PrintFile_StateProbabilites_OriginalBasis(vector<pair<__int128_t, unsigned 
     Pk_MCM[k] = 0;
   }
 
-  string Ps_filename = filename + "_DataVSMCM_Ps.dat";
+  string Ps_filename = filename + "_DataVSMCM_Ps_sig.dat";
   string Pk_filename = filename + "_DataVSMCM_Pk.dat";
 
-  cout << "--->> Print information about the MCM in the file: \'" << filename << "_MCM_info.dat\'" << endl;
+  //cout << "--->> Print information about the MCM in the file: \'" << filename << "_MCM_info.dat\'" << endl;
   cout << "--->> Print the state probabilities P(s) in the file: \'" << Ps_filename << "\'" << endl;
   cout << "--->> Print the probability of a state with k \'+1\' bits: \'" << Pk_filename << "\'" << endl << endl;
 
-  //***** Print info about the model -- Print Basis and MCM:  **************/
-  PrintFile_MCM_Info(Basis, MCM_Partition, r, filename);
+  // ***** Print info about the model -- Print Basis and MCM:  **************/
+  //PrintFile_MCM_Info(Basis, MCM_Partition, r, filename);
 
-  //***** Print P(s):  *****************************************************/
+  // ***** Print P(s):  *****************************************************/
   __int128_t s;
-  //fstream file_Ps((OUTPUT_directory + Ps_filename), ios::out);
-  fstream file_Ps(OutputFile_Add_Location(Ps_filename), ios::out);
+
+  fstream file_Ps(Ps_filename, ios::out);
 
   file_Ps << "## s = states in the original basis" << endl;
   file_Ps << "## sig = states in the chosen new basis (ideally the best basis)" << endl;
@@ -298,9 +316,8 @@ void PrintFile_StateProbabilites_OriginalBasis(vector<pair<__int128_t, unsigned 
   }
   file_Ps.close();
 
-  //***** Print P(k):   ***************************************************/
-  //fstream file_Pk((OUTPUT_directory + Pk_filename), ios::out);
-  fstream file_Pk(OutputFile_Add_Location(Pk_filename), ios::out);
+  // ***** Print P(k):   ***************************************************/
+  fstream file_Pk(Pk_filename, ios::out);
 
   file_Pk << "## 1:k \t 2:P_D(k) \t 3:P_MCM(k)" << endl;
 
@@ -311,4 +328,200 @@ void PrintFile_StateProbabilites_OriginalBasis(vector<pair<__int128_t, unsigned 
   file_Pk.close();
 }
 
+/******************************************************************************/
+/***************************      SAMPLES         *****************************/
+/******************************************************************************/
+/*
+
+std::string int_to_bstring(__int128_t bool_nb, unsigned int n);
+
+void PrintTerm_samples(vector<pair<__int128_t, unsigned int>> Kset, map<unsigned int, __int128_t> MCM, list<__int128_t> Basis_li_invert, unsigned int n, unsigned int Nsample)
+{
+  // Create a random device and use it to generate a random seed
+  std::random_device myRandomDevice;
+  unsigned seed = myRandomDevice();
+
+  // Initialize a default_random_engine with the seed
+  default_random_engine generator(seed);
+
+
+// ***** Vector of the weights from Kset  ********************************************
+  vector<int> weights(Kset.size());
+
+  int i=0;
+  for (auto const& my_pair : Kset)
+  {
+      weights[i]=my_pair.second;
+      i++;
+  }
+
+  //cout << weights.size() << " : " << Kset.size() << endl;
+
+  cout << "## 1: sample i \t2: state_sig \t 3: state_s" << endl;
+
+  discrete_distribution<int> distribution(weights.begin(), weights.end());
+
+  int sample;
+  __int128_t sig = 0, s = 0, Ai = 0;
+
+  for (int i = 0; i < Nsample; i++)
+  {
+    sig=0;
+
+    for (map<unsigned int, __int128_t>::iterator it = MCM.begin(); it != MCM.end(); it++) // for each ICC sample a new datapoint from the original dataset (in new basis)
+    {    
+      Ai = (*it).second;
+
+      sample = distribution(generator);
+      //cout << int_to_bstring(Kset[sample].first, n) << endl;
+
+      //cout << "##\t ICC_sample_" << i << " = " << int_to_bstring(Ai, n) << endl;
+
+      sig += (Kset[sample].first) & Ai;          // troncated state: take only the bits of s (=it.first) indicated by Ai
+
+      //cout << "##\t ICC_sample_s = " << int_to_bstring(sig, n) << endl;
+    }
+
+    s = transform_mu_basis(sig, Basis_li_invert);
+    cout << "\t sample " << i << " : " << int_to_bstring(sig, n) << " \t " << int_to_bstring(s, n) << endl;
+
+  }
+
+}
+
+
+void PrintFile_samples(vector<pair<__int128_t, unsigned int>> Kset, map<unsigned int, __int128_t> MCM, list<__int128_t> Basis_li_invert, unsigned int n, unsigned int Nsample, string filename)
+{
+  // Create a random device and use it to generate a random seed
+  std::random_device myRandomDevice;
+  unsigned seed = myRandomDevice();
+
+  // Initialize a default_random_engine with the seed
+  default_random_engine generator(seed);
+
+
+// ***** Vector of the weights from Kset  ********************************************
+  vector<int> weights(Kset.size());
+
+  int i=0;
+  for (auto const& my_pair : Kset)
+  {
+      weights[i]=my_pair.second;
+      i++;
+  }
+
+  string sample_filename = filename + "_samples_N" + to_string(Nsample) + ".dat"; 
+
+  cout << "Print sampled data in:   " << sample_filename << endl;
+  cout << "Number of samples: N = " << Nsample << endl;
+
+// ***** create file:
+  fstream file_sample(sample_filename, ios::out);
+
+  bool newbasis_bool = (Basis_li_invert.size() != 0);
+
+  if (newbasis_bool)
+    { file_sample << "## 1:state_s \t 2: state_sig" << endl; }
+  else 
+    { file_sample << "## 1:state_s" << endl; }
+
+  discrete_distribution<int> distribution(weights.begin(), weights.end());
+
+  int sample;
+  __int128_t sig = 0, s = 0, Ai = 0;
+
+  for (int i = 0; i < Nsample; i++)
+  {
+    sig=0;
+
+    for (map<unsigned int, __int128_t>::iterator it = MCM.begin(); it != MCM.end(); it++) // for each ICC sample a new datapoint from the original dataset (in new basis)
+    {    
+      Ai = (*it).second;
+
+      sample = distribution(generator);
+      //cout << int_to_bstring(Kset[sample].first, n) << endl;
+
+      //cout << "##\t ICC_sample_" << i << " = " << int_to_bstring(Ai, n) << endl;
+
+      sig += (Kset[sample].first) & Ai;          // troncated state: take only the bits of s (=it.first) indicated by Ai
+
+      //cout << "##\t ICC_sample_s = " << int_to_bstring(sig, n) << endl;
+    }
+
+    s = transform_mu_basis(sig, Basis_li_invert);
+
+    if (newbasis_bool)
+    {
+      file_sample << int_to_bstring(s, n) << "\t ";
+    }
+    file_sample << int_to_bstring(sig, n) << endl;
+
+//    file_sample << "\t sample " << i << " : " << int_to_bstring(sig, n) << " \t " << int_to_bstring(s, n) << endl;
+  }
+
+  file_sample.close();
+}
+
+
+vector<pair<__int128_t, unsigned int>>  histo_sample_bestMCM(vector<pair<__int128_t, unsigned int>> Kset, map<unsigned int, __int128_t> MCM, list<__int128_t> Basis_li_invert, unsigned int n, unsigned int Nsample)
+{
+  default_random_engine generator;
+
+  map<__int128_t, unsigned int> Kset_sample_map;
+
+// ***** Vector of the weights from Kset  ********************************************
+  vector<int> weights(Kset.size());
+
+  int i=0;
+  for (auto const& my_pair : Kset)
+  {
+      weights[i]=my_pair.second;
+      i++;
+  }
+
+  //cout << weights.size() << " : " << Kset.size() << endl;
+
+//  cout << "## 1: sample i \t2: state_sig \t 3: state_s" << endl;
+
+  discrete_distribution<int> distribution(weights.begin(), weights.end());
+
+  int sample;
+  __int128_t sig = 0, s = 0, Ai = 0;
+
+  for (i = 0; i < Nsample; i++)
+  {
+    sig=0;
+
+    for (map<unsigned int, __int128_t>::iterator it = MCM.begin(); it != MCM.end(); it++) // for each ICC sample a new datapoint from the original dataset (in new basis)
+    {    
+      Ai = (*it).second;
+
+      sample = distribution(generator);
+      //cout << int_to_bstring(Kset[sample].first, n) << endl;
+
+      //cout << "##\t ICC_sample_" << i << " = " << int_to_bstring(Ai, n) << endl;
+
+      sig += (Kset[sample].first) & Ai;          // troncated state: take only the bits of s (=it.first) indicated by Ai
+
+      //cout << "##\t ICC_sample_s = " << int_to_bstring(sig, n) << endl;
+    }
+
+    //s = transform_mu_basis(sig, Basis_li_invert);
+    //cout << "\t sample " << i << " : " << int_to_bstring(sig, n) << " \t " << int_to_bstring(s, n) << endl;
+
+    Kset_sample_map[sig] += 1;
+  }
+
+// ***** Convert map to a vector:  for faster reading later on ********************************
+    vector<pair<__int128_t, unsigned int>> Kset_sample(Kset_sample_map.size());    //Nset.resize(Nset_map.size());
+
+    i=0;
+    for (auto& my_pair : Kset_sample_map)
+    {
+        Kset_sample[i]=my_pair;
+        i++;
+    }
+    return Kset_sample;
+}
+*/
 

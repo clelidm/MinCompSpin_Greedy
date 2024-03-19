@@ -150,7 +150,37 @@ void PrintTerm_Basis(list<__int128_t> Basis_li, unsigned int r)
   {
     cout << "##\t sig_" << setw(3) << setfill(' ') << left << i << " \t " << int_to_bstring((*it), r) << endl; i++;
   } 
+  cout << endl;
+
+  cout << "## Convention for converting datapoints in this basis in the following:" << endl;
+  cout << "## \t   -- sig_1 = Rightmost bit" << endl;
+  cout << "## \t   -- sig_n = Leftmost bit" << endl;
   cout << "##" << endl;
+  cout << "## Besides, in the basis above:" << endl;
+  cout << "## \t   -- Rightmost bit = Rightmost bit in the data = will be labeled s_1 in the following;" << endl;
+  cout << "## \t   -- Leftmost bit  = Leftmost bit  in the data = will be labeled s_n in the following." << endl;
+  cout << endl;
+}
+
+void PrintTerm_Basis_invert(list<__int128_t> Basis_li, unsigned int r)
+{
+  cout << "## Number of basis operators = " << Basis_li.size() << endl;
+  cout << "##" << endl;
+  int i = 1;
+  for (list<__int128_t>::iterator it = Basis_li.begin(); it != Basis_li.end(); it++)
+  {
+    cout << "##\t   s_" << setw(3) << setfill(' ') << left << i << " \t " << int_to_bstring((*it), r) << endl; i++;
+  } 
+  cout << endl;
+
+  cout << "Convention for reading this basis in comparison with the original basis of the data:" << endl;
+  cout << "## \t   -- s_1 = Rightmost bit in the original data" << endl;
+  cout << "## \t   -- s_n = Leftmost bit in the original data" << endl;
+  cout << "##" << endl;
+  cout << "## Besides, in the basis above:" << endl;
+  cout << "## \t   -- Rightmost bit = first basis operator, labeled sig_1 above;" << endl;
+  cout << "## \t   -- Leftmost bit  = last  basis operator, labeled sig_n above." << endl;
+  cout << endl;
 }
 
 
