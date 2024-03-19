@@ -55,6 +55,8 @@ The data file and the basis file must be placed in the `INPUT` folder and have t
   
   See the example file `MNIST11.sorted_BestBasis_k4_Binary.dat` which contains a basis with `n=121` basis operators, each encoded over the `n=121` original basis variables. Each operator corresponds to a new line. Note that the text appearing after the `n`-th columns is simply ignored by the function reading the basis. Similarly, empty lines or lines starting with characters other than `'0'` or `'1'` are ignored (see for example the line starting with `'#'`).
 
+- **MCM file (for sampling only):** 
+
 ## Usage without Makefile:
 
  - **To compile:**  Type in your Terminal from the main folder:
@@ -80,6 +82,7 @@ The data file and the basis file must be placed in the `INPUT` folder and have t
    **Other options:** You can also use the following options: `--full` and `--NoCheckPoint`
     - **Full merging:** the option `--full` will run the greedy merging until everything is merged into a single complete ICC, and print the evolution of the LogE along the merging path. The best MCM along the greedy path is saved and returned at the end. By default (i.e., without this option), the greedy algorithm will stop as soon as any additional merging starts decreasing the LogE.
     - **Remove checkpoints:** By default, the program prints out the intermediate values of LogE along the Greedy path. Using the option `--NoCheckPoint` will stop printing this information. This may save time, when printing is not needed, for datasets with a large number of variables and a long greedy path.
+    - **Print model probabilities:** the option `--proba` will print out the model probability distribution in comparison with the empirical probability distribution (only for the states observed in the dataset) at the end of the program.
     - The options `-b`, `--full` and `--NoCheckPoint` can be combined in any order. Note that options `--full` and `--NoCheckPoint` are incompatible: `--full` will always print the checkpoints and therefore take over `--NoCheckPoint`.
    
    **Summary table:**
@@ -135,7 +138,7 @@ In the `INPUT` folder, we provided the following examples:
   - **Example 1: MNIST dataset.** The binary dataset `MNIST11.sorted`: this is the binarized version of the MNIST dataset [3] used as an example in Ref.[1] (see Fig.~7). The dataset has `n=121` variables and `N=60 000` datapoints. The file `MNIST11.sorted_BestBasis_k4_Binary.dat` contains the binary representation of the best basis found with the recursive procedure described in Ref.[1] up to order `k=4` (using the program available [here](https://github.com/clelidm/MinCompSpin_BasisSearch128)).
   - **Example 2: Big 5 dataset.** The binary dataset `Big5PT.sorted`: this is the binarized version of the Big 5 dataset [3] used as an example in Ref.[1]. The dataset has `n=50` variables and `N = 1 013 558` datapoints. Important: This dataset is given as a zip file (due to its large size) and must be decompressed before use.
 The file `MNIST11.sorted_BestBasis_k4_Binary.dat` contains the binary representation of the best basis found with the recursive procedure described in Ref.[1] up to order `k=4` (using the program available [here](https://github.com/clelidm/MinCompSpin_BasisSearch128)).
-  - **Example 3:** The binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[4] and used as an example in Ref.[1]. Note that for this dataset, the greedy search wasn't able to find the best MCM in the best basis (i.e., the one found by the exhaustive search). However, when run in the orginal basis, the greedy search is able to find the same MCM as the exhaustive search in the original basis (this is however not the best MCM overall).
+  - **Example 3: SCOTUS dataset.** The binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[4] and used as an example in Ref.[1]. Note that for this dataset, the greedy search wasn't able to find the best MCM in the best basis (i.e., the one found by the exhaustive search). However, when run in the orginal basis, the greedy search is able to find the same MCM as the exhaustive search in the original basis (this is however not the best MCM overall).
     
 Each of these datasets can be analyzed by running the program with the `makefile` or the `job_run.sh` after commenting/uncommenting the correct datafile choices at the beginning of these files.
 
