@@ -102,7 +102,7 @@ The data file and the basis file must be placed in the `INPUT` folder and have t
       ```
     - **Print model probabilities:** adding the option `--proba` will also print out (in a file) the model probability distribution in comparison with the empirical probability distribution (only for the states observed in the dataset) at the end of the program.
    
-   **Summary table:**
+   **Summary tables:**
    | Run MCM Search  | Command | Comment |
    | --- | --- | --- |
    | Help | `./MCM_Greedy.out -h` | |
