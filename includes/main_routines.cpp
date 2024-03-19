@@ -49,7 +49,7 @@ map<unsigned int, __int128_t> MCM_GreedySearch_AND_printInfo(vector<pair<__int12
 
     cout << "Log-Evidence(MCM)       : " << LogE_g << "\t = " << LogE_g/( (double) N)/log(2.) << " bits per datapoint \t" << endl;
     cout << "Max-Log-Likelihood(MCM) : " << LogL_g << "\t = " << LogL_g/( (double) N)/log(2.) << " bits per datapoint \t" << endl << endl;
-    cout << "Average community size  : " << (double)r / (double)fp1.size() << " variables per community \t" << endl << endl;
+    cout << "Average ICC size  : " << (double)r / (double)fp1.size() << " variables per ICC \t" << endl << endl;
 
     return fp1;
 }
@@ -117,19 +117,19 @@ map<unsigned int, __int128_t> MCM_ReducedGreedySearch_AND_PrintInfo(vector<pair<
 /******************************************************************************/
 /*************************   READING MCM from a FILE   ************************/
 /******************************************************************************/
-map<unsigned int, __int128_t> read_MCM_fromfile(string Input_MCM_file, unsigned int r);
+map<unsigned int, __int128_t> read_MCM_fromfile_bin(string Input_MCM_file, unsigned int r);
 
 
 map<unsigned int, __int128_t> read_MCM_fromfile_AND_printInfo(vector<pair<__int128_t, unsigned int>> Kset, unsigned int N, string Input_MCM_file, unsigned int r)
 {
     cout << "#########  THEORETICAL   #########" << endl;
-    map<unsigned int, __int128_t> fp2 = read_MCM_fromfile(Input_MCM_file, r);
+    map<unsigned int, __int128_t> fp2 = read_MCM_fromfile_bin(Input_MCM_file, r);
 
     double LE_t = LogE_MCM(Kset, fp2, N, r);
     Print_MCM_Partition(fp2, r);
 
     cout << "Log-evidence (MCM)     : " << LE_t << endl;
-    cout << "Average community size : " << (double)r / (double)fp2.size() << endl << endl;
+    cout << "Average ICC size : " << (double)r / (double)fp2.size() << endl << endl;
 
     return fp2;
 }

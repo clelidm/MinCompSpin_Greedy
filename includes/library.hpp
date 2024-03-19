@@ -23,6 +23,7 @@ std::list<__int128_t> Read_BasisOp_IntegerRepresentation(std::string Basis_integ
 /*** Print Basis Info in the Terminal:    *************************************/
 /******************************************************************************/
 void PrintTerm_Basis(std::list<__int128_t> Basis_li, unsigned int r);
+void PrintTerm_Basis_invert(std::list<__int128_t> Basis_li, unsigned int r);
 
 
 /******************************************************************************/
@@ -130,6 +131,11 @@ double Norm_Mut_info(std::map<unsigned int, __int128_t> Partition1, std::map<uns
 // *** Check if the MCM in "fp1" is a sub-partition of the MCM in "fp2":
 bool is_subset(std::map<unsigned int, __int128_t> fp1, std::map<unsigned int, __int128_t> fp2);
 
+/*****************************************************************************************/
+/**********************************   SAMPLING       *************************************/
+/*****************************************************************************************/
+std::vector<std::pair<__int128_t, unsigned int>>  histo_sample_bestMCM(std::vector<std::pair<__int128_t, unsigned int>> Kset, std::map<unsigned int, __int128_t> MCM, std::list<__int128_t> Basis_li_invert, unsigned int n, unsigned int Nsample);
+void Print_File_Kset(std::vector<std::pair<__int128_t, unsigned int>> Kset, unsigned int N, unsigned int r, std::string OUTPUTfilename);
 
 /******************************************************************************/
 /******************************************************************************/
@@ -138,12 +144,45 @@ bool is_subset(std::map<unsigned int, __int128_t> fp1, std::map<unsigned int, __
 /******************************************************************************/
 /******************************************************************************/
 
-void PrintFile_StateProbabilites_NewBasis(std::vector<std::pair<__int128_t, unsigned int>> Kset, std::map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, std::string filename = "Result");
-void PrintFile_StateProbabilites_OriginalBasis(std::vector<std::pair<__int128_t, unsigned int>> Nset, std::list<__int128_t> Basis, std::map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, std::string filename = "Result");
+//void PrintFile_StateProbabilites_CurrentBasis(std::vector<std::pair<__int128_t, unsigned int>> Kset, std::map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, std::string filename = "Result");
+//void PrintFile_StateProbabilites_OriginalBasis_NewBasis(std::vector<std::pair<__int128_t, unsigned int>> Nset, std::list<__int128_t> Basis, std::map<unsigned int, __int128_t> MCM_Partition, unsigned int N, unsigned int r, std::string filename = "Result");
 
 // *** Create distributions of empirical data and MCMs:
 // std::map<__int128_t, double> emp_dist(std::map<__int128_t, unsigned int> Kset, unsigned int N, unsigned int r);
 // std::map<__int128_t, double> MCM_distr(std::map<__int128_t, unsigned int> Kset, std::map<unsigned int, __int128_t> Partition, unsigned int N, unsigned int r);
+
+
+/******************************************************************************/
+/******************************************************************************/
+/*****************************   USER INTERFACE    ****************************/
+/******************************************************************************/
+/******************************************************************************/
+void HELP_message();
+
+struct RunOptions
+{
+    bool change_basis = false;  // by default: Search in the original basis 
+    bool print_checkpoint = true;   // by default: print all the checkpoints
+    
+    // by default: stop Greedy merging when LogE starts decreasing 
+    bool greedy_full_merging = false; // if TRUE: keep on merging until everything is merged; save best MCM along the greedy path
+
+    // MODE GREEDY:
+    // by default in greedy merging mode:
+
+    // MODE SAMPLING:
+    // if sampling = true, then in sampling mode
+    bool sampling = false;
+    unsigned int Nsample = 1000; // default value
+    std::string MCM_file = "";
+
+    // MODE COMPUTE PROBABILITIES:
+    bool proba = false;
+};
+
+int Read_argument(int argc, char *argv[], std::string *datafilename, unsigned int *n, std::string *basis_filename, RunOptions *options);
+
+std::string filename_remove_extension(std::string filename);  // defined in tools.cpp
 
 /******************************************************************************/
 /******************************************************************************/

@@ -24,5 +24,5 @@ const std::string basis_IntegerRepresentation_filename = "SCOTUS_n9_BestBasis_In
 const std::string basis_BinaryRepresentation_filename = "SCOTUS_n9_BestBasis_Binary.dat";      // (optional) Input basis file
 
 // INPUT MCM FILES (optional): // For example: choice of a community to compare with the uncovered community:
-const std::string communityfile = "INPUT/SCOTUS_Communities_inBestBasis.dat"; 
+const std::string MCM_ex = "INPUT/SCOTUS_Communities_inBestBasis.dat"; 
 
