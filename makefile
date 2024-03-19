@@ -6,13 +6,11 @@
 ####     DEFAULT EXAMPLE:   MNIST dataset            ###################################################################
 ########################################################################################################################
 
-######################################      MCM GREEDY SEARCH     ######################################################
-
 ### IMPORTANT: -- the datafile and the basis-file must be in the 'INPUT' folder
 ### 		   -- the MCM-file (for sampling) must be in the 'OUTPUT' folder
 
-#### #### #### 
-#### EXAMPLE 1: MNIST dataset:	
+###############################      EXAMPLE 1: MNIST dataset:     #####################################################
+
 #datafilename := MNIST11.sorted # datafile name, must be in INPUT folder
 #n := 121 		# number of binary variables in the datafile 
 #basisfilename := MNIST11.sorted_BestBasis_k4_Binary.dat   # must be in INPUT folder 
@@ -20,8 +18,8 @@
 #mcmfilename :=    # MCM-filename (to specify), must be in OUTPUT folder 
 #N = 1000
 
-#### #### #### 
-#### EXAMPLE 2: Big5 dataset:
+###############################      EXAMPLE 2: Big5 dataset:     ######################################################
+
 #datafilename := Big5PT.sorted   # datafile name, must be in INPUT folder
 #n := 50		# number of binary variables in the datafile 
 #basisfilename := Big5PT.sorted_BestBasis_Binary.dat  # must be in INPUT folder 
@@ -29,8 +27,8 @@
 #mcmfilename :=    # MCM-filename (to specify), must be in OUTPUT folder 
 #N = 1000
 
-#### #### #### 
-#### EXAMPLE 3: SCOTUS dataset:
+###############################      EXAMPLE 3: SCOTUS dataset:     ####################################################
+
 datafilename := SCOTUS_n9_N895_Data.dat    # datafile name, must be in INPUT folder
 n := 9      # number of binary variables in the datafile 
 basisfilename := SCOTUS_n9_BestBasis_Binary.dat  # must be in INPUT folder 
