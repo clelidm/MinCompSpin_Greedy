@@ -172,7 +172,8 @@ In the `INPUT` folder, we provided the following examples:
   - **Example 1: MNIST dataset.** The binary dataset `MNIST11.sorted`: this is the binarized version of the MNIST dataset [3] used as an example in Ref.[1] (see Fig.~7). The dataset has `n=121` variables and `N=60 000` datapoints. The file `MNIST11.sorted_BestBasis_k4_Binary.dat` contains the binary representation of the best basis found with the recursive procedure described in Ref.[1] up to order `k=4` (using the program available [here](https://github.com/clelidm/MinCompSpin_BasisSearch128)).
   - **Example 2: Big 5 dataset.** The binary dataset `Big5PT.sorted`: this is the binarized version of the Big 5 dataset [3] used as an example in Ref.[1]. The dataset has `n=50` variables and `N = 1 013 558` datapoints. Important: This dataset is given as a zip file (due to its large size) and must be decompressed before use.
 The file `MNIST11.sorted_BestBasis_k4_Binary.dat` contains the binary representation of the best basis found with the recursive procedure described in Ref.[1] up to order `k=4` (using the program available [here](https://github.com/clelidm/MinCompSpin_BasisSearch128)).
-  - **Example 3: SCOTUS dataset.** The binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[4] and used as an example in Ref.[1]. Note that for this dataset, the greedy search wasn't able to find the best MCM in the best basis (i.e., the one found by the exhaustive search). However, when run in the orginal basis, the greedy search is able to find the same MCM as the exhaustive search in the original basis (this is however not the best MCM overall).
+  - **Example 3: SCOTUS dataset.** The binary dataset `SCOTUS_n9_N895_Data.dat`, which is the dataset of votes of the US Supreme Court analyzed in Ref.[4] and used as an example in Ref.[1]. The dataset was processed by the authors of Ref.[4] from the original data published by Ref.[3] (accessed in 3 April 2012).
+Note that for this dataset, the greedy search wasn't able to find the best MCM in the best basis (i.e., the one found by the exhaustive search). However, when run in the orginal basis, the greedy search is able to find the same MCM as the exhaustive search in the original basis (this is however not the best MCM overall).
     
 Each of these datasets can be analyzed by running the program with the `makefile` or the `job_run.sh` after commenting/uncommenting the correct datafile choices at the beginning of these files.
 
@@ -181,6 +182,8 @@ Each of these datasets can be analyzed by running the program with the `makefile
 [3] Raw data from [Open-Source Psychometrics Project](https://openpsychometrics.org/_rawdata/) in the line indicated as *"Answers to the IPIP Big Five Factor Markers"*; [here](https://openpsychometrics.org/_rawdata/IPIP-FFM-data-8Nov2018.zip) is a direct link to the same zip file.
 
 [4] E.D. Lee, C.P. Broedersz, W. Bialek, *Statistical Mechanics of the US Supreme Court*. [J Stat Phys 160, 275–301 (2015)](https://link.springer.com/article/10.1007/s10955-015-1253-6).
+
+[5] H.J. Spaeth, L. Epstein, T.W. Ruger, K. Whittington, J.A. Segal, A.D. Martin:SupremeCourtdatabase. Version 2011 Release 3 (2011). http://scdb.wustl.edu/index.php. Accessed 3 April 2012.
 
 
 ## Output and format of the returned MCMs:
