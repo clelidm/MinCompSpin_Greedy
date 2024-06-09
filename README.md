@@ -106,7 +106,7 @@ The data file and the basis file must be placed in the `INPUT` folder and have t
    | Run MCM Search  | Command | Comment |
    | --- | --- | --- |
    | Help | `./MCM_Greedy.out -h` | |
-   | Run default example:<br>MNIST dataset <br> in Original Basis | `./MCM_Greedy.out`| See Example 1<br>in "Examples" section below|
+   | Run default example:<br>MNIST dataset <br> in its original basis | `./MCM_Greedy.out`| See Example 1<br>in "Examples" section below|
    | Greedy Search<br>in the Original Basis<br>of the data | `./MCM_Greedy.out [datafilename] [n]` |  |
    | Greedy Search<br>in the chosen New Basis | `./MCM_Greedy.out [datafilename] [n] -b [basisfilename]`| |
    | Full Greedy merging<br>until getting a single ICC | `./MCM_Greedy.out [datafilename] [n] --full` | prints LogE<br>along the entire Greedy path |
