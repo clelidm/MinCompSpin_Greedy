@@ -15,7 +15,7 @@ It is also possible to use the program to generate samples from a chosen MCM, as
 [2] E. Peerbooms, S. Kamphof, J.-H. Lestang, C. de Mulatier, *Statistical Modeling of High-Order Community Structures in Binary Data* (arxiv coming soon)
 
 **To cite this repository:**<br>
-C. de Mulatier, S. Kamphof. (2024). Greedy Search for the best Minimally Complex Model (v1.0). Zenodo. https://doi.org/10.5281/zenodo.11539775
+C. de Mulatier, S. Kamphof. (2024). Greedy Search for the best Minimally Complex Model (v1.0). Zenodo. https://doi.org/10.5281/zenodo.11539774. 
 
 ## Different programs for searching for the best MCM:
 
